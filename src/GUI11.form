@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="GUI11">
+  <grid id="27dc6" binding="guiPanel" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="641" height="833"/>
+    </constraints>
+    <properties>
+      <background color="-1"/>
+      <enabled value="true"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <grid id="202cb" binding="TopBar" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="6" left="10" bottom="6" right="10"/>
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-16682590"/>
+          <foreground color="-1"/>
+        </properties>
+        <border type="none">
+          <font/>
+        </border>
+        <children>
+          <component id="1e5c0" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <foreground color="-1"/>
+              <icon value="hamburger-button.png"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="e7f8a" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <foreground color="-1"/>
+              <text value="Username"/>
+            </properties>
+          </component>
+          <hspacer id="81da7">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
+        </children>
+      </grid>
+      <grid id="2635d" binding="MidZone1Container" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="5" left="7" bottom="0" right="7"/>
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <grid id="f3868" binding="MidZone1" layout-manager="GridLayoutManager" row-count="4" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="10" left="10" bottom="10" right="10"/>
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-1"/>
+              <visible value="true"/>
+            </properties>
+            <border type="line">
+              <font/>
+              <title-color color="-4934476"/>
+              <color color="-4473925"/>
+            </border>
+            <children>
+              <component id="e3f69" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <enabled value="true"/>
+                  <font name="Inter" size="36" style="0"/>
+                  <foreground color="-4508112"/>
+                  <text value="IT"/>
+                </properties>
+              </component>
+              <component id="de9e0" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <enabled value="false"/>
+                  <font name="Inter"/>
+                  <text value="Home / My courses / Thi cuối kỳ"/>
+                </properties>
+              </component>
+              <hspacer id="5b797">
+                <constraints>
+                  <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </hspacer>
+              <component id="49b67" class="javax.swing.JButton" binding="TURNEDITINGONButton" default-binding="true">
+                <constraints>
+                  <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="140" height="30"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <autoscrolls value="false"/>
+                  <background color="-16682590"/>
+                  <borderPainted value="false"/>
+                  <contentAreaFilled value="true"/>
+                  <enabled value="true"/>
+                  <focusPainted value="true"/>
+                  <focusable value="false"/>
+                  <font name="Inter"/>
+                  <foreground color="-1"/>
+                  <hideActionText value="false"/>
+                  <margin top="1" left="0" bottom="0" right="0"/>
+                  <opaque value="true"/>
+                  <text value="TURN EDITING ON"/>
+                  <toolTipText value=""/>
+                  <verticalAlignment value="0"/>
+                  <visible value="true"/>
+                </properties>
+              </component>
+              <component id="f82a2" class="javax.swing.JButton" binding="settingButton">
+                <constraints>
+                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="6" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <borderPainted value="false"/>
+                  <focusable value="false"/>
+                  <icon value="settings.png"/>
+                  <inheritsPopupMenu value="true"/>
+                  <label value=""/>
+                  <text value=""/>
+                </properties>
+              </component>
+              <grid id="1fcc5" binding="popupPanel" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="10" left="10" bottom="10" right="10"/>
+                <constraints>
+                  <grid row="1" column="2" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="5" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <autoscrolls value="true"/>
+                  <background color="-1"/>
+                  <visible value="true"/>
+                </properties>
+                <border type="line">
+                  <font/>
+                  <color color="-4473925"/>
+                </border>
+                <children>
+                  <component id="9e58e" class="javax.swing.JButton" binding="questionsButton" default-binding="true">
+                    <constraints>
+                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <background color="-1"/>
+                      <borderPainted value="false"/>
+                      <focusTraversalPolicyProvider value="true"/>
+                      <focusable value="false"/>
+                      <font name="Inter"/>
+                      <foreground color="-8602663"/>
+                      <horizontalAlignment value="2"/>
+                      <text value="Questions"/>
+                      <verticalAlignment value="3"/>
+                    </properties>
+                  </component>
+                  <component id="bd666" class="javax.swing.JButton" binding="categoriesButton" default-binding="true">
+                    <constraints>
+                      <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <background color="-1"/>
+                      <borderPainted value="false"/>
+                      <focusTraversalPolicyProvider value="true"/>
+                      <focusable value="false"/>
+                      <font name="Inter"/>
+                      <foreground color="-8602663"/>
+                      <horizontalAlignment value="2"/>
+                      <text value="Categories"/>
+                      <verticalAlignment value="3"/>
+                    </properties>
+                  </component>
+                  <component id="be0d1" class="javax.swing.JButton" binding="importButton" default-binding="true">
+                    <constraints>
+                      <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <background color="-1"/>
+                      <borderPainted value="false"/>
+                      <focusTraversalPolicyProvider value="true"/>
+                      <focusable value="false"/>
+                      <font name="Inter"/>
+                      <foreground color="-8602663"/>
+                      <horizontalAlignment value="2"/>
+                      <text value="Import"/>
+                      <verticalAlignment value="3"/>
+                    </properties>
+                  </component>
+                  <component id="92761" class="javax.swing.JButton" binding="exportButton" default-binding="true">
+                    <constraints>
+                      <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <background color="-1"/>
+                      <borderPainted value="false"/>
+                      <focusTraversalPolicyProvider value="true"/>
+                      <focusable value="false"/>
+                      <font name="Inter"/>
+                      <foreground color="-8602663"/>
+                      <horizontalAlignment value="2"/>
+                      <text value="Export"/>
+                      <verticalAlignment value="3"/>
+                    </properties>
+                  </component>
+                  <component id="ff97c" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <focusable value="false"/>
+                      <font name="Inter" size="21" style="1"/>
+                      <foreground color="-8602663"/>
+                      <text value="Question bank"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <hspacer id="78b3a">
+                <constraints>
+                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </hspacer>
+              <vspacer id="a8813">
+                <constraints>
+                  <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                    <minimum-size width="-1" height="10"/>
+                  </grid>
+                </constraints>
+              </vspacer>
+            </children>
+          </grid>
+        </children>
+      </grid>
+      <grid id="e862e" binding="MidZone2Container" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="7" left="7" bottom="7" right="7"/>
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-1"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <grid id="5617d" binding="MidZone2" layout-manager="GridLayoutManager" row-count="6" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="10">
+            <margin top="10" left="10" bottom="10" right="10"/>
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <autoscrolls value="false"/>
+              <background color="-1"/>
+            </properties>
+            <border type="line">
+              <color color="-4473925"/>
+            </border>
+            <children>
+              <component id="46df7" class="javax.swing.JButton" binding="quiz1Button">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <borderPainted value="false"/>
+                  <focusable value="false"/>
+                  <font name="Inter" size="14"/>
+                  <horizontalAlignment value="2"/>
+                  <icon value="quiz_icon.png"/>
+                  <text value="Kiểm tra cuối kỳ môn IT4895Q"/>
+                </properties>
+              </component>
+              <component id="3a306" class="javax.swing.JButton" binding="quiz5Button">
+                <constraints>
+                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <borderPainted value="false"/>
+                  <focusable value="false"/>
+                  <font name="Inter" size="14"/>
+                  <horizontalAlignment value="2"/>
+                  <icon value="quiz_icon.png"/>
+                  <text value="Thi giữa kỳ 2 môn công nghệ"/>
+                </properties>
+              </component>
+              <component id="7f035" class="javax.swing.JButton" binding="quiz4Button">
+                <constraints>
+                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <borderPainted value="false"/>
+                  <focusable value="false"/>
+                  <font name="Inter" size="14"/>
+                  <horizontalAlignment value="2"/>
+                  <icon value="quiz_icon.png"/>
+                  <text value="Thi GK2 Sử Địa 7"/>
+                </properties>
+              </component>
+              <component id="25a3b" class="javax.swing.JButton" binding="quiz2Button">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <borderPainted value="false"/>
+                  <focusable value="false"/>
+                  <font name="Inter" size="14"/>
+                  <horizontalAlignment value="2"/>
+                  <icon value="quiz_icon.png"/>
+                  <text value="Thi thử KTLT"/>
+                </properties>
+              </component>
+              <component id="2dcb5" class="javax.swing.JButton" binding="quiz3Button">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <borderPainted value="false"/>
+                  <focusable value="false"/>
+                  <font name="Inter" size="14"/>
+                  <horizontalAlignment value="2"/>
+                  <icon value="quiz_icon.png"/>
+                  <text value="Thi GK2 Tin học 7"/>
+                </properties>
+              </component>
+              <vspacer id="9731c">
+                <constraints>
+                  <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </vspacer>
+            </children>
+          </grid>
+        </children>
+      </grid>
+    </children>
+  </grid>
+  <buttonGroups>
+    <group name="buttonGroup1">
+      <member id="a94d"/>
+      <member id="25ada"/>
+      <member id="43dd8"/>
+    </group>
+  </buttonGroups>
+</form>
