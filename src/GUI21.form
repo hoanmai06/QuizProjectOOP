@@ -29,7 +29,7 @@
             </constraints>
             <properties>
               <foreground color="-1"/>
-              <icon value="hamburger-button.png"/>
+              <icon value="icons/hamburger-button.png"/>
               <text value=""/>
             </properties>
           </component>
@@ -406,7 +406,7 @@
                           <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
-                          <icon value="question_mark.png"/>
+                          <icon value="icons/question_mark.png"/>
                           <text value=""/>
                         </properties>
                       </component>
@@ -415,7 +415,7 @@
                           <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
-                          <icon value="required.png"/>
+                          <icon value="icons/required.png"/>
                           <text value=""/>
                         </properties>
                       </component>
@@ -424,7 +424,7 @@
                           <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
-                          <icon value="question_mark.png"/>
+                          <icon value="icons/question_mark.png"/>
                           <text value=""/>
                         </properties>
                       </component>
@@ -524,7 +524,7 @@
                           <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
-                          <icon value="required.png"/>
+                          <icon value="icons/required.png"/>
                           <text value=""/>
                         </properties>
                       </component>
@@ -611,7 +611,7 @@
                                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                                 </constraints>
                                 <properties>
-                                  <icon value="down_arrow.png"/>
+                                  <icon value="icons/down_arrow.png"/>
                                   <text value=""/>
                                 </properties>
                               </component>

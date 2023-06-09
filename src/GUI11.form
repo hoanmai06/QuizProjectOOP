@@ -30,7 +30,7 @@
             </constraints>
             <properties>
               <foreground color="-1"/>
-              <icon value="hamburger-button.png"/>
+              <icon value="icons/hamburger-button.png"/>
               <text value=""/>
             </properties>
           </component>
@@ -133,7 +133,7 @@
                 <properties>
                   <borderPainted value="false"/>
                   <focusable value="false"/>
-                  <icon value="settings.png"/>
+                  <icon value="icons/settings.png"/>
                   <inheritsPopupMenu value="true"/>
                   <label value=""/>
                   <text value=""/>
@@ -279,7 +279,7 @@
                   <focusable value="false"/>
                   <font name="Inter" size="14"/>
                   <horizontalAlignment value="2"/>
-                  <icon value="quiz_icon.png"/>
+                  <icon value="icons/quiz_icon.png"/>
                   <text value="Kiểm tra cuối kỳ môn IT4895Q"/>
                 </properties>
               </component>
@@ -292,7 +292,7 @@
                   <focusable value="false"/>
                   <font name="Inter" size="14"/>
                   <horizontalAlignment value="2"/>
-                  <icon value="quiz_icon.png"/>
+                  <icon value="icons/quiz_icon.png"/>
                   <text value="Thi giữa kỳ 2 môn công nghệ"/>
                 </properties>
               </component>
@@ -305,7 +305,7 @@
                   <focusable value="false"/>
                   <font name="Inter" size="14"/>
                   <horizontalAlignment value="2"/>
-                  <icon value="quiz_icon.png"/>
+                  <icon value="icons/quiz_icon.png"/>
                   <text value="Thi GK2 Sử Địa 7"/>
                 </properties>
               </component>
@@ -318,7 +318,7 @@
                   <focusable value="false"/>
                   <font name="Inter" size="14"/>
                   <horizontalAlignment value="2"/>
-                  <icon value="quiz_icon.png"/>
+                  <icon value="icons/quiz_icon.png"/>
                   <text value="Thi thử KTLT"/>
                 </properties>
               </component>
@@ -331,7 +331,7 @@
                   <focusable value="false"/>
                   <font name="Inter" size="14"/>
                   <horizontalAlignment value="2"/>
-                  <icon value="quiz_icon.png"/>
+                  <icon value="icons/quiz_icon.png"/>
                   <text value="Thi GK2 Tin học 7"/>
                 </properties>
               </component>
