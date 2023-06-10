@@ -19,7 +19,8 @@ public class GUI32 extends DefaultJFrame {
     private JButton BLANKSFOR3MOREButton;
     private JScrollPane mainScrollPane;
 
-    public GUI32() {
+    public GUI32(int width, int height) {
+        super(width, height);
         setContentPane(guiPanel);
         setVisible(true);
 
@@ -39,7 +40,7 @@ public class GUI32 extends DefaultJFrame {
 
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new GUI32();
+                new GUI32(1024, 768);
             }
         });
     }

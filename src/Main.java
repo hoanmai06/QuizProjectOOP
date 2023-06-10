@@ -11,6 +11,6 @@ public class Main {
 //            throw new RuntimeException(e);
 //        }
 
-        GUI11 gui11 = new GUI11();
+        GUI11 gui11 = new GUI11(1024, 768);
     }
 }

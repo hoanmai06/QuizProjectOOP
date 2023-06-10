@@ -34,7 +34,8 @@ public class GUI21 extends DefaultJFrame {
             {Boolean.FALSE, "Cho các đặc điểm sau: 1. Thường mọc ở những nơi quang đãng 2. Phiến bla bla bla bla", "Edit"}
     };
 
-    public GUI21() {
+    public GUI21(int width, int height) {
+        super(width, height);
         setContentPane(guiPanel);
         setVisible(true);
 
@@ -43,19 +44,18 @@ public class GUI21 extends DefaultJFrame {
         CHOOSEAFILEButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                JFileChooser fileChooser = new JFileChooser();
-//                fileChooser.showOpenDialog(null);
                 FileDialog fd = new FileDialog((Frame) null, "Choose a file", FileDialog.LOAD);
-//                fd.setDirectory("C:\\");
-//                fd.setFile("*.xml");
                 fd.setVisible(true);
             }
         });
-    }
 
-    public GUI21(int width, int height) {
-        this();
-        setSize(width, height);
+        CREATENEWQUESTIONButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new GUI32(1024, 768);
+            }
+        });
     }
 
     public static void main(String[] args) {
@@ -71,10 +71,9 @@ public class GUI21 extends DefaultJFrame {
 
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new GUI21();
+                new GUI21(1024, 768);
             }
         });
-//        GUI21 myForm = new GUI21();
     }
 
     private void createUIComponents() {

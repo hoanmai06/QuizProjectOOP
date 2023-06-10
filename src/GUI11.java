@@ -29,7 +29,8 @@ public class GUI11 extends DefaultJFrame {
     private JPanel popupPanel;
     private JButton exportButton;
 
-    public GUI11() {
+    public GUI11(int width, int height) {
+        super(width, height);
         setContentPane(guiPanel);
         setVisible(true);
 
@@ -56,7 +57,7 @@ public class GUI11 extends DefaultJFrame {
             throw new RuntimeException(e);
         }
 
-        GUI11 myForm = new GUI11();
+        GUI11 myForm = new GUI11(1024, 768);
     }
 
 }
