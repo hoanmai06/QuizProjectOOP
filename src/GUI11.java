@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Locale;
 
-public class GUI11 extends JFrame {
+public class GUI11 extends DefaultJFrame {
     private JPanel guiPanel;
     private JButton TURNEDITINGONButton;
     private JPanel TopBar;
@@ -30,15 +30,7 @@ public class GUI11 extends JFrame {
     private JButton exportButton;
 
     public GUI11() {
-        setTitle("._.");
         setContentPane(guiPanel);
-
-        pack();
-        setMinimumSize(new Dimension(getWidth(), getHeight()));
-
-        setSize(new Dimension(1024, 768));
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
 
         settingButton.addActionListener(new ActionListener() {

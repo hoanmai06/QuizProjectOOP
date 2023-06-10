@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GUI21 extends JFrame {
+public class GUI21 extends DefaultJFrame {
     private JPanel TopBar;
     private JPanel MidZone1Container;
     private JPanel MidZone1;
@@ -35,18 +35,7 @@ public class GUI21 extends JFrame {
     };
 
     public GUI21() {
-        setTitle("._.");
         setContentPane(guiPanel);
-
-//        pack();
-//        setMinimumSize(new Dimension(400, 400));
-
-        pack();
-        setMinimumSize(new Dimension(getWidth(), getHeight()));
-
-        setSize(new Dimension(1024, 768));
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
 
         dashedBorderPanel.setBorder(BorderFactory.createDashedBorder(Color.GRAY, 7, 3));
