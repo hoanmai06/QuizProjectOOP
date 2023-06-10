@@ -6,6 +6,7 @@ import java.awt.*;
 public class GUI51 extends DefaultJFrame {
     private JPanel guiPanel;
     private JPanel topbar;
+    private JPanel TopBar;
 
     public GUI51(int width, int height) {
         super(width, height);
