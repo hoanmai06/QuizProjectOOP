@@ -1,10 +1,17 @@
 import com.formdev.flatlaf.FlatLightLaf;
+import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
+import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
+import javax.swing.plaf.FontUIResource;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
 
 public class GUI21 extends DefaultJFrame {
     private JPanel TopBar;
@@ -69,7 +76,7 @@ public class GUI21 extends DefaultJFrame {
         if (defaults.get("Table.alternateRowColor") == null)
             defaults.put("Table.alternateRowColor", new Color(240, 240, 240));
 
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+        SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 new GUI21(1024, 768);
             }
@@ -109,4 +116,5 @@ public class GUI21 extends DefaultJFrame {
 //        questionTable.getColumnModel().getColumn(1).setPreferredWidth(500);
         questionTable.getColumnModel().getColumn(2).setMaxWidth(60);
     }
+
 }
