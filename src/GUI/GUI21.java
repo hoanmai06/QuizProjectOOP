@@ -73,6 +73,7 @@ public class GUI21 extends DefaultJFrame {
 
                     Singleton.getInstance().addCategory(new_category);
                     categoryComboBox.addItem(String.format("%s (0)", new_category.getCategoryName()));
+                    JOptionPane.showMessageDialog(null, String.format("Added category \"%s\"", new_category.getCategoryName()));
                 }
             }
         });
