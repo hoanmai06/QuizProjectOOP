@@ -61,16 +61,16 @@ public class GUI21 extends DefaultJFrame {
             public void actionPerformed(ActionEvent e) {
                 Category new_category = new Category();
 
-                new_category.setCategory_name(categoryNameTextField.getText());
-                new_category.setCategory_info(categoryInfoTextArea.getText());
-                new_category.setID_number(categoryIDNumberTextField.getText());
+                new_category.setCategoryName(categoryNameTextField.getText());
+                new_category.setCategoryInfo(categoryInfoTextArea.getText());
+                new_category.setIdNumber(categoryIDNumberTextField.getText());
 
                 categoryNameTextField.setText("");
                 categoryInfoTextArea.setText("");
                 categoryIDNumberTextField.setText("");
 
                 Singleton.getInstance().addCategory(new_category);
-                categoryComboBox.addItem(String.format("%s (0)", new_category.getCategory_name()));
+                categoryComboBox.addItem(String.format("%s (0)", new_category.getCategoryName()));
             }
         });
     }
