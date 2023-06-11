@@ -31,7 +31,6 @@ public class GUI21 extends DefaultJFrame {
     private JPanel dashedBorderPanel;
     private JTextField categoryIDNumberTextField;
     String[] columnNames = {"isSelected", "Question name", "Actions"};
-    Object[][] data = {{Boolean.FALSE, "1", "Edit"}, {Boolean.FALSE, "2", "Edit"}};
 
     public GUI21(int width, int height) {
         super(width, height);
@@ -59,18 +58,22 @@ public class GUI21 extends DefaultJFrame {
         ADDCATEGORYButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Category new_category = new Category();
+                if (categoryNameTextField.getText().isEmpty())
+                    JOptionPane.showMessageDialog(null, "Category name is required.");
+                else {
+                    Category new_category = new Category();
 
-                new_category.setCategoryName(categoryNameTextField.getText());
-                new_category.setCategoryInfo(categoryInfoTextArea.getText());
-                new_category.setIdNumber(categoryIDNumberTextField.getText());
+                    new_category.setCategoryName(categoryNameTextField.getText());
+                    new_category.setCategoryInfo(categoryInfoTextArea.getText());
+                    new_category.setIdNumber(categoryIDNumberTextField.getText());
 
-                categoryNameTextField.setText("");
-                categoryInfoTextArea.setText("");
-                categoryIDNumberTextField.setText("");
+                    categoryNameTextField.setText("");
+                    categoryInfoTextArea.setText("");
+                    categoryIDNumberTextField.setText("");
 
-                Singleton.getInstance().addCategory(new_category);
-                categoryComboBox.addItem(String.format("%s (0)", new_category.getCategoryName()));
+                    Singleton.getInstance().addCategory(new_category);
+                    categoryComboBox.addItem(String.format("%s (0)", new_category.getCategoryName()));
+                }
             }
         });
     }
@@ -97,7 +100,7 @@ public class GUI21 extends DefaultJFrame {
         // TODO: place custom component creation code here
 
         categoryComboBox = new JComboBox(Singleton.getInstance().getCategoryNameList());
-        questionTable = new JTable(new DefaultTableModel(data, columnNames) {
+        questionTable = new JTable(new DefaultTableModel(Singleton.getInstance().getQuestionTableData(Singleton.getInstance().getCategories().get(0)), columnNames) {
             @Override
             public Class<?> getColumnClass(int columnIndex) {
                 return getValueAt(0, columnIndex).getClass();
@@ -109,7 +112,7 @@ public class GUI21 extends DefaultJFrame {
             }
         });
 
-        Action increase = new AbstractAction("+") {
+        Action edit = new AbstractAction("Edit") {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -119,13 +122,11 @@ public class GUI21 extends DefaultJFrame {
                 JOptionPane.showMessageDialog(null, "Editing row " + row);
             }
         };
-        ButtonColumn inc = new ButtonColumn(questionTable, increase, 2);
+
+        ButtonColumn inc = new ButtonColumn(questionTable, edit, 2);
 
         questionTable.setRowHeight(35);
-
-//        questionTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         questionTable.getColumnModel().getColumn(0).setMaxWidth(25);
-//        questionTable.getColumnModel().getColumn(1).setPreferredWidth(500);
         questionTable.getColumnModel().getColumn(2).setMaxWidth(60);
     }
 
