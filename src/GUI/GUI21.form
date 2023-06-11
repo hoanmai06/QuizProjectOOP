@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="GUI21">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="GUI.GUI21">
   <grid id="27dc6" binding="guiPanel" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
@@ -215,21 +215,16 @@
                           <visible value="true"/>
                         </properties>
                       </component>
-                      <component id="49e3b" class="javax.swing.JComboBox" binding="selectACategoryComboBox" default-binding="true">
+                      <component id="49e3b" class="javax.swing.JComboBox" binding="categoryComboBox" custom-create="true">
                         <constraints>
                           <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="0" indent="0" use-parent-layout="false">
                             <preferred-size width="-1" height="30"/>
                           </grid>
                         </constraints>
                         <properties>
-                          <model>
-                            <item value="C câu hỏi dễ (256)"/>
-                            <item value="Heelo"/>
-                            <item value="Hello"/>
-                          </model>
+                          <editable value="false"/>
                           <name value="Default"/>
-                          <popupVisible value="false"/>
-                          <selectedIndex value="0"/>
+                          <selectedIndex value="-1"/>
                         </properties>
                       </component>
                       <hspacer id="79d96">
@@ -316,7 +311,7 @@
                           <text value="Name"/>
                         </properties>
                       </component>
-                      <component id="eccf9" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+                      <component id="eccf9" class="javax.swing.JTextField" binding="categoryNameTextField">
                         <constraints>
                           <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                             <preferred-size width="150" height="30"/>
@@ -343,7 +338,7 @@
                           <text value="ID number"/>
                         </properties>
                       </component>
-                      <component id="b23d7" class="javax.swing.JTextField" default-binding="true">
+                      <component id="b23d7" class="javax.swing.JTextField" binding="categoryIDNumberTextField">
                         <constraints>
                           <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                             <preferred-size width="150" height="30"/>
@@ -439,7 +434,7 @@
                         </properties>
                         <border type="none"/>
                         <children>
-                          <component id="72197" class="javax.swing.JTextArea" binding="textArea1" default-binding="true">
+                          <component id="72197" class="javax.swing.JTextArea" binding="categoryInfoTextArea">
                             <constraints/>
                             <properties>
                               <enabled value="true"/>

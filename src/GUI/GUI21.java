@@ -1,17 +1,14 @@
+package GUI;
+
+import DataObject.Category;
+import DataObject.Singleton;
 import com.formdev.flatlaf.FlatLightLaf;
-import com.intellij.uiDesigner.core.GridConstraints;
-import com.intellij.uiDesigner.core.GridLayoutManager;
-import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import javax.swing.plaf.FontUIResource;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Locale;
 
 public class GUI21 extends DefaultJFrame {
     private JPanel TopBar;
@@ -21,28 +18,24 @@ public class GUI21 extends DefaultJFrame {
     private JPanel MidZone2;
     private JPanel guiPanel;
     private JTabbedPane tabbedPane1;
-    private JComboBox selectACategoryComboBox;
+    private JComboBox categoryComboBox;
     private JCheckBox alsoShowQuestionsFromCheckBox;
     private JCheckBox alsoShowOldQuestionCheckBox;
     private JButton CREATENEWQUESTIONButton;
     private JTable questionTable;
     private JComboBox comboBox1;
-    private JTextField textField1;
+    private JTextField categoryNameTextField;
     private JButton ADDCATEGORYButton;
-    private JTextArea textArea1;
+    private JTextArea categoryInfoTextArea;
     private JButton CHOOSEAFILEButton;
     private JPanel dashedBorderPanel;
+    private JTextField categoryIDNumberTextField;
     String[] columnNames = {"isSelected", "Question name", "Actions"};
-    Object[][] data = {
-            {Boolean.FALSE, "Cho các đặc điểm sau: 1. Thường mọc ở những nơi quang đãng 2. Phiến bla bla bla bla", "Edit"},
-            {Boolean.FALSE, "Cho các đặc điểm sau: 1. Thường mọc ở những nơi quang đãng 2. Phiến bla bla bla bla", "Edit"},
-            {Boolean.FALSE, "Cho các đặc điểm sau: 1. Thường mọc ở những nơi quang đãng 2. Phiến bla bla bla bla", "Edit"},
-            {Boolean.FALSE, "Cho các đặc điểm sau: 1. Thường mọc ở những nơi quang đãng 2. Phiến bla bla bla bla", "Edit"},
-            {Boolean.FALSE, "Cho các đặc điểm sau: 1. Thường mọc ở những nơi quang đãng 2. Phiến bla bla bla bla", "Edit"}
-    };
+    Object[][] data = {{Boolean.FALSE, "1", "Edit"}, {Boolean.FALSE, "2", "Edit"}};
 
     public GUI21(int width, int height) {
         super(width, height);
+        categoryComboBox.setSelectedIndex(0);
         setContentPane(guiPanel);
         setVisible(true);
 
@@ -61,6 +54,23 @@ public class GUI21 extends DefaultJFrame {
             public void actionPerformed(ActionEvent e) {
                 dispose();
                 new GUI32(1024, 768);
+            }
+        });
+        ADDCATEGORYButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Category new_category = new Category();
+
+                new_category.setCategory_name(categoryNameTextField.getText());
+                new_category.setCategory_info(categoryInfoTextArea.getText());
+                new_category.setID_number(categoryIDNumberTextField.getText());
+
+                categoryNameTextField.setText("");
+                categoryInfoTextArea.setText("");
+                categoryIDNumberTextField.setText("");
+
+                Singleton.getInstance().addCategory(new_category);
+                categoryComboBox.addItem(String.format("%s (0)", new_category.getCategory_name()));
             }
         });
     }
@@ -85,6 +95,8 @@ public class GUI21 extends DefaultJFrame {
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
+
+        categoryComboBox = new JComboBox(Singleton.getInstance().getCategoryNameList());
         questionTable = new JTable(new DefaultTableModel(data, columnNames) {
             @Override
             public Class<?> getColumnClass(int columnIndex) {
