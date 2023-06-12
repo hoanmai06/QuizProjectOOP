@@ -12,7 +12,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Locale;
 
-public class GUI32 extends DefaultJFrame {
+public class
+GUI32 extends DefaultJFrame {
     private JPanel TopBar;
     private JPanel MidZone1Container;
     private JPanel MidZone1;

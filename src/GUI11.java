@@ -51,6 +51,12 @@ public class GUI11 extends DefaultJFrame {
                 dispose();
             }
         });
+        TURNEDITINGONButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
     public static void main(String[] args) {
