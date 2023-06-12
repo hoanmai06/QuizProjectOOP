@@ -1,12 +1,12 @@
 import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class GUI51 extends DefaultJFrame {
     private JPanel guiPanel;
-    private JPanel topbar;
-    private JPanel TopBar;
+    private JTextField textField1;
+    private JTextArea textArea1;
+    private JCheckBox displayDecriptionOnCourseCheckBox;
 
     public GUI51(int width, int height) {
         super(width, height);
