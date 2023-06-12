@@ -9,6 +9,10 @@ public class Question implements Serializable {
     private int defaultMark;
     private final ArrayList<Choice> choices = new ArrayList<Choice>();
 
+    public void addChoice(Choice choice) {
+        choices.add(choice);
+    }
+
     public String getQuestionText() {
         return questionText;
     }
