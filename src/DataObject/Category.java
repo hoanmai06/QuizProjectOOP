@@ -27,4 +27,16 @@ public class Category {
     public void setIdNumber(String id_number) {
         this.idNumber = id_number;
     }
+
+    public Object[][] getQuestionTableData() {
+        Object[][] questionTaleData = new Object[questions.size()][3];
+        Object[] questionRowData = {Boolean.FALSE, "", "Edit"};
+
+        for (int i = 0; i < questions.size(); i++) {
+            questionRowData[2] = questions.get(i).getQuestionText();
+            questionTaleData[i] = questionRowData;
+        }
+
+        return questionTaleData;
+    }
 }

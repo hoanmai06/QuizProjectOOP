@@ -40,16 +40,4 @@ public class Singleton {
 
         return name_list;
     }
-
-    public Object[][] getQuestionTableData(Category category) {
-        Object[][] questionTaleData = new Object[category.getQuestions().size()][3];
-        Object[] questionRowData = {Boolean.FALSE, "", "Edit"};
-
-        for (int i = 0; i < category.getQuestions().size(); i++) {
-            questionRowData[2] = category.getQuestions().get(i).getQuestionText();
-            questionTaleData[i] = questionRowData;
-        }
-
-        return questionTaleData;
-    }
 }

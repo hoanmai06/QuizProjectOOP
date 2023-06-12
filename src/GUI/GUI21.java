@@ -101,7 +101,7 @@ public class GUI21 extends DefaultJFrame {
         // TODO: place custom component creation code here
 
         categoryComboBox = new JComboBox(Singleton.getInstance().getCategoryNameList());
-        questionTable = new JTable(new DefaultTableModel(Singleton.getInstance().getQuestionTableData(Singleton.getInstance().getCategories().get(0)), columnNames) {
+        questionTable = new JTable(new DefaultTableModel(Singleton.getInstance().getCategories().get(0).getQuestionTableData(), columnNames) {
             @Override
             public Class<?> getColumnClass(int columnIndex) {
                 return getValueAt(0, columnIndex).getClass();
