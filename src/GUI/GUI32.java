@@ -1,5 +1,8 @@
 package GUI;
 
+import DataObject.Choice;
+import DataObject.Question;
+import DataObject.Singleton;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.intellij.uiDesigner.core.GridConstraints;
 
@@ -15,17 +18,21 @@ public class GUI32 extends DefaultJFrame {
     private JPanel MidZone2Container;
     private JPanel MidZone2;
     private JPanel guiPanel;
-    private JComboBox comboBox1;
-    private JTextField textField1;
-    private JTextArea textArea1;
+    private JComboBox categoryComboBox;
+    private JTextField questionNameField;
+    private JTextArea questionTextField;
     private JPanel choicePanel1;
-    private JComboBox comboBox2;
+    private JComboBox grade1ComboBox;
     private JPanel choicePanel2;
     private JButton BLANKSFOR3MOREButton;
     private JScrollPane mainScrollPane;
     private JButton cancelButton;
     private JButton saveButton;
     private JPanel choicePanel;
+    private JTextField defaultMarkField;
+    private JTextArea choice1TextArea;
+    private JTextArea choice2TextArea;
+    private JComboBox grade2ComboBox;
 
     public GUI32(int width, int height) {
         super(width, height);
@@ -50,6 +57,30 @@ public class GUI32 extends DefaultJFrame {
                 new GUI21(getWidth(), getHeight());
             }
         });
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Question new_question = new Question();
+                new_question.setQuestionName(questionNameField.getText());
+                new_question.setQuestionText(questionTextField.getText());
+                new_question.setDefaultMark(Integer.parseInt(defaultMarkField.getText()));
+
+                Choice choice1 = new Choice();
+                choice1.setChoiceText(choice1TextArea.getText());
+                choice1.setGrade(grade1ComboBox.getSelectedIndex());
+                new_question.addChoice(choice1);
+
+                Choice choice2 = new Choice();
+                choice2.setChoiceText(choice2TextArea.getText());
+                choice2.setGrade(grade2ComboBox.getSelectedIndex());
+                new_question.addChoice(choice2);
+
+                Singleton.getInstance().getCategories().get(categoryComboBox.getSelectedIndex()).addQuestion(new_question);
+
+                dispose();
+                new GUI21(getWidth(), getHeight());
+            }
+        });
     }
 
     public static void main(String[] args) {
@@ -70,4 +101,10 @@ public class GUI32 extends DefaultJFrame {
         });
     }
 
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+
+        //categoryComboBox
+        categoryComboBox = new JComboBox(Singleton.getInstance().getCategoryNameList());
+    }
 }
