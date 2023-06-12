@@ -35,11 +35,9 @@ public class Category implements Serializable {
 
     public Object[][] getQuestionTableData() {
         Object[][] questionTaleData = new Object[questions.size()][3];
-        Object[] questionRowData = {Boolean.FALSE, "", "Edit"};
 
         for (int i = 0; i < questions.size(); i++) {
-            questionRowData[1] = questions.get(i).getQuestionText();
-            questionTaleData[i] = questionRowData.clone();
+            questionTaleData[i] = questions.get(i).getQuestionTableRow();
         }
 
         return questionTaleData;
