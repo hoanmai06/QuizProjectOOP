@@ -18,7 +18,7 @@ public class Singleton {
         }
     }
 
-    private void writeCategoriesToFile() {
+    public void writeCategoriesToFile() {
         try {
             FileOutputStream f = new FileOutputStream("categories");
             ObjectOutputStream o = new ObjectOutputStream(f);
