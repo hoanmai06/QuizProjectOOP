@@ -25,6 +25,11 @@ public class Question implements Serializable {
         return defaultMark;
     }
 
+    public Object[] getQuestionTableRow() {
+        Object[] questionTableRow = {Boolean.FALSE, questionText, "Edit"};
+        return questionTableRow;
+    }
+
     public ArrayList<Choice> getChoices() {
         return choices;
     }
