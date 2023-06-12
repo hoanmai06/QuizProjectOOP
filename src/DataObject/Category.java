@@ -9,6 +9,10 @@ public class Category implements Serializable {
     private String idNumber;
     private ArrayList<Question> questions = new ArrayList<Question>();
 
+    public void addQuestion(Question question) {
+        questions.add(question);
+    }
+
     public String getCategoryName() {
         return categoryName;
     }
@@ -34,8 +38,8 @@ public class Category implements Serializable {
         Object[] questionRowData = {Boolean.FALSE, "", "Edit"};
 
         for (int i = 0; i < questions.size(); i++) {
-            questionRowData[2] = questions.get(i).getQuestionText();
-            questionTaleData[i] = questionRowData;
+            questionRowData[1] = questions.get(i).getQuestionText();
+            questionTaleData[i] = questionRowData.clone();
         }
 
         return questionTaleData;
