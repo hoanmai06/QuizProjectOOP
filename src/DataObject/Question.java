@@ -1,8 +1,9 @@
 package DataObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Question {
+public class Question implements Serializable {
     private String questionName;
     private String questionText;
     private int defaultMark;

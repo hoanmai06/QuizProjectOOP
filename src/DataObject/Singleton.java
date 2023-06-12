@@ -1,5 +1,6 @@
 package DataObject;
 
+import java.io.*;
 import java.util.ArrayList;
 
 public class Singleton {
@@ -7,14 +8,51 @@ public class Singleton {
     private ArrayList<Category> categories = new ArrayList<>();
 
     private Singleton() {
-        Category default_category = new Category();
-        default_category.setCategoryName("Default");
-        default_category.setCategoryInfo("This is the default category.");
-        categories.add(default_category);
+        if (new File("categories").exists())
+            readCategoriesFromFile();
+        else {
+            Category default_category = new Category();
+            default_category.setCategoryName("Default");
+            default_category.setCategoryInfo("This is the default category.");
+            categories.add(default_category);
+        }
+    }
+
+    private void writeCategoriesToFile() {
+        try {
+            FileOutputStream f = new FileOutputStream("categories");
+            ObjectOutputStream o = new ObjectOutputStream(f);
+
+            o.writeObject(categories);
+
+            o.close();
+            f.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void readCategoriesFromFile() {
+        try {
+            FileInputStream fi = new FileInputStream("categories");
+            ObjectInputStream oi = new ObjectInputStream(fi);
+
+            categories = (ArrayList<Category>) oi.readObject();
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void addCategory(Category category) {
         categories.add(category);
+        writeCategoriesToFile();
     }
 
     public static Singleton getInstance() {
