@@ -151,18 +151,14 @@
                     </properties>
                     <border type="none"/>
                     <children>
-                      <component id="15510" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+                      <component id="15510" class="javax.swing.JComboBox" binding="categoryComboBox" custom-create="true">
                         <constraints>
                           <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
                             <preferred-size width="457" height="30"/>
                             <maximum-size width="200" height="-1"/>
                           </grid>
                         </constraints>
-                        <properties>
-                          <model>
-                            <item value="Default"/>
-                          </model>
-                        </properties>
+                        <properties/>
                       </component>
                       <component id="b2052" class="javax.swing.JLabel">
                         <constraints>
@@ -172,7 +168,7 @@
                           <text value="Question name"/>
                         </properties>
                       </component>
-                      <component id="789e6" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+                      <component id="789e6" class="javax.swing.JTextField" binding="questionNameField">
                         <constraints>
                           <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                             <preferred-size width="457" height="30"/>
@@ -221,7 +217,7 @@
                         </properties>
                         <border type="none"/>
                         <children>
-                          <component id="ec75f" class="javax.swing.JTextArea" binding="textArea1" default-binding="true">
+                          <component id="ec75f" class="javax.swing.JTextArea" binding="questionTextField">
                             <constraints/>
                             <properties>
                               <enabled value="true"/>
@@ -240,7 +236,7 @@
                           <text value="Default mark"/>
                         </properties>
                       </component>
-                      <component id="e5b95" class="javax.swing.JTextField" default-binding="true">
+                      <component id="e5b95" class="javax.swing.JTextField" binding="defaultMarkField">
                         <constraints>
                           <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                             <preferred-size width="457" height="30"/>
@@ -359,7 +355,7 @@
                                 </properties>
                                 <border type="none"/>
                                 <children>
-                                  <component id="63c12" class="javax.swing.JTextArea" default-binding="true">
+                                  <component id="63c12" class="javax.swing.JTextArea" binding="choice1TextArea">
                                     <constraints/>
                                     <properties>
                                       <enabled value="true"/>
@@ -370,7 +366,7 @@
                                   </component>
                                 </children>
                               </scrollpane>
-                              <component id="48df5" class="javax.swing.JComboBox" binding="comboBox2" default-binding="true">
+                              <component id="48df5" class="javax.swing.JComboBox" binding="grade1ComboBox">
                                 <constraints>
                                   <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
                                     <maximum-size width="125" height="-1"/>
@@ -444,7 +440,7 @@
                                 </properties>
                                 <border type="none"/>
                                 <children>
-                                  <component id="a770f" class="javax.swing.JTextArea" default-binding="true">
+                                  <component id="a770f" class="javax.swing.JTextArea" binding="choice2TextArea">
                                     <constraints/>
                                     <properties>
                                       <enabled value="true"/>
@@ -455,7 +451,7 @@
                                   </component>
                                 </children>
                               </scrollpane>
-                              <component id="fb805" class="javax.swing.JComboBox" default-binding="true">
+                              <component id="fb805" class="javax.swing.JComboBox" binding="grade2ComboBox">
                                 <constraints>
                                   <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
                                     <maximum-size width="125" height="-1"/>
