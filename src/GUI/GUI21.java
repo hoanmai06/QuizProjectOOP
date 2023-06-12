@@ -1,11 +1,11 @@
 package GUI;
 
 import DataObject.Category;
+import DataObject.Question;
 import DataObject.Singleton;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,7 +30,6 @@ public class GUI21 extends DefaultJFrame {
     private JButton CHOOSEAFILEButton;
     private JPanel dashedBorderPanel;
     private JTextField categoryIDNumberTextField;
-    String[] columnNames = {"isSelected", "Question name", "Actions"};
 
     public GUI21(int width, int height) {
         super(width, height);
@@ -77,6 +76,19 @@ public class GUI21 extends DefaultJFrame {
                 }
             }
         });
+        categoryComboBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedIndex = categoryComboBox.getSelectedIndex();
+                Category selectedCategory = Singleton.getInstance().getCategories().get(selectedIndex);
+
+                QuestionTableModel questionTableModel = (QuestionTableModel) questionTable.getModel();
+                questionTableModel.setRowCount(0);
+                for (Question question : selectedCategory.getQuestions()) {
+                    questionTableModel.addRow(question.getQuestionTableRow());
+                }
+            }
+        });
     }
 
     public static void main(String[] args) {
@@ -104,34 +116,8 @@ public class GUI21 extends DefaultJFrame {
         categoryComboBox = new JComboBox(Singleton.getInstance().getCategoryNameList());
 
         // questionTable
-        questionTable = new JTable(new DefaultTableModel(Singleton.getInstance().getCategories().get(0).getQuestionTableData(), columnNames) {
-            @Override
-            public Class<?> getColumnClass(int columnIndex) {
-                return getValueAt(0, columnIndex).getClass();
-            }
+        questionTable = new QuestionTable(Singleton.getInstance().getCategories().get(0));
 
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return column != 1;
-            }
-        });
-
-        Action edit = new AbstractAction("Edit") {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JTable table = (JTable) e.getSource();
-                int row = Integer.valueOf(e.getActionCommand());
-                DefaultTableModel model = (DefaultTableModel) table.getModel();
-                JOptionPane.showMessageDialog(null, "Editing row " + row);
-            }
-        };
-
-        ButtonColumn inc = new ButtonColumn(questionTable, edit, 2);
-
-        questionTable.setRowHeight(35);
-        questionTable.getColumnModel().getColumn(0).setMaxWidth(25);
-        questionTable.getColumnModel().getColumn(2).setMaxWidth(60);
     }
 
 }
