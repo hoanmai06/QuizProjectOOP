@@ -151,19 +151,6 @@
                     </properties>
                     <border type="none"/>
                     <children>
-                      <component id="15510" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
-                        <constraints>
-                          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                            <preferred-size width="457" height="30"/>
-                            <maximum-size width="200" height="-1"/>
-                          </grid>
-                        </constraints>
-                        <properties>
-                          <model>
-                            <item value="Default"/>
-                          </model>
-                        </properties>
-                      </component>
                       <component id="b2052" class="javax.swing.JLabel">
                         <constraints>
                           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -174,7 +161,7 @@
                       </component>
                       <component id="789e6" class="javax.swing.JTextField" binding="textField1" default-binding="true">
                         <constraints>
-                          <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                          <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
                             <preferred-size width="457" height="30"/>
                             <maximum-size width="250" height="-1"/>
                           </grid>
@@ -584,6 +571,19 @@
                           <verifyInputWhenFocusTarget value="true"/>
                           <verticalAlignment value="0"/>
                           <visible value="true"/>
+                        </properties>
+                      </component>
+                      <component id="15510" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+                        <constraints>
+                          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                            <preferred-size width="457" height="30"/>
+                            <maximum-size width="200" height="-1"/>
+                          </grid>
+                        </constraints>
+                        <properties>
+                          <model>
+                            <item value="Default"/>
+                          </model>
                         </properties>
                       </component>
                     </children>

@@ -4,9 +4,22 @@ import javax.swing.*;
 
 public class GUI51 extends DefaultJFrame {
     private JPanel guiPanel;
+    private JScrollPane mainScrollPane;
     private JTextField textField1;
     private JTextArea textArea1;
-    private JCheckBox displayDecriptionOnCourseCheckBox;
+    private JCheckBox displayDesciptionOnCourseCheckBox;
+    private JProgressBar progressBar1;
+    private JComboBox comboBox1;
+    private JComboBox comboBox3;
+    private JComboBox comboBox4;
+    private JCheckBox enableCheckBox;
+    private JCheckBox enableCheckBox1;
+    private JComboBox comboBox2;
+    private JFormattedTextField formattedTextField1;
+    private JButton createButton;
+    private JButton cancelButton;
+    private JComboBox comboBox5;
+    private JProgressBar progressBar2;
 
     public GUI51(int width, int height) {
         super(width, height);
