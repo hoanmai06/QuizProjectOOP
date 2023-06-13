@@ -1,5 +1,6 @@
 package GUI;
 
+import DataObject.Category;
 import DataObject.Choice;
 import DataObject.Question;
 import DataObject.Singleton;
@@ -33,6 +34,7 @@ public class GUI32 extends DefaultJFrame {
     private JTextArea choice1TextArea;
     private JTextArea choice2TextArea;
     private JComboBox grade2ComboBox;
+    private JLabel titleLabel;
 
     public GUI32(int width, int height) {
         super(width, height);
@@ -54,9 +56,16 @@ public class GUI32 extends DefaultJFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                new GUI21(getWidth(), getHeight());
+                new GUI21(getWidth(), getHeight(), categoryComboBox.getSelectedIndex());
             }
         });
+    }
+
+    /** This is the constructor used when Adding a question, it adds a different ActionListener to the saveButton*/
+    public GUI32(int width, int height, int categoryIndex) {
+        this(width, height);
+        categoryComboBox.setSelectedIndex(categoryIndex);
+
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -83,6 +92,51 @@ public class GUI32 extends DefaultJFrame {
         });
     }
 
+    /** This is the constructor used when Editing a question, it adds a different ActionListener to the saveButton*/
+    public GUI32(int width, int height, int categoryIndex, int questionIndex) {
+        this(width, height);
+        categoryComboBox.setSelectedIndex(categoryIndex);
+
+        titleLabel.setText("Editing a Multiple choice question");
+
+        Category category = Singleton.getInstance().getCategories().get(categoryIndex);
+        Question editingQuestion = category.getQuestions().get(questionIndex);
+
+        questionNameField.setText(editingQuestion.getQuestionName());
+        questionTextField.setText(editingQuestion.getQuestionText());
+        defaultMarkField.setText(String.valueOf(editingQuestion.getDefaultMark()));
+
+        choice1TextArea.setText(editingQuestion.getChoices().get(0).getChoiceText());
+        grade1ComboBox.setSelectedIndex(editingQuestion.getChoices().get(0).getGrade());
+
+        choice2TextArea.setText(editingQuestion.getChoices().get(1).getChoiceText());
+        grade2ComboBox.setSelectedIndex(editingQuestion.getChoices().get(1).getGrade());
+        
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                editingQuestion.getChoices().clear();
+
+                editingQuestion.setQuestionName(questionNameField.getText());
+                editingQuestion.setQuestionText(questionTextField.getText());
+                editingQuestion.setDefaultMark(Integer.parseInt(defaultMarkField.getText()));
+
+                Choice choice1 = new Choice();
+                choice1.setChoiceText(choice1TextArea.getText());
+                choice1.setGrade(grade1ComboBox.getSelectedIndex());
+                editingQuestion.addChoice(choice1);
+
+                Choice choice2 = new Choice();
+                choice2.setChoiceText(choice2TextArea.getText());
+                choice2.setGrade(grade2ComboBox.getSelectedIndex());
+                editingQuestion.addChoice(choice2);
+
+                dispose();
+                new GUI21(getWidth(), getHeight());
+            }
+        });
+    }
+
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel(new FlatLightLaf());
@@ -96,15 +150,12 @@ public class GUI32 extends DefaultJFrame {
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new GUI32(1024, 768);
+                new GUI32(1024, 768, 0);
             }
         });
     }
 
     private void createUIComponents() {
-        // TODO: place custom component creation code here
-
-        //categoryComboBox
         categoryComboBox = new JComboBox(Singleton.getInstance().getCategoryNameList());
     }
 }
