@@ -51,7 +51,7 @@ public class GUI21 extends DefaultJFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                new GUI32(1024, 768);
+                new GUI32(1024, 768, categoryComboBox.getSelectedIndex());
             }
         });
         ADDCATEGORYButton.addActionListener(new ActionListener() {
@@ -89,6 +89,22 @@ public class GUI21 extends DefaultJFrame {
                 }
             }
         });
+
+        Action edit = new AbstractAction("Edit") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row = Integer.parseInt(e.getActionCommand());
+                dispose();
+                new GUI32(getWidth(), getHeight(), categoryComboBox.getSelectedIndex(), row);
+            }
+        };
+
+        new ButtonColumn(questionTable, edit, 2);
+    }
+
+    public GUI21(int width, int height, int categoryIndex) {
+        this(width, height);
+        categoryComboBox.setSelectedIndex(categoryIndex);
     }
 
     public static void main(String[] args) {
