@@ -141,6 +141,7 @@ public class ButtonColumn extends AbstractCellEditor
 	public Component getTableCellRendererComponent(
 		JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
 	{
+		renderButton.setBorderPainted(false);
 		if (isSelected)
 		{
 			renderButton.setForeground(table.getSelectionForeground());
@@ -148,8 +149,8 @@ public class ButtonColumn extends AbstractCellEditor
 		}
 		else
 		{
-			renderButton.setForeground(table.getForeground());
-			renderButton.setBackground(UIManager.getColor("Button.background"));
+			renderButton.setForeground(new Color(0x009FE5));
+			renderButton.setBackground(row%2==0 ? Color.white : UIManager.getColor("Table.alternateRowColor"));
 		}
 
 		if (hasFocus)
