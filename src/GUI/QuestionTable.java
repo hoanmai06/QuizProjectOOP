@@ -4,6 +4,7 @@ import DataObject.Category;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class QuestionTable extends JTable {
@@ -11,8 +12,11 @@ public class QuestionTable extends JTable {
     public QuestionTable(Category category) {
         super(new QuestionTableModel(category));
 
-        this.setRowHeight(35);
-        this.getColumnModel().getColumn(0).setMaxWidth(25);
-        this.getColumnModel().getColumn(2).setMaxWidth(60);
+        setSelectionBackground(new Color(0x009FE5));
+        getColumn("isSelected").setCellRenderer(new CheckBoxRenderer());
+        getColumn("Question name").setCellRenderer(new QuestionRenderer());
+        setRowHeight(35);
+        getColumnModel().getColumn(0).setMaxWidth(25);
+        getColumnModel().getColumn(2).setMaxWidth(60);
     }
 }
