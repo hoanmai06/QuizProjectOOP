@@ -147,7 +147,7 @@
                 <properties>
                   <autoscrolls value="true"/>
                   <background color="-1"/>
-                  <visible value="true"/>
+                  <visible value="false"/>
                 </properties>
                 <border type="line">
                   <font/>
