@@ -1,14 +1,26 @@
 package DataObject;
 
 import java.io.*;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class Singleton {
+    private static final String filePath;
+    static {
+        try {
+            filePath = Paths.get(new File(Singleton.class.getProtectionDomain().getCodeSource().getLocation()
+                    .toURI()).getPath()).getParent().toString() + File.separator + "categories";
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private static Singleton instance;
     private ArrayList<Category> categories = new ArrayList<>();
 
     private Singleton() {
-        if (new File("categories").exists())
+        if (new File(filePath).exists())
             readCategoriesFromFile();
         else {
             Category default_category = new Category();
@@ -20,7 +32,7 @@ public class Singleton {
 
     public void writeCategoriesToFile() {
         try {
-            FileOutputStream f = new FileOutputStream("categories");
+            FileOutputStream f = new FileOutputStream(filePath);
             ObjectOutputStream o = new ObjectOutputStream(f);
 
             o.writeObject(categories);
@@ -36,7 +48,7 @@ public class Singleton {
 
     private void readCategoriesFromFile() {
         try {
-            FileInputStream fi = new FileInputStream("categories");
+            FileInputStream fi = new FileInputStream(filePath);
             ObjectInputStream oi = new ObjectInputStream(fi);
 
             categories = (ArrayList<Category>) oi.readObject();
