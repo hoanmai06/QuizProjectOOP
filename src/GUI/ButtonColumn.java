@@ -2,6 +2,7 @@ package GUI;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
@@ -58,7 +59,8 @@ public class ButtonColumn extends AbstractCellEditor
 		editButton.setFocusPainted( false );
 		editButton.addActionListener( this );
 		originalBorder = editButton.getBorder();
-		setFocusBorder( new LineBorder(Color.BLUE) );
+		renderButton.setBorder(new EmptyBorder(0, 0, 0, 0));
+		setFocusBorder( new EmptyBorder(0, 0, 0, 0));
 
 		TableColumnModel columnModel = table.getColumnModel();
 		columnModel.getColumn(column).setCellRenderer( this );
@@ -80,7 +82,7 @@ public class ButtonColumn extends AbstractCellEditor
 	/**
 	 *  The foreground color of the button when the cell has focus
 	 *
-	 *  @param focusBorder the foreground color
+//	 *  @param focusBorder the foreground color
 	 */
 	public void setFocusBorder(Border focusBorder)
 	{
@@ -153,14 +155,14 @@ public class ButtonColumn extends AbstractCellEditor
 			renderButton.setBackground(row%2==0 ? Color.white : UIManager.getColor("Table.alternateRowColor"));
 		}
 
-		if (hasFocus)
-		{
-			renderButton.setBorder( focusBorder );
-		}
-		else
-		{
-			renderButton.setBorder( originalBorder );
-		}
+//		if (hasFocus)
+//		{
+//			renderButton.setBorder( focusBorder );
+//		}
+//		else
+//		{
+//			renderButton.setBorder( originalBorder );
+//		}
 
 //		renderButton.setText( (value == null) ? "" : value.toString() );
 		if (value == null)
