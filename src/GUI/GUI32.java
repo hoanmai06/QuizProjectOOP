@@ -87,7 +87,7 @@ public class GUI32 extends DefaultJFrame {
                 Singleton.getInstance().getCategories().get(categoryComboBox.getSelectedIndex()).addQuestion(new_question);
 
                 dispose();
-                new GUI21(getWidth(), getHeight());
+                new GUI21(getWidth(), getHeight(), categoryComboBox.getSelectedIndex());
             }
         });
     }
@@ -132,7 +132,7 @@ public class GUI32 extends DefaultJFrame {
                 editingQuestion.addChoice(choice2);
 
                 dispose();
-                new GUI21(getWidth(), getHeight());
+                new GUI21(getWidth(), getHeight(), categoryComboBox.getSelectedIndex());
             }
         });
     }
