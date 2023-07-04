@@ -10,7 +10,7 @@ public class GUI51 extends DefaultJFrame {
     private JTextField textField1;
     private JTextArea textArea1;
     private JCheckBox displayDesciptionOnCourseCheckBox;
-    private JProgressBar progressBar1;
+    private JSeparator progressBar1;
     private JComboBox comboBox1;
     private JComboBox comboBox3;
     private JComboBox comboBox4;
@@ -21,7 +21,8 @@ public class GUI51 extends DefaultJFrame {
     private JButton createButton;
     private JButton cancelButton;
     private JComboBox comboBox5;
-    private JProgressBar progressBar2;
+    private JSeparator progressBar2;
+    private JPanel TopBar;
 
     public GUI51(int width, int height) {
         super(width, height);
