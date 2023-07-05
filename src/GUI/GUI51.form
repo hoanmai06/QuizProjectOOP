@@ -112,7 +112,7 @@
                           <text value="Name"/>
                         </properties>
                       </component>
-                      <component id="e340f" class="javax.swing.JTextField" binding="textField1" default-binding="true">
+                      <component id="e340f" class="javax.swing.JTextField" binding="nameTextField">
                         <constraints>
                           <grid row="0" column="2" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
                             <preferred-size width="457" height="30"/>
@@ -154,7 +154,7 @@
                         </properties>
                         <border type="none"/>
                         <children>
-                          <component id="41881" class="javax.swing.JTextArea" binding="textArea1" default-binding="true">
+                          <component id="41881" class="javax.swing.JTextArea" binding="descriptionTextArea">
                             <constraints/>
                             <properties>
                               <enabled value="true"/>
@@ -801,7 +801,7 @@
               </grid>
             </children>
           </grid>
-          <component id="23cc3" class="javax.swing.JSeparator" binding="progressBar1" default-binding="true">
+          <component id="23cc3" class="javax.swing.JSeparator" default-binding="true">
             <constraints>
               <grid row="3" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -841,7 +841,7 @@
               </component>
             </children>
           </grid>
-          <component id="1af9" class="javax.swing.JSeparator" binding="progressBar2" default-binding="true">
+          <component id="1af9" class="javax.swing.JSeparator" default-binding="true">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
