@@ -150,16 +150,8 @@ public class QuizButtonColumn extends AbstractCellEditor
     public Component getTableCellRendererComponent(
             JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
     {
-        if (isSelected)
-        {
-            renderButton.setForeground(Color.BLACK);
-            renderButton.setBackground(row%2==0 ? Color.white : UIManager.getColor("Table.alternateRowColor"));
-        }
-        else
-        {
-            renderButton.setForeground(Color.BLACK);
-            renderButton.setBackground(row%2==0 ? Color.white : UIManager.getColor("Table.alternateRowColor"));
-        }
+        renderButton.setForeground(Color.BLACK);
+        renderButton.setBackground(Color.WHITE);
 
 //		if (hasFocus)
 //		{
