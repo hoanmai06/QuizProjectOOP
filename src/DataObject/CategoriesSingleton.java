@@ -5,21 +5,21 @@ import java.net.URISyntaxException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-public class Singleton {
+public class CategoriesSingleton {
     private static final String filePath;
     static {
         try {
-            filePath = Paths.get(new File(Singleton.class.getProtectionDomain().getCodeSource().getLocation()
+            filePath = Paths.get(new File(CategoriesSingleton.class.getProtectionDomain().getCodeSource().getLocation()
                     .toURI()).getPath()).getParent().toString() + File.separator + "categories";
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private static Singleton instance;
+    private static CategoriesSingleton instance;
     private ArrayList<Category> categories = new ArrayList<>();
 
-    private Singleton() {
+    private CategoriesSingleton() {
         if (new File(filePath).exists())
             readCategoriesFromFile();
         else {
@@ -67,9 +67,9 @@ public class Singleton {
         writeCategoriesToFile();
     }
 
-    public static Singleton getInstance() {
+    public static CategoriesSingleton getInstance() {
         if (instance == null)
-            instance = new Singleton();
+            instance = new CategoriesSingleton();
 
         return instance;
     }
