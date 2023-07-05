@@ -7,6 +7,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GUI61 extends DefaultJFrame {
@@ -27,6 +28,13 @@ public class GUI61 extends DefaultJFrame {
         super(width, height);
         setContentPane(guiPanel);
         setVisible(true);
+        editQuizButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new GUI62(getWidth(), getHeight());
+                dispose();
+            }
+        });
     }
 
     public static void main(String[] args) {

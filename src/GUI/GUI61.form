@@ -92,7 +92,7 @@
                 <properties>
                   <enabled value="false"/>
                   <font name="Inter"/>
-                  <text value="Home / My courses / Thi cuối kỳ"/>
+                  <text value="Home / My courses / Thi cuối kỳ / Genetal / Quiz Name"/>
                 </properties>
               </component>
             </children>
