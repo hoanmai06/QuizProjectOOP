@@ -103,8 +103,6 @@ public class GUI21 extends DefaultJFrame {
         };
 
         new ButtonColumn(questionTable, edit, 2);
-        questionTable.getTableHeader().setUI(null);
-
     }
 
     public GUI21(int width, int height, int categoryIndex) {

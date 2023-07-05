@@ -19,5 +19,6 @@ public class QuestionTable extends JTable {
         setRowHeight(35);
         getColumnModel().getColumn(0).setMaxWidth(25);
         getColumnModel().getColumn(2).setMaxWidth(60);
+        getTableHeader().setUI(null);
     }
 }
