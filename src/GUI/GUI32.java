@@ -3,7 +3,7 @@ package GUI;
 import DataObject.Category;
 import DataObject.Choice;
 import DataObject.Question;
-import DataObject.Singleton;
+import DataObject.CategoriesSingleton;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.intellij.uiDesigner.core.GridConstraints;
 
@@ -84,7 +84,7 @@ public class GUI32 extends DefaultJFrame {
                 choice2.setGrade(grade2ComboBox.getSelectedIndex());
                 new_question.addChoice(choice2);
 
-                Singleton.getInstance().getCategories().get(categoryComboBox.getSelectedIndex()).addQuestion(new_question);
+                CategoriesSingleton.getInstance().getCategories().get(categoryComboBox.getSelectedIndex()).addQuestion(new_question);
 
                 dispose();
                 new GUI21(getWidth(), getHeight(), categoryComboBox.getSelectedIndex());
@@ -99,7 +99,7 @@ public class GUI32 extends DefaultJFrame {
 
         titleLabel.setText("Editing a Multiple choice question");
 
-        Category category = Singleton.getInstance().getCategories().get(categoryIndex);
+        Category category = CategoriesSingleton.getInstance().getCategories().get(categoryIndex);
         Question editingQuestion = category.getQuestions().get(questionIndex);
 
         questionNameField.setText(editingQuestion.getQuestionName());
@@ -156,6 +156,6 @@ public class GUI32 extends DefaultJFrame {
     }
 
     private void createUIComponents() {
-        categoryComboBox = new JComboBox(Singleton.getInstance().getCategoryNameList());
+        categoryComboBox = new JComboBox(CategoriesSingleton.getInstance().getCategoryNameList());
     }
 }

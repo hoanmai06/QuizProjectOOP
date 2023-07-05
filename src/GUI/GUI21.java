@@ -2,13 +2,10 @@ package GUI;
 
 import DataObject.Category;
 import DataObject.Question;
-import DataObject.Singleton;
+import DataObject.CategoriesSingleton;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.plaf.basic.BasicTableHeaderUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -73,7 +70,7 @@ public class GUI21 extends DefaultJFrame {
                     categoryInfoTextArea.setText("");
                     categoryIDNumberTextField.setText("");
 
-                    Singleton.getInstance().addCategory(new_category);
+                    CategoriesSingleton.getInstance().addCategory(new_category);
                     categoryComboBox.addItem(String.format("%s (0)", new_category.getCategoryName()));
                     JOptionPane.showMessageDialog(null, String.format("Added category \"%s\"", new_category.getCategoryName()));
                 }
@@ -83,7 +80,7 @@ public class GUI21 extends DefaultJFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int selectedIndex = categoryComboBox.getSelectedIndex();
-                Category selectedCategory = Singleton.getInstance().getCategories().get(selectedIndex);
+                Category selectedCategory = CategoriesSingleton.getInstance().getCategories().get(selectedIndex);
 
                 QuestionTableModel questionTableModel = (QuestionTableModel) questionTable.getModel();
                 questionTableModel.setRowCount(0);
@@ -102,7 +99,7 @@ public class GUI21 extends DefaultJFrame {
             }
         };
 
-        new ButtonColumn(questionTable, edit, 2);
+        new EditButtonColumn(questionTable, edit, 2);
     }
 
     public GUI21(int width, int height, int categoryIndex) {
@@ -132,10 +129,10 @@ public class GUI21 extends DefaultJFrame {
         // TODO: place custom component creation code here
 
         //categoryComboBox
-        categoryComboBox = new JComboBox(Singleton.getInstance().getCategoryNameList());
+        categoryComboBox = new JComboBox(CategoriesSingleton.getInstance().getCategoryNameList());
 
         // questionTable
-        questionTable = new QuestionTable(Singleton.getInstance().getCategories().get(0));
+        questionTable = new QuestionTable(CategoriesSingleton.getInstance().getCategories().get(0));
 
     }
 
