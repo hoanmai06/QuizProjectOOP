@@ -1,16 +1,19 @@
 package GUI;
 
+import DataObject.Quiz;
+import DataObject.QuizzesSingleton;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class GUI51 extends DefaultJFrame {
     private JPanel guiPanel;
     private JScrollPane mainScrollPane;
-    private JTextField textField1;
-    private JTextArea textArea1;
+    private JTextField nameTextField;
+    private JTextArea descriptionTextArea;
     private JCheckBox displayDesciptionOnCourseCheckBox;
-    private JSeparator progressBar1;
     private JComboBox comboBox1;
     private JComboBox comboBox3;
     private JComboBox comboBox4;
@@ -21,13 +24,33 @@ public class GUI51 extends DefaultJFrame {
     private JButton createButton;
     private JButton cancelButton;
     private JComboBox comboBox5;
-    private JSeparator progressBar2;
     private JPanel TopBar;
 
     public GUI51(int width, int height) {
         super(width, height);
         setContentPane(guiPanel);
         setVisible(true);
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new GUI11(getWidth(), getHeight());
+                dispose();
+            }
+        });
+
+        createButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Quiz newQuiz = new Quiz();
+                newQuiz.setName(nameTextField.getText());
+                newQuiz.setDescription(descriptionTextArea.getText());
+
+                QuizzesSingleton.getInstance().getQuizzes().add(newQuiz);
+
+                new GUI11(getWidth(), getHeight());
+                dispose();
+            }
+        });
     }
     public static void main(String[] args) {
         try {
