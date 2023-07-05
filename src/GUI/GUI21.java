@@ -6,6 +6,9 @@ import DataObject.Singleton;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.plaf.basic.BasicTableHeaderUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -100,6 +103,8 @@ public class GUI21 extends DefaultJFrame {
         };
 
         new ButtonColumn(questionTable, edit, 2);
+        questionTable.getTableHeader().setUI(null);
+
     }
 
     public GUI21(int width, int height, int categoryIndex) {

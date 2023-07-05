@@ -13,6 +13,7 @@ public class QuestionTable extends JTable {
         super(new QuestionTableModel(category));
 
         setSelectionBackground(new Color(0x009FE5));
+        setSelectionForeground(Color.white);
         getColumn("isSelected").setCellRenderer(new CheckBoxRenderer());
         getColumn("Question name").setCellRenderer(new QuestionRenderer());
         setRowHeight(35);
