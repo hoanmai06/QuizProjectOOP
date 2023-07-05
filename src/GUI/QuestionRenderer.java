@@ -14,10 +14,6 @@ public class QuestionRenderer extends JLabel implements TableCellRenderer {
 
         setText((String) value);
 
-        if (isSelected) {
-            setBackground(table.getSelectionBackground());
-        }
-
         return this;
     }
 }
