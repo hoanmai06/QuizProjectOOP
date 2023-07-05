@@ -1,6 +1,7 @@
 package GUI;
 
-import DataObject.Singleton;
+import DataObject.CategoriesSingleton;
+import DataObject.QuizzesSingleton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +17,8 @@ public class DefaultJFrame extends JFrame {
 
         this.addWindowListener(new WindowAdapter(){
             public void windowClosing(WindowEvent e){
-                Singleton.getInstance().writeCategoriesToFile();
+                CategoriesSingleton.getInstance().writeCategoriesToFile();
+                QuizzesSingleton.getInstance().writeQuizzesToFile();
                 System.exit(0);
             }
         });
