@@ -257,7 +257,7 @@
         </properties>
         <border type="none"/>
         <children>
-          <grid id="5617d" binding="MidZone2" layout-manager="GridLayoutManager" row-count="6" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="10">
+          <grid id="5617d" binding="MidZone2" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="10">
             <margin top="10" left="10" bottom="10" right="10"/>
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -270,76 +270,19 @@
               <color color="-4473925"/>
             </border>
             <children>
-              <component id="46df7" class="javax.swing.JButton" binding="quiz1Button">
+              <scrollpane id="12f35">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
-                <properties>
-                  <borderPainted value="false"/>
-                  <focusable value="false"/>
-                  <font name="Inter" size="14"/>
-                  <horizontalAlignment value="2"/>
-                  <icon value="icons/quiz_icon.png"/>
-                  <text value="Kiểm tra cuối kỳ môn IT4895Q"/>
-                </properties>
-              </component>
-              <component id="3a306" class="javax.swing.JButton" binding="quiz5Button">
-                <constraints>
-                  <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <borderPainted value="false"/>
-                  <focusable value="false"/>
-                  <font name="Inter" size="14"/>
-                  <horizontalAlignment value="2"/>
-                  <icon value="icons/quiz_icon.png"/>
-                  <text value="Thi giữa kỳ 2 môn công nghệ"/>
-                </properties>
-              </component>
-              <component id="7f035" class="javax.swing.JButton" binding="quiz4Button">
-                <constraints>
-                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <borderPainted value="false"/>
-                  <focusable value="false"/>
-                  <font name="Inter" size="14"/>
-                  <horizontalAlignment value="2"/>
-                  <icon value="icons/quiz_icon.png"/>
-                  <text value="Thi GK2 Sử Địa 7"/>
-                </properties>
-              </component>
-              <component id="25a3b" class="javax.swing.JButton" binding="quiz2Button">
-                <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <borderPainted value="false"/>
-                  <focusable value="false"/>
-                  <font name="Inter" size="14"/>
-                  <horizontalAlignment value="2"/>
-                  <icon value="icons/quiz_icon.png"/>
-                  <text value="Thi thử KTLT"/>
-                </properties>
-              </component>
-              <component id="2dcb5" class="javax.swing.JButton" binding="quiz3Button">
-                <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <borderPainted value="false"/>
-                  <focusable value="false"/>
-                  <font name="Inter" size="14"/>
-                  <horizontalAlignment value="2"/>
-                  <icon value="icons/quiz_icon.png"/>
-                  <text value="Thi GK2 Tin học 7"/>
-                </properties>
-              </component>
-              <vspacer id="9731c">
-                <constraints>
-                  <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-                </constraints>
-              </vspacer>
+                <properties/>
+                <border type="empty"/>
+                <children>
+                  <component id="d51ba" class="javax.swing.JTable" binding="quizTable" custom-create="true">
+                    <constraints/>
+                    <properties/>
+                  </component>
+                </children>
+              </scrollpane>
             </children>
           </grid>
         </children>
