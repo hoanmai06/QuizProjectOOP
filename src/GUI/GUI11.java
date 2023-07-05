@@ -74,7 +74,9 @@ public class GUI11 extends DefaultJFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int row = Integer.parseInt(e.getActionCommand());
-                System.out.println("Line 72, GUI11");
+
+                new GUI61(getWidth(), getHeight());
+                dispose();
             }
         };
 
@@ -82,7 +84,7 @@ public class GUI11 extends DefaultJFrame {
         quizTable = new JTable(new DefaultTableModel(QuizzesSingleton.getInstance().getQuizTableData(), columnNames));
         quizTable.getTableHeader().setUI(null);
         quizTable.setSelectionBackground(new Color(0x009FE5));
-        quizTable.setRowHeight(35);
+        quizTable.setRowHeight(40);
         new QuizButtonColumn(quizTable, quiz, 0);
 
     }
