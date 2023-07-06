@@ -1,14 +1,15 @@
 package GUI;
 
 import DataObject.Category;
+import DataObject.QuestionListContainer;
 
 import javax.swing.table.DefaultTableModel;
 
 public class QuestionTableModel extends DefaultTableModel {
     private final static String[] columnNames = {"isSelected", "Question name", "Actions"};
 
-    public QuestionTableModel(Category category) {
-        super(category.getQuestionTableData(), columnNames);
+    public QuestionTableModel(QuestionListContainer questionListContainer) {
+        super(questionListContainer.getQuestionTableData(), columnNames);
     }
     @Override
     public Class<?> getColumnClass(int columnIndex) {

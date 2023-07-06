@@ -1,6 +1,7 @@
 package GUI;
 
 import DataObject.Category;
+import DataObject.QuestionListContainer;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -9,8 +10,8 @@ import java.awt.event.ActionEvent;
 
 public class QuestionTable extends JTable {
     private final static String[] columnNames = {"isSelected", "Question name", "Actions"};
-    public QuestionTable(Category category) {
-        super(new QuestionTableModel(category));
+    public QuestionTable(QuestionListContainer questionListContainer) {
+        super(new QuestionTableModel(questionListContainer));
 
         setSelectionBackground(new Color(0x009FE5));
         setSelectionForeground(Color.white);
