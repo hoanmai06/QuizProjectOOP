@@ -7,6 +7,8 @@ import com.formdev.flatlaf.FlatLightLaf;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 public class GUI51 extends DefaultJFrame {
     private JPanel guiPanel;
@@ -14,10 +16,10 @@ public class GUI51 extends DefaultJFrame {
     private JTextField nameTextField;
     private JTextArea descriptionTextArea;
     private JCheckBox displayDesciptionOnCourseCheckBox;
-    private JComboBox comboBox1;
-    private JComboBox comboBox3;
-    private JComboBox comboBox4;
-    private JCheckBox enableCheckBox;
+    private JComboBox dateOpen;
+    private JComboBox monthOpen;
+    private JComboBox yearOpen;
+    private JCheckBox openCheckBox;
     private JCheckBox enableCheckBox1;
     private JComboBox comboBox2;
     private JFormattedTextField formattedTextField1;
@@ -25,6 +27,8 @@ public class GUI51 extends DefaultJFrame {
     private JButton cancelButton;
     private JComboBox comboBox5;
     private JPanel TopBar;
+    private JComboBox hourOpen;
+    private JComboBox minuteOpen;
 
     public GUI51(int width, int height) {
         super(width, height);
@@ -49,6 +53,18 @@ public class GUI51 extends DefaultJFrame {
 
                 new GUI11(getWidth(), getHeight());
                 dispose();
+            }
+        });
+
+        openCheckBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                boolean checkBoxStatus = e.getStateChange() == ItemEvent.SELECTED;
+                dateOpen.setEnabled(checkBoxStatus);
+                hourOpen.setEnabled(checkBoxStatus);
+                minuteOpen.setEnabled(checkBoxStatus);
+                monthOpen.setEnabled(checkBoxStatus);
+                yearOpen.setEnabled(checkBoxStatus);
             }
         });
     }
