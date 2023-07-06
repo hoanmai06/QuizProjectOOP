@@ -10,6 +10,8 @@ import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class GUI11 extends DefaultJFrame {
     private JPanel guiPanel;
@@ -26,6 +28,7 @@ public class GUI11 extends DefaultJFrame {
     private JPanel popupPanel;
     private JButton exportButton;
     private JTable quizTable;
+    private JLabel ITLabel;
 
     public GUI11(int width, int height) {
         super(width, height);
@@ -53,6 +56,12 @@ public class GUI11 extends DefaultJFrame {
                 dispose();
             }
         });
+        ITLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.out.println("Ester Egg Button");
+            }
+        });
     }
 
     public static void main(String[] args) {
@@ -75,14 +84,14 @@ public class GUI11 extends DefaultJFrame {
             public void actionPerformed(ActionEvent e) {
                 int row = Integer.parseInt(e.getActionCommand());
 
-                new GUI61(getWidth(), getHeight());
+                new GUI61(getWidth(), getHeight(), QuizzesSingleton.getInstance().getQuizzes().get(row));
                 dispose();
             }
         };
 
         String[] columnNames = {"Quiz"};
         quizTable = new JTable(new DefaultTableModel(QuizzesSingleton.getInstance().getQuizTableData(), columnNames));
-        quizTable.getTableHeader().setUI(null);
+        quizTable.setTableHeader(null);
         quizTable.setSelectionBackground(new Color(0x009FE5));
         quizTable.setRowHeight(40);
         new QuizButtonColumn(quizTable, quiz, 0);

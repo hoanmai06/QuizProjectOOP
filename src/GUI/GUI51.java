@@ -20,15 +20,25 @@ public class GUI51 extends DefaultJFrame {
     private JComboBox monthOpen;
     private JComboBox yearOpen;
     private JCheckBox openCheckBox;
-    private JCheckBox enableCheckBox1;
-    private JComboBox comboBox2;
-    private JFormattedTextField formattedTextField1;
+    private JCheckBox closeCheckBix;
+    private JComboBox timeLimitType;
+    private JFormattedTextField timeLimitField;
     private JButton createButton;
     private JButton cancelButton;
     private JComboBox comboBox5;
     private JPanel TopBar;
     private JComboBox hourOpen;
     private JComboBox minuteOpen;
+    private JComboBox dateClose;
+    private JComboBox monthClose;
+    private JComboBox yearClose;
+    private JComboBox hourClose;
+    private JComboBox minuteClose;
+    private JCheckBox timeLimitCheckBox;
+    private JPanel MidZone1Container;
+    private JPanel MidZone1;
+    private JPanel MidZone2Container;
+    private JPanel MidZone2;
 
     public GUI51(int width, int height) {
         super(width, height);
@@ -65,6 +75,25 @@ public class GUI51 extends DefaultJFrame {
                 minuteOpen.setEnabled(checkBoxStatus);
                 monthOpen.setEnabled(checkBoxStatus);
                 yearOpen.setEnabled(checkBoxStatus);
+            }
+        });
+        closeCheckBix.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                boolean checkBoxStatus = e.getStateChange() == ItemEvent.SELECTED;
+                dateClose.setEnabled(checkBoxStatus);
+                hourClose.setEnabled(checkBoxStatus);
+                minuteClose.setEnabled(checkBoxStatus);
+                monthClose.setEnabled(checkBoxStatus);
+                yearClose.setEnabled(checkBoxStatus);
+            }
+        });
+        timeLimitCheckBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                boolean checkBoxStatus = e.getStateChange() == ItemEvent.SELECTED;
+                timeLimitField.setEnabled(checkBoxStatus);
+                timeLimitType.setEnabled(checkBoxStatus);
             }
         });
     }

@@ -109,7 +109,7 @@
         </properties>
         <border type="none"/>
         <children>
-          <grid id="3b72" binding="MidZone2" layout-manager="GridLayoutManager" row-count="6" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="10">
+          <grid id="3b72" binding="MidZone2" layout-manager="GridLayoutManager" row-count="5" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="10">
             <margin top="10" left="10" bottom="10" right="10"/>
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -134,7 +134,7 @@
               </component>
               <vspacer id="e9911">
                 <constraints>
-                  <grid row="5" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                  <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                 </constraints>
               </vspacer>
               <component id="7d152" class="javax.swing.JLabel">
@@ -241,7 +241,7 @@
               <grid id="c04da" binding="ZeroVerticalGap" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="0">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
-                  <grid row="3" column="0" row-span="2" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="3" column="0" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <background color="-1"/>
@@ -324,6 +324,7 @@
                         <properties>
                           <background color="-921103"/>
                           <borderPainted value="false"/>
+                          <enabled value="false"/>
                           <foreground color="-16777216"/>
                           <horizontalAlignment value="2"/>
                           <text value="A new question"/>
