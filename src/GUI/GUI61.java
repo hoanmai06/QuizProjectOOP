@@ -34,8 +34,23 @@ public class GUI61 extends DefaultJFrame {
 
         // Set GUI component related to quiz
         quizNameLabel.setText(quiz.getName());
-        if (quiz.getTimeLimit() == -1) timeLimitLabel.setText("Time limit: No limit");
-        else timeLimitLabel.setText("Time limit: " + quiz.getTimeLimit());
+        switch (quiz.getTimeLimit()) {
+            case -1 -> timeLimitLabel.setText("Time limit: No limit");
+            case 1 -> {
+                if (quiz.getTimeLimitType() == Quiz.TIME_TYPE_HOUR) {
+                    timeLimitLabel.setText("Time limit: 1 hour");
+                } else {
+                    timeLimitLabel.setText("Time limit: 1 minute");
+                }
+            }
+            default -> {
+                if (quiz.getTimeLimitType() == Quiz.TIME_TYPE_HOUR) {
+                    timeLimitLabel.setText("Time limit: " + quiz.getTimeLimit() + " hours");
+                } else {
+                    timeLimitLabel.setText("Time limit: " + quiz.getTimeLimit() + " minutes");
+                }
+            }
+        }
 
         // Config attemptTable
         String[] columnNames = {"Attempt", "State"};
@@ -92,6 +107,8 @@ public class GUI61 extends DefaultJFrame {
         // Test quiz
         Quiz quiz = new Quiz();
         quiz.setName("Hello World");
+        quiz.setTimeLimit(10);
+        quiz.setTimeLimitType(Quiz.TIME_TYPE_MINUTE);
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 new GUI61(1024, 768, quiz);
