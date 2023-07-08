@@ -1,5 +1,6 @@
 package GUI;
 
+import DataObject.Question;
 import DataObject.Quiz;
 import com.formdev.flatlaf.FlatLightLaf;
 
@@ -104,11 +105,15 @@ public class GUI61 extends DefaultJFrame {
         if (defaults.get("Table.alternateRowColor") == null)
             defaults.put("Table.alternateRowColor", new Color(240, 240, 240));
 
+        // Test question
+        Question question = new Question();
+        question.setQuestionText("Hello World");
         // Test quiz
         Quiz quiz = new Quiz();
         quiz.setName("Hello World");
         quiz.setTimeLimit(10);
         quiz.setTimeLimitType(Quiz.TIME_TYPE_MINUTE);
+        quiz.addQuestion(question);
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 new GUI61(1024, 768, quiz);
