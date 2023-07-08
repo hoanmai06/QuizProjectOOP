@@ -3,15 +3,22 @@ package GUIs;
 import DataObjects.Question;
 import DataObjects.Quiz;
 import com.formdev.flatlaf.FlatLightLaf;
+import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
+import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.plaf.FontUIResource;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
 
 public class GUI61 extends DefaultJFrame {
     private JPanel TopBar;
@@ -72,7 +79,7 @@ public class GUI61 extends DefaultJFrame {
         tableHeader.setBackground(new Color(0x0171A2));
         tableHeader.setForeground(Color.white);
         tableHeader.setPreferredSize(new Dimension(-1, 40));
-        tableHeader.setFont(javax.swing.UIManager.getDefaults().getFont("Label.font").deriveFont(Font.BOLD));
+        tableHeader.setFont(UIManager.getDefaults().getFont("Label.font").deriveFont(Font.BOLD));
         tableHeader.setBorder(new EmptyBorder(0, 0, 0, 0));
 
         // Listener
@@ -123,4 +130,5 @@ public class GUI61 extends DefaultJFrame {
 
     private void createUIComponents() {
     }
+
 }

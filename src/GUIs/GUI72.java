@@ -7,20 +7,28 @@ import GUIs.GUI62;
 import GUIs.GUI63;
 import GUIs.GUI65;
 import com.formdev.flatlaf.FlatLightLaf;
+import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
+import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
+import javax.swing.plaf.FontUIResource;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
 
 public class GUI72 extends DefaultJFrame {
     private JPanel guiPanel;
     private JPanel TopBar;
+    private JTextArea attemptTextArea;
+    private JPanel MidZone1Container;
     private JPanel MidZone1;
     private JPanel MidZone2Container;
     private JPanel MidZone2;
-    private JTextArea attemptTextArea;
 
     public GUI72(int width, int height, Quiz quiz) {
         super(width, height);
@@ -63,4 +71,5 @@ public class GUI72 extends DefaultJFrame {
             }
         });
     }
+
 }

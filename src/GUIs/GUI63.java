@@ -5,13 +5,20 @@ import DataObjects.Category;
 import DataObjects.Question;
 import DataObjects.Quiz;
 import com.formdev.flatlaf.FlatLightLaf;
+import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
+import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Locale;
 
 public class GUI63 extends DefaultJFrame {
     private JPanel TopBar;
@@ -76,11 +83,11 @@ public class GUI63 extends DefaultJFrame {
                     if ((boolean) questionTable.getModel().getValueAt(i, 0))
                         quiz.addQuestion(
                                 CategoriesSingleton
-                                .getInstance()
-                                .getCategories()
-                                .get(categoryComboBox.getSelectedIndex())
-                                .getQuestions()
-                                .get(i)
+                                        .getInstance()
+                                        .getCategories()
+                                        .get(categoryComboBox.getSelectedIndex())
+                                        .getQuestions()
+                                        .get(i)
                         );
                 }
 
@@ -121,4 +128,5 @@ public class GUI63 extends DefaultJFrame {
         questionTable = new QuestionTable(CategoriesSingleton.getInstance().getCategories().get(0));
 
     }
+
 }
