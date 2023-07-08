@@ -3,12 +3,14 @@ package GUI;
 import DataObject.CategoriesSingleton;
 import DataObject.Category;
 import DataObject.Question;
+import DataObject.Quiz;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.stream.IntStream;
 
 public class GUI65 extends DefaultJFrame {
     private JPanel guiPanel;
@@ -24,12 +26,26 @@ public class GUI65 extends DefaultJFrame {
     private JTabbedPane tabbedPane1;
     private JPanel existingCategory;
     private JPanel newCategory;
-    private JComboBox comboBox1;
+    private JComboBox numberOfRandomQuestionComboBox;
 
-    public GUI65(int width, int height) {
+    public GUI65(int width, int height, Quiz quiz) {
         super(width, height);
         setContentPane(guiPanel);
         setVisible(true);
+
+        // Set up number of random question combo box
+        int numberOfQuestion =
+                CategoriesSingleton
+                        .getInstance()
+                        .getCategories()
+                        .get(categoryComboBox.getSelectedIndex())
+                        .getQuestions()
+                        .size();
+        String[] comboBoxList = new String[numberOfQuestion + 1];
+        for (int i = 0; i <= numberOfQuestion; i++)
+            comboBoxList[i] = String.valueOf(i);
+
+        numberOfRandomQuestionComboBox.setModel(new DefaultComboBoxModel(comboBoxList));
 
         categoryComboBox.addActionListener(new ActionListener() {
             @Override
@@ -68,9 +84,10 @@ public class GUI65 extends DefaultJFrame {
         if (defaults.get("Table.alternateRowColor") == null)
             defaults.put("Table.alternateRowColor", new Color(240, 240, 240));
 
+        Quiz quiz = new Quiz();
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new GUI65(1024, 768);
+                new GUI65(1024, 768, quiz);
             }
         });
     }
