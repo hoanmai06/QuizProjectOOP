@@ -1,12 +1,10 @@
-package GUI;
+package GUIs;
 
-import DataObject.Category;
-import DataObject.QuizzesSingleton;
+import DataObjects.QuizzesSingleton;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

@@ -1,4 +1,4 @@
-import GUI.GUI11;
+import GUIs.GUI11;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;

@@ -1,6 +1,4 @@
-package GUI;
-
-import DataObject.Quiz;
+package GUIs;
 
 import javax.swing.*;
 import javax.swing.border.Border;

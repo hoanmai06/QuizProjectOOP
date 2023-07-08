@@ -1,8 +1,8 @@
-package GUI;
+package GUIs;
 
-import DataObject.Category;
-import DataObject.Question;
-import DataObject.CategoriesSingleton;
+import DataObjects.Category;
+import DataObjects.Question;
+import DataObjects.CategoriesSingleton;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;

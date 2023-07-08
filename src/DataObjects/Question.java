@@ -1,4 +1,4 @@
-package DataObject;
+package DataObjects;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package DataObject;
+package DataObjects;
 
 public interface GradeConstants {
     public static final int GRADE_NONE = 0;

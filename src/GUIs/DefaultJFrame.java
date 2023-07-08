@@ -1,7 +1,7 @@
-package GUI;
+package GUIs;
 
-import DataObject.CategoriesSingleton;
-import DataObject.QuizzesSingleton;
+import DataObjects.CategoriesSingleton;
+import DataObjects.QuizzesSingleton;
 
 import javax.swing.*;
 import java.awt.*;

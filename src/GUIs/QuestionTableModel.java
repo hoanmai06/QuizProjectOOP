@@ -1,7 +1,6 @@
-package GUI;
+package GUIs;
 
-import DataObject.Category;
-import DataObject.QuestionListContainer;
+import DataObjects.QuestionListContainer;
 
 import javax.swing.table.DefaultTableModel;
 

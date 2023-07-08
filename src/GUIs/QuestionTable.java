@@ -1,12 +1,9 @@
-package GUI;
+package GUIs;
 
-import DataObject.Category;
-import DataObject.QuestionListContainer;
+import DataObjects.QuestionListContainer;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 
 public class QuestionTable extends JTable {
     private final static String[] columnNames = {"isSelected", "Question name", "Actions"};
