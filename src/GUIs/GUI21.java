@@ -1,14 +1,17 @@
 package GUIs;
 
+import Algorithms.Aiken_Checker;
+import DataObjects.CategoriesSingleton;
 import DataObjects.Category;
 import DataObjects.Question;
-import DataObjects.CategoriesSingleton;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.ArrayList;
 
 public class GUI21 extends DefaultJFrame {
     private JPanel TopBar;
@@ -30,6 +33,7 @@ public class GUI21 extends DefaultJFrame {
     private JButton CHOOSEAFILEButton;
     private JPanel dashedBorderPanel;
     private JTextField categoryIDNumberTextField;
+    private JButton IMPORTButton;
 
     public GUI21(int width, int height) {
         super(width, height);
@@ -39,11 +43,32 @@ public class GUI21 extends DefaultJFrame {
 
         dashedBorderPanel.setBorder(BorderFactory.createDashedBorder(Color.GRAY, 7, 3));
 
+        final String[] idFile = {new String("")};
         CHOOSEAFILEButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 FileDialog fd = new FileDialog((Frame) null, "Choose a file", FileDialog.LOAD);
                 fd.setVisible(true);
+                // fd nay la mot trang so ra khi bam vao nut choose a file, chu khong phai la con tro tro toi file vua chon
+
+                File selected = new File(fd.getDirectory());
+                idFile[0] = selected.getAbsolutePath() + "\\" +fd.getFile();
+
+            }
+        });
+
+        IMPORTButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Aiken_Checker check = new Aiken_Checker();
+                ArrayList<Question> listQ = check.readFromFile(idFile[0]);
+                if(listQ.size()>0) {
+                    for(Question q : listQ) {
+                        CategoriesSingleton.getInstance().getCategories().get(categoryComboBox.getSelectedIndex()).addQuestion(q);
+                    }
+                    JFrame Sframe = new JFrame("SuccessMessage");
+                    JOptionPane.showMessageDialog(Sframe, "Success "+listQ.size() +" questions", "Valid input", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
         });
 

@@ -1,9 +1,9 @@
 package GUIs;
 
+import DataObjects.CategoriesSingleton;
 import DataObjects.Category;
 import DataObjects.Choice;
 import DataObjects.Question;
-import DataObjects.CategoriesSingleton;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.intellij.uiDesigner.core.GridConstraints;
 

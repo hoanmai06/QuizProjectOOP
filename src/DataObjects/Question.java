@@ -7,11 +7,16 @@ public class Question implements Serializable {
     private String questionName;
     private String questionText;
     private int defaultMark;
-    private final ArrayList<Choice> choices = new ArrayList<Choice>();
+    private ArrayList<Choice> choices = new ArrayList<Choice>();            // loai bo final
+    private Answer ans;                                                 // them vao thuoc tinh Answer
 
     public void addChoice(Choice choice) {
         choices.add(choice);
     }
+
+    public void setChoices(ArrayList<Choice> choices) {
+        this.choices = choices;
+    }           // them phuong thuc nhap vao ca list choices
 
     public String getQuestionText() {
         return questionText;
@@ -24,6 +29,9 @@ public class Question implements Serializable {
     public int getDefaultMark() {
         return defaultMark;
     }
+
+    public Answer getAnswer() {return ans;}                 // them getter setter cho Answer
+    public void setAnswer(Answer ans) {this.ans = ans;}
 
     public Object[] getQuestionTableRow() {
         Object[] questionTableRow = {Boolean.FALSE, questionText, "Edit"};
