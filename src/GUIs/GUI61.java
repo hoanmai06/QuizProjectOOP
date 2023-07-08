@@ -1,7 +1,7 @@
-package GUI;
+package GUIs;
 
-import DataObject.Question;
-import DataObject.Quiz;
+import DataObjects.Question;
+import DataObjects.Quiz;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;
