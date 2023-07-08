@@ -1,6 +1,5 @@
 package GUIs;
 
-import DataObjects.Question;
 import DataObjects.Quiz;
 import com.formdev.flatlaf.FlatLightLaf;
 
@@ -72,7 +71,7 @@ public class GUI61 extends DefaultJFrame {
         tableHeader.setBackground(new Color(0x0171A2));
         tableHeader.setForeground(Color.white);
         tableHeader.setPreferredSize(new Dimension(-1, 40));
-        tableHeader.setFont(javax.swing.UIManager.getDefaults().getFont("Label.font").deriveFont(Font.BOLD));
+        tableHeader.setFont(UIManager.getDefaults().getFont("Label.font").deriveFont(Font.BOLD));
         tableHeader.setBorder(new EmptyBorder(0, 0, 0, 0));
 
         // Listener
@@ -105,15 +104,11 @@ public class GUI61 extends DefaultJFrame {
         if (defaults.get("Table.alternateRowColor") == null)
             defaults.put("Table.alternateRowColor", new Color(240, 240, 240));
 
-        // Test question
-        Question question = new Question();
-        question.setQuestionText("Hello World");
         // Test quiz
         Quiz quiz = new Quiz();
         quiz.setName("Hello World");
         quiz.setTimeLimit(10);
         quiz.setTimeLimitType(Quiz.TIME_TYPE_MINUTE);
-        quiz.addQuestion(question);
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 new GUI61(1024, 768, quiz);
