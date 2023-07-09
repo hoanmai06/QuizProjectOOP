@@ -5,20 +5,13 @@ import DataObjects.CategoriesSingleton;
 import DataObjects.Category;
 import DataObjects.Question;
 import com.formdev.flatlaf.FlatLightLaf;
-import com.intellij.uiDesigner.core.GridConstraints;
-import com.intellij.uiDesigner.core.GridLayoutManager;
-import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import javax.swing.plaf.FontUIResource;
-import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class GUI21 extends DefaultJFrame {
     private JPanel TopBar;
@@ -33,7 +26,6 @@ public class GUI21 extends DefaultJFrame {
     private JCheckBox alsoShowOldQuestionCheckBox;
     private JButton CREATENEWQUESTIONButton;
     private JTable questionTable;
-    private JComboBox comboBox1;
     private JTextField categoryNameTextField;
     private JButton ADDCATEGORYButton;
     private JTextArea categoryInfoTextArea;
@@ -41,6 +33,7 @@ public class GUI21 extends DefaultJFrame {
     private JPanel dashedBorderPanel;
     private JTextField categoryIDNumberTextField;
     private JButton IMPORTButton;
+    private JComboBox parentCategoryComboBox;
 
     public GUI21(int width, int height) {
         super(width, height);
@@ -59,7 +52,7 @@ public class GUI21 extends DefaultJFrame {
                 // fd nay la mot trang so ra khi bam vao nut choose a file, chu khong phai la con tro tro toi file vua chon
 
                 File selected = new File(fd.getDirectory());
-                idFile[0] = selected.getAbsolutePath() + "\\" +fd.getFile();
+                idFile[0] = selected.getAbsolutePath() + File.separator + fd.getFile();
 
             }
         });
