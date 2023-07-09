@@ -54,6 +54,7 @@ public class GUI62 extends DefaultJFrame {
         DefaultTableModel tableModel = new DefaultTableModel(getQuestionTableData(quiz), columnNames);
 
         questionTable.setModel(tableModel);
+        questionTable.setRowHeight(30);
 
         // Listener
         addButton.addActionListener(new ActionListener() {
