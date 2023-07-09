@@ -2,15 +2,22 @@ package GUIs;
 
 import DataObjects.Quiz;
 import com.formdev.flatlaf.FlatLightLaf;
+import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
+import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.plaf.FontUIResource;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
 
 public class GUI61 extends DefaultJFrame {
     private JPanel TopBar;
@@ -86,8 +93,7 @@ public class GUI61 extends DefaultJFrame {
         PREVIEW_QUIZ_NOWButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                quiz.getPreviousAttemptList().add("Never Submitted");
-                new GUI61(getWidth(), getHeight(), quiz);
+                new GUI72(getWidth(), getHeight(), quiz);
                 dispose();
             }
         });
@@ -118,4 +124,5 @@ public class GUI61 extends DefaultJFrame {
 
     private void createUIComponents() {
     }
+
 }

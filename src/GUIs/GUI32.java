@@ -6,11 +6,17 @@ import DataObjects.Choice;
 import DataObjects.Question;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
+import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
 
 public class GUI32 extends DefaultJFrame {
     private JPanel TopBar;
@@ -61,7 +67,9 @@ public class GUI32 extends DefaultJFrame {
         });
     }
 
-    /** This is the constructor used when Adding a question, it adds a different ActionListener to the saveButton*/
+    /**
+     * This is the constructor used when Adding a question, it adds a different ActionListener to the saveButton
+     */
     public GUI32(int width, int height, int categoryIndex) {
         this(width, height);
         categoryComboBox.setSelectedIndex(categoryIndex);
@@ -92,7 +100,9 @@ public class GUI32 extends DefaultJFrame {
         });
     }
 
-    /** This is the constructor used when Editing a question, it adds a different ActionListener to the saveButton*/
+    /**
+     * This is the constructor used when Editing a question, it adds a different ActionListener to the saveButton
+     */
     public GUI32(int width, int height, int categoryIndex, int questionIndex) {
         this(width, height);
         categoryComboBox.setSelectedIndex(categoryIndex);
@@ -111,7 +121,7 @@ public class GUI32 extends DefaultJFrame {
 
         choice2TextArea.setText(editingQuestion.getChoices().get(1).getChoiceText());
         grade2ComboBox.setSelectedIndex(editingQuestion.getChoices().get(1).getGrade());
-        
+
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -158,4 +168,5 @@ public class GUI32 extends DefaultJFrame {
     private void createUIComponents() {
         categoryComboBox = new JComboBox(CategoriesSingleton.getInstance().getCategoryNameList());
     }
+
 }
