@@ -94,8 +94,7 @@ public class GUI61 extends DefaultJFrame {
         PREVIEW_QUIZ_NOWButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                quiz.getPreviousAttemptList().add("Never Submitted");
-                new GUI61(getWidth(), getHeight(), quiz);
+                new GUI72(getWidth(), getHeight(), quiz);
                 dispose();
             }
         });

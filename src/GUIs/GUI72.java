@@ -29,6 +29,8 @@ public class GUI72 extends DefaultJFrame {
     private JPanel MidZone1;
     private JPanel MidZone2Container;
     private JPanel MidZone2;
+    private JButton cancelButton;
+    private JButton startButton;
 
     public GUI72(int width, int height, Quiz quiz) {
         super(width, height);
@@ -42,6 +44,21 @@ public class GUI72 extends DefaultJFrame {
 //        attemptTextArea.getCaret().setSelectionVisible(false);
 
         // Listener
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new GUI61(getWidth(), getHeight(), quiz);
+                dispose();
+            }
+        });
+        startButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                quiz.getPreviousAttemptList().add("Never submitted");
+                new GUI73(getWidth(), getHeight(), quiz);
+                dispose();
+            }
+        });
     }
 
     public static void main(String[] args) {

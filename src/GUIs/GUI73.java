@@ -10,8 +10,7 @@ import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 public class GUI73 extends DefaultJFrame {
     private JPanel TopBar;
@@ -23,12 +22,9 @@ public class GUI73 extends DefaultJFrame {
     private JPanel MidZone2;
     private JScrollPane questionsScrollPane;
     private JPanel navigationCheckBoxPanel;
-    private JCheckBox xCheckBox;
-    private JCheckBox xCheckBox1;
-    private JCheckBox xCheckBox2;
-    private JCheckBox xCheckBox3;
-    private JCheckBox xCheckBox4;
     private JButton finishAttemptButton;
+    private JScrollPane navigationScrollPane;
+    private QuestionPanelManager[] questionPanelManager;
 
     public GUI73(int width, int height, Quiz quiz) {
         super(width, height);
@@ -37,21 +33,37 @@ public class GUI73 extends DefaultJFrame {
 
         // Set GUI component related to quiz
 
-        // Insert all questionPanel into questionPanelContainer, which is the viewport.
+        // Setup navigationCheckBoxPanel
+        navigationScrollPane.getVerticalScrollBar().setUnitIncrement(4);
         int numberOfQuestion = quiz.getQuestions().size();
+
+        MouseListener mouseListener = new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                JCheckBox source = (JCheckBox) e.getSource();
+                int sourceIndex = Integer.parseInt(source.getActionCommand());
+
+                questionsScrollPane.getVerticalScrollBar().setValue(questionScrollBarValue(sourceIndex));
+            }
+        };
+
+        navigationCheckBoxPanel.setLayout(new GridLayoutManager(numberOfQuestion/5 + 1, 6, new Insets(0, 0, 0, 0), 0, 4));
+        JCheckBox[] navigationCheckBoxes = new JCheckBox[numberOfQuestion];
+        for (int i = 0; i < numberOfQuestion; i++) {
+            navigationCheckBoxes[i] = new JCheckBox(String.valueOf(i+1));
+            navigationCheckBoxes[i].setEnabled(false);
+            navigationCheckBoxes[i].setActionCommand(String.valueOf(i));
+            navigationCheckBoxes[i].addMouseListener(mouseListener);
+
+            navigationCheckBoxPanel.add(navigationCheckBoxes[i], new GridConstraints(i/5, i%5, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        }
+
+        // Insert all questionPanel into questionPanelContainer, which is the viewport.
         questionPanelContainer.setLayout(new GridLayoutManager(numberOfQuestion + 1, 1, new Insets(0, 0, 0, 0), -1, 20));
 
-        QuestionPanelManager[] questionPanelManager = new QuestionPanelManager[numberOfQuestion];
+        questionPanelManager = new QuestionPanelManager[numberOfQuestion];
         for (int i = 0; i < numberOfQuestion; i++) {
-
-            // Create QuestionPaneManager, which takes ActionListener as a parameter, so the code is quite messy
-            questionPanelManager[i] = new QuestionPanelManager(i + 1, quiz.getQuestions().get(i), new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-
-                }
-            });
-
+            questionPanelManager[i] = new QuestionPanelManager(i + 1, quiz.getQuestions().get(i), navigationCheckBoxes[i]);
             questionPanelContainer.add(questionPanelManager[i].getQuestionPanel(), new GridConstraints(i, 0, 1, 1, GridConstraints.ANCHOR_NORTHWEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         }
 
@@ -62,8 +74,18 @@ public class GUI73 extends DefaultJFrame {
         // Increase scrollPaneSpeed
         questionsScrollPane.getVerticalScrollBar().setUnitIncrement(6);
 
-
         // Listener
+    }
+
+    public int questionScrollBarValue(int index) {
+        int scrollBarValue = 0;
+
+        for (int i = 0; i < index; i++) {
+            scrollBarValue += questionPanelManager[i].getQuestionPanel().getHeight();
+            scrollBarValue += 20;
+        }
+
+        return Math.min(scrollBarValue, questionsScrollPane.getVerticalScrollBar().getMaximum());
     }
 
     public static void main(String[] args) {
@@ -126,37 +148,37 @@ public class GUI73 extends DefaultJFrame {
         quiz.addQuestion(question3);
         quiz.addQuestion(question1);
         quiz.addQuestion(question2);
-        quiz.addQuestion(question3);
-        quiz.addQuestion(question1);
-        quiz.addQuestion(question2);
-        quiz.addQuestion(question3);
-        quiz.addQuestion(question1);
-        quiz.addQuestion(question2);
-        quiz.addQuestion(question3);
-        quiz.addQuestion(question1);
-        quiz.addQuestion(question2);
-        quiz.addQuestion(question3);
-        quiz.addQuestion(question1);
-        quiz.addQuestion(question2);
-        quiz.addQuestion(question3);
-        quiz.addQuestion(question1);
-        quiz.addQuestion(question2);
-        quiz.addQuestion(question3);
-        quiz.addQuestion(question1);
-        quiz.addQuestion(question2);
-        quiz.addQuestion(question3);
-        quiz.addQuestion(question1);
-        quiz.addQuestion(question2);
-        quiz.addQuestion(question3);
-        quiz.addQuestion(question1);
-        quiz.addQuestion(question2);
-        quiz.addQuestion(question3);
-        quiz.addQuestion(question1);
-        quiz.addQuestion(question2);
-        quiz.addQuestion(question3);
-        quiz.addQuestion(question1);
-        quiz.addQuestion(question2);
-        quiz.addQuestion(question3);
+//        quiz.addQuestion(question3);
+//        quiz.addQuestion(question1);
+//        quiz.addQuestion(question2);
+//        quiz.addQuestion(question3);
+//        quiz.addQuestion(question1);
+//        quiz.addQuestion(question2);
+//        quiz.addQuestion(question3);
+//        quiz.addQuestion(question1);
+//        quiz.addQuestion(question2);
+//        quiz.addQuestion(question3);
+//        quiz.addQuestion(question1);
+//        quiz.addQuestion(question2);
+//        quiz.addQuestion(question3);
+//        quiz.addQuestion(question1);
+//        quiz.addQuestion(question2);
+//        quiz.addQuestion(question3);
+//        quiz.addQuestion(question1);
+//        quiz.addQuestion(question2);
+//        quiz.addQuestion(question3);
+//        quiz.addQuestion(question1);
+//        quiz.addQuestion(question2);
+//        quiz.addQuestion(question3);
+//        quiz.addQuestion(question1);
+//        quiz.addQuestion(question2);
+//        quiz.addQuestion(question3);
+//        quiz.addQuestion(question1);
+//        quiz.addQuestion(question2);
+//        quiz.addQuestion(question3);
+//        quiz.addQuestion(question1);
+//        quiz.addQuestion(question2);
+//        quiz.addQuestion(question3);
 //        quiz.addQuestion(question1);
 //        quiz.addQuestion(question2);
 //        quiz.addQuestion(question3);
@@ -299,5 +321,4 @@ public class GUI73 extends DefaultJFrame {
             }
         });
     }
-
 }
