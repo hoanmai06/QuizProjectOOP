@@ -28,6 +28,7 @@ public class GUI65 extends DefaultJFrame {
     private JPanel MidZone2;
     private JCheckBox includeQuestionsFromSubcategoriesCheckBox;
     private JComboBox categoryComboBox;
+    private JComboBox randomQuestionComboBox;
     private JTable questionTable;
     private JButton ADDRANDOMQUESTIONTOButton;
     private JTabbedPane tabbedPane1;
