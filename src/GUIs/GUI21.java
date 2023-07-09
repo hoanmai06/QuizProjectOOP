@@ -20,7 +20,7 @@ public class GUI21 extends DefaultJFrame {
     private JPanel MidZone2Container;
     private JPanel MidZone2;
     private JPanel guiPanel;
-    private JTabbedPane tabbedPane1;
+    private JTabbedPane tabbedPane;
     private JComboBox categoryComboBox;
     private JCheckBox alsoShowQuestionsFromCheckBox;
     private JCheckBox alsoShowOldQuestionCheckBox;
@@ -34,6 +34,7 @@ public class GUI21 extends DefaultJFrame {
     private JTextField categoryIDNumberTextField;
     private JButton IMPORTButton;
     private JComboBox parentCategoryComboBox;
+    private JLabel fileNameLabel;
 
     public GUI21(int width, int height) {
         super(width, height);
@@ -54,6 +55,7 @@ public class GUI21 extends DefaultJFrame {
                 File selected = new File(fd.getDirectory());
                 idFile[0] = selected.getAbsolutePath() + File.separator + fd.getFile();
 
+                fileNameLabel.setText(fd.getFile());
             }
         });
 
@@ -68,6 +70,9 @@ public class GUI21 extends DefaultJFrame {
                     }
                     JFrame Sframe = new JFrame("SuccessMessage");
                     JOptionPane.showMessageDialog(Sframe, "Success "+listQ.size() +" questions", "Valid input", JOptionPane.INFORMATION_MESSAGE);
+
+                    JFrame newGUI21 = new GUI21(getWidth(), getHeight());
+                    dispose();
                 }
             }
         });
