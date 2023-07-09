@@ -21,9 +21,7 @@ public class QuestionPanelFactory {
     private JPanel questionContent;
     private JPanel choicePanel;
     private JPanel questionPanel;
-    private JLabel questionText;
-    private JRadioButton radioButton1;
-    private JRadioButton radioButton2;
+    private JTextArea questionText;
 
     public QuestionPanelFactory(int index, Question question) {
         // Customize JLabel
@@ -33,7 +31,7 @@ public class QuestionPanelFactory {
         // Setup choice panel
         int numberOfChoices = question.getChoices().size();
 
-        choicePanel.setLayout(new GridLayoutManager(numberOfChoices, 1, new Insets(0, 0, 0, 0), -1, -1));
+        choicePanel.setLayout(new GridLayoutManager(numberOfChoices, 1, new Insets(0, 0, 0, 0), -1, 8));
 
         JRadioButton[] choiceRadioButtonList = new JRadioButton[numberOfChoices];
         ButtonGroup choiceButtonGroup = new ButtonGroup();

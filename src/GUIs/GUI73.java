@@ -9,11 +9,7 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import javax.swing.plaf.FontUIResource;
-import javax.swing.text.StyleContext;
 import java.awt.*;
-import java.util.Locale;
 
 public class GUI73 extends DefaultJFrame {
     private JPanel TopBar;
@@ -23,7 +19,7 @@ public class GUI73 extends DefaultJFrame {
     private JPanel MidZone1;
     private JPanel MidZone2Container;
     private JPanel MidZone2;
-    private JScrollPane questionsViewPort;
+    private JScrollPane questionsScrollPane;
     private JPanel navigationPanel;
     private JCheckBox xCheckBox;
     private JCheckBox xCheckBox1;
@@ -41,12 +37,17 @@ public class GUI73 extends DefaultJFrame {
 
         // Insert all question
         int numberOfQuestion = quiz.getQuestions().size();
-        questionPanelContainer.setLayout(new GridLayoutManager(numberOfQuestion, 1, new Insets(0, 0, 0, 0), -1, 20));
+        questionPanelContainer.setLayout(new GridLayoutManager(numberOfQuestion + 1, 1, new Insets(0, 0, 0, 0), -1, 20));
         JPanel[] questionPanels = new JPanel[numberOfQuestion];
         for (int i = 0; i < numberOfQuestion; i++) {
             questionPanels[i] = new QuestionPanelFactory(i + 1, quiz.getQuestions().get(i)).getQuestionPanel();
             questionPanelContainer.add(questionPanels[i], new GridConstraints(i, 0, 1, 1, GridConstraints.ANCHOR_NORTHWEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         }
+        // Insert spacer at the bottom of questionPaneContainer to push all questionPanel up
+        final Spacer spacer = new Spacer();
+        questionPanelContainer.add(spacer, new GridConstraints(numberOfQuestion, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        // Increase scrollPaneSpeed
+        questionsScrollPane.getVerticalScrollBar().setUnitIncrement(6);
 
         // Listener
     }
@@ -78,7 +79,7 @@ public class GUI73 extends DefaultJFrame {
         Choice choice11 = new Choice();
         choice11.setChoiceText("Hello. I am choice1");
         Choice choice12 = new Choice();
-        choice12.setChoiceText("Nice to meet you. My name is choice2");
+        choice12.setChoiceText("Nice to meet you. My name is choice2 ");
 
         // Test question1
         Question question2 = new Question();
@@ -88,6 +89,10 @@ public class GUI73 extends DefaultJFrame {
         question2.getChoices().add(choice12);
         question2.getChoices().add(choice12);
 
+        // Test question3
+        Question question3 = new Question();
+        question3.addChoice(choice11);
+
         // Test quiz
         Quiz quiz = new Quiz();
         quiz.setName("Hello World");
@@ -95,6 +100,13 @@ public class GUI73 extends DefaultJFrame {
         quiz.setTimeLimitType(Quiz.TIME_TYPE_MINUTE);
         quiz.addQuestion(question1);
         quiz.addQuestion(question2);
+        quiz.addQuestion(question3);
+        quiz.addQuestion(question1);
+        quiz.addQuestion(question2);
+        quiz.addQuestion(question3);
+        quiz.addQuestion(question1);
+        quiz.addQuestion(question2);
+        quiz.addQuestion(question3);
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
