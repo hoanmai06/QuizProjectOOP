@@ -5,19 +5,11 @@ import DataObjects.Category;
 import DataObjects.Question;
 import DataObjects.Quiz;
 import com.formdev.flatlaf.FlatLightLaf;
-import com.intellij.uiDesigner.core.GridConstraints;
-import com.intellij.uiDesigner.core.GridLayoutManager;
-import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import javax.swing.plaf.FontUIResource;
-import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Locale;
-import java.util.stream.IntStream;
 
 public class GUI65 extends DefaultJFrame {
     private JPanel guiPanel;
@@ -73,7 +65,7 @@ public class GUI65 extends DefaultJFrame {
             public void actionPerformed(ActionEvent e) {
                 int row = Integer.parseInt(e.getActionCommand());
                 dispose();
-                new GUI32(getWidth(), getHeight(), categoryComboBox.getSelectedIndex(), row);
+                new GUI32Edit(getWidth(), getHeight(), categoryComboBox.getSelectedIndex(), row);
             }
         };
 
@@ -100,8 +92,6 @@ public class GUI65 extends DefaultJFrame {
     }
 
     private void createUIComponents() {
-        // TODO: place custom component creation code here
-
         //categoryComboBox
         categoryComboBox = new JComboBox(CategoriesSingleton.getInstance().getCategoryNameList());
 
