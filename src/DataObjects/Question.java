@@ -43,7 +43,21 @@ public class Question implements Serializable {
     }
 
     public void setText(String text) {
-        this.text = text;
+
+        String newstr="";
+        for(int i=0;i<text.length();i++)
+            if(text.charAt(i)=='\'')
+                newstr = newstr + "&#39;";
+            else if (text.charAt(i)=='\"')
+                newstr = newstr + "&#34;";
+            else if(text.charAt(i)=='&')
+                newstr = newstr + "&#38;";
+            else if(text.charAt(i)=='<')
+                newstr = newstr + "&#60;";
+            else if(text.charAt(i)=='>')
+                newstr = newstr + "&#39;";
+            else
+                newstr= newstr + String.copyValueOf(text.toCharArray(),i,1);this.text = text;
     }
 
     public void setName(String name) {
