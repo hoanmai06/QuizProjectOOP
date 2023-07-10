@@ -24,7 +24,7 @@ public class QuestionPanelManager {
     public QuestionPanelManager(int index, Question question, JCheckBox navigationCheckBox) {
         // Customize JLabel
         questionIndex.setText(String.valueOf(index));
-        questionText.setText("<html>%s</html>".formatted(question.getQuestionText()));
+        questionText.setText("<html>%s</html>".formatted(question.getText()));
 
         // Setup choice panel
         int numberOfChoices = question.getChoices().size();
@@ -41,7 +41,7 @@ public class QuestionPanelManager {
         };
 
         for (int i = 0; i < numberOfChoices; i++) {
-            choiceRadioButtonList[i] = new JRadioButton("<html>" + question.getChoices().get(i).getChoiceText() + "</html>");
+            choiceRadioButtonList[i] = new JRadioButton("<html>" + question.getChoices().get(i).getText() + "</html>");
 
             choiceRadioButtonList[i].addActionListener(radioButtonListener);
 
