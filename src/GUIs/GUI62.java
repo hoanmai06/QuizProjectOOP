@@ -3,19 +3,12 @@ package GUIs;
 import DataObjects.Question;
 import DataObjects.Quiz;
 import com.formdev.flatlaf.FlatLightLaf;
-import com.intellij.uiDesigner.core.GridConstraints;
-import com.intellij.uiDesigner.core.GridLayoutManager;
-import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import javax.swing.plaf.FontUIResource;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Locale;
 
 public class GUI62 extends DefaultJFrame {
 
@@ -91,7 +84,7 @@ public class GUI62 extends DefaultJFrame {
 
         Object[][] questionTableData = new Object[numberOfQuestions][4];
         for (int i = 0; i < numberOfQuestions; i++) {
-            questionTableData[i] = new Object[]{i, quiz.getQuestions().get(i).getQuestionText(), "", "1"};
+            questionTableData[i] = new Object[]{i, quiz.getQuestions().get(i).getText(), "", "1"};
         }
         return questionTableData;
     }
@@ -109,7 +102,7 @@ public class GUI62 extends DefaultJFrame {
 
         // Test question
         Question question = new Question();
-        question.setQuestionText("Hello World");
+        question.setText("Hello World");
         // Test quiz
         Quiz quiz = new Quiz();
         quiz.setName("Hello World");

@@ -79,7 +79,7 @@ public class GUI63 extends DefaultJFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 for (int i = 0; i < questionTable.getRowCount(); i++) {
-                    // TODO Go through all row and add selected row to quiz.questions
+                    // Go through all row and add selected row to quiz.questions
                     if ((boolean) questionTable.getModel().getValueAt(i, 0))
                         quiz.addQuestion(
                                 CategoriesSingleton
@@ -119,8 +119,6 @@ public class GUI63 extends DefaultJFrame {
     }
 
     private void createUIComponents() {
-        // TODO: place custom component creation code here
-
         //categoryComboBox
         categoryComboBox = new JComboBox(CategoriesSingleton.getInstance().getCategoryNameList());
 

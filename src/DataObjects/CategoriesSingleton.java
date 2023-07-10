@@ -18,6 +18,7 @@ public class CategoriesSingleton {
 
     private static CategoriesSingleton instance;
     private ArrayList<Category> categories = new ArrayList<>();
+    private Question addingQuestion;
 
     private CategoriesSingleton() {
         if (new File(filePath).exists())
@@ -89,5 +90,13 @@ public class CategoriesSingleton {
         }
 
         return name_list;
+    }
+
+    public Question getAddingQuestion() {
+        return addingQuestion;
+    }
+
+    public void setAddingQuestion(Question addingQuestion) {
+        this.addingQuestion = addingQuestion;
     }
 }
