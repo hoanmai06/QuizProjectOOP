@@ -1,6 +1,5 @@
 package Algorithms;
 
-import DataObjects.Answer;
 import DataObjects.Choice;
 import DataObjects.Question;
 
@@ -87,16 +86,16 @@ public class Aiken_Checker {
                     }
                     else {
                         if(listCN.contains("A.") && listCN.contains("B.") && listCN.contains(txtCorA[1] + ".")) {
-                            char a = txtCorA[1].charAt(0);
-                            q.setAnswer(new Answer(a));
-                            q.setChoices(listC);
-
+                            String ans = txtCorA[1] + ".";
             //# setGrade cho tung choice, chu y doc file thi cau hoi chi co 1 cau tra loi
                             for(Choice c : listC) {
-                                if ((c.getChoiceName()).equals(txtCorA[1]+"."))
+                                if ((c.getChoiceName()).equals(ans)) {
                                     c.setGrade(1);
+                                    q.setAnswer(c);
+                                }
                                 else c.setGrade(0);
                             }
+                            q.setChoices(listC);
                             listCN.clear();
                             listQ.add(q);
                             beforeString = "ANS";
