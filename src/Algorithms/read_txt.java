@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Aiken_Checker {
+public class read_txt {
 
     //# show message if the input file is invalid
     public void showError(int i) {
@@ -19,7 +19,7 @@ public class Aiken_Checker {
         JOptionPane.showMessageDialog(frame, "Error at line "+i, "Invalid input", JOptionPane.ERROR_MESSAGE);
     }
     public int indexOfLines = 0;
-    public ArrayList<Question> readFromFile(String absPath) {
+    public ArrayList<Question> readFromTXT(String absPath) {
         ArrayList<Question> listQ = new ArrayList<>();
 
         String beforeString = new String("");
@@ -113,7 +113,7 @@ public class Aiken_Checker {
 
     }
 //    public static void main(String[] args) {
-//        Aiken_Checker m = new Aiken_Checker();
+//        read_txt m = new read_txt();
 //        ArrayList<Question> list = m.readFromFile("D:\\HelloJava\\helloSwing\\Aiken\\out\\production\\Aiken\\BaoHiemQuestion.txt");
 //        if(list.size() > 0) {
 //            JFrame Sframe = new JFrame("SuccessMessage");
