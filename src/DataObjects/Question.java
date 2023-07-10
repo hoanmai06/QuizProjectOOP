@@ -55,7 +55,7 @@ public class Question implements Serializable {
             else if(text.charAt(i)=='<')
                 newstr = newstr + "&#60;";
             else if(text.charAt(i)=='>')
-                newstr = newstr + "&#39;";
+                newstr = newstr + "&#62;";
             else
                 newstr= newstr + String.copyValueOf(text.toCharArray(),i,1);this.text = text;
     }
