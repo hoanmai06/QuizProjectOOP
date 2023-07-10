@@ -1,29 +1,35 @@
 package GUIs;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class ChoicePanelManager {
     private JPanel choicePanel;
     private JLabel choiceLabel;
-    private JComboBox choiceGradeBox;
+    private JComboBox choiceGradeComboBox;
     private JButton testButton;
     private JTextArea choiceTextArea;
 
     public ChoicePanelManager(int index) {
         choiceLabel.setText("Choice " + index);
-
-        testButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Activated by choice " + index);
-            }
-        });
     }
 
-    public JPanel getChoicePanel() {
+    public JPanel getPanel() {
         return choicePanel;
     }
 
+    public String getChoiceText() {
+        return choiceTextArea.getText();
+    }
+
+    public int getGrade() {
+        return choiceGradeComboBox.getSelectedIndex();
+    }
+
+    public void setGrade(int index) {
+        choiceGradeComboBox.setSelectedIndex(index);
+    }
+
+    public void setChoiceText(String choiceText) {
+        choiceTextArea.setText(choiceText);
+    }
 }
