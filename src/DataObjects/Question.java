@@ -8,7 +8,7 @@ public class Question implements Serializable {
     private String questionText;
     private final double defaultMark = 1.0;
     private ArrayList<Choice> choices = new ArrayList<Choice>();            // loai bo final
-    private Answer ans;                                                 // them vao thuoc tinh Answer
+    private Choice answer;                                                 // them vao thuoc tinh Answer ls 1 trong so cac choices
 
     public void addChoice(Choice choice) {
         choices.add(choice);
@@ -30,8 +30,8 @@ public class Question implements Serializable {
         return defaultMark;
     }
 
-    public Answer getAnswer() {return ans;}                 // them getter setter cho Answer
-    public void setAnswer(Answer ans) {this.ans = ans;}
+    public Choice getAnswer() {return answer;}                 // them getter setter cho Answer
+    public void setAnswer(Choice ans) {this.answer = ans;}
 
     public Object[] getQuestionTableRow() {
         Object[] questionTableRow = {Boolean.FALSE, questionText, "Edit"};
