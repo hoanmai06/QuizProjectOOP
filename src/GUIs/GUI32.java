@@ -80,7 +80,7 @@ public class GUI32 extends DefaultJFrame {
                 Question new_question = new Question();
                 new_question.setQuestionName(questionNameField.getText());
                 new_question.setQuestionText(questionTextField.getText());
-                new_question.setDefaultMark(Integer.parseInt(defaultMarkField.getText()));
+//                new_question.setDefaultMark(Integer.parseInt(defaultMarkField.getText()));
 
                 Choice choice1 = new Choice();
                 choice1.setChoiceText(choice1TextArea.getText());
@@ -129,7 +129,7 @@ public class GUI32 extends DefaultJFrame {
 
                 editingQuestion.setQuestionName(questionNameField.getText());
                 editingQuestion.setQuestionText(questionTextField.getText());
-                editingQuestion.setDefaultMark(Integer.parseInt(defaultMarkField.getText()));
+//                editingQuestion.setDefaultMark(Integer.parseInt(defaultMarkField.getText()));
 
                 Choice choice1 = new Choice();
                 choice1.setChoiceText(choice1TextArea.getText());
