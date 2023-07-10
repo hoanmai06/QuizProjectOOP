@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Question implements Serializable {
-    private String questionName;
-    private String questionText;
+    private String name;
+    private String text;
     private final double defaultMark = 1.0;
     private ArrayList<Choice> choices = new ArrayList<Choice>();            // loai bo final
     private Choice answer;                                                 // them vao thuoc tinh Answer ls 1 trong so cac choices
@@ -18,12 +18,12 @@ public class Question implements Serializable {
         this.choices = choices;
     }           // them phuong thuc nhap vao ca list choices
 
-    public String getQuestionText() {
-        return questionText;
+    public String getText() {
+        return text;
     }
 
-    public String getQuestionName() {
-        return questionName;
+    public String getName() {
+        return name;
     }
 
     public double getDefaultMark() {
@@ -34,7 +34,7 @@ public class Question implements Serializable {
     public void setAnswer(Choice ans) {this.answer = ans;}
 
     public Object[] getQuestionTableRow() {
-        Object[] questionTableRow = {Boolean.FALSE, questionText, "Edit"};
+        Object[] questionTableRow = {Boolean.FALSE, text, "Edit"};
         return questionTableRow;
     }
 
@@ -42,13 +42,15 @@ public class Question implements Serializable {
         return choices;
     }
 
-    public void setQuestionText(String questionText) {
-        this.questionText = questionText;
+    public void setText(String text) {
+        this.text = text;
     }
 
-    public void setQuestionName(String questionName) {
-        this.questionName = questionName;
+    public void setName(String name) {
+        this.name = name;
     }
+
+
 
 //    public void setDefaultMark(int defaultMark) {
 //        this.defaultMark = defaultMark;
