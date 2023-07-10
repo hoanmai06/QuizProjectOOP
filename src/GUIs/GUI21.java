@@ -1,6 +1,7 @@
 package GUIs;
 
-import Algorithms.Aiken_Checker;
+import Algorithms.read_docx;
+import Algorithms.read_txt;
 import DataObjects.CategoriesSingleton;
 import DataObjects.Category;
 import DataObjects.Question;
@@ -52,7 +53,8 @@ public class GUI21 extends DefaultJFrame implements DropTargetListener {
         dashedBorderPanel.setBorder(BorderFactory.createDashedBorder(Color.GRAY, 7, 3));
         dt = new DropTarget(dashedBorderPanel, this);
 
-
+        final String[] idFile = {new String("")};
+        final String[] formatFile = {new String("")};
         CHOOSEAFILEButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -61,26 +63,41 @@ public class GUI21 extends DefaultJFrame implements DropTargetListener {
                 // fd nay la mot trang so ra khi bam vao nut choose a file, chu khong phai la con tro tro toi file vua chon
 
                 File selected = new File(fd.getDirectory());
-                idFile = selected.getAbsolutePath() + File.separator + fd.getFile();
+                idFile[0] = selected.getAbsolutePath() + File.separator + fd.getFile();
+
+                String[] end = fd.getFile().split("\\.");
+                formatFile[0] = end[end.length-1];
 
                 fileNameLabel.setText(fd.getFile());
-
             }
         });
         IMPORTButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Aiken_Checker check = new Aiken_Checker();
-                ArrayList<Question> listQ = check.readFromFile(idFile);
-                if(listQ.size()>0) {
-                    for(Question q : listQ) {
-                        CategoriesSingleton.getInstance().getCategories().get(categoryComboBox.getSelectedIndex()).addQuestion(q);
+                if (formatFile[0].equals("txt") || formatFile[0].equals("doc") || formatFile[0].equals("docx")) {
+                    ArrayList<Question> listQ = new ArrayList<>();
+                    if(formatFile[0].equals("txt") ) {
+                        read_txt rt = new read_txt();
+                        listQ = rt.readFromTXT(idFile[0]);
                     }
-                    JFrame Sframe = new JFrame("SuccessMessage");
-                    JOptionPane.showMessageDialog(Sframe, "Success "+listQ.size() +" questions", "Valid input", JOptionPane.INFORMATION_MESSAGE);
+                    if(formatFile[0].equals("docx")) {
+                        read_docx rd = new read_docx();
+                        listQ = rd.readFromDOCX(idFile[0]);
+                    }
+                    if(listQ.size()>0) {
+                        for(Question q : listQ) {
+                            CategoriesSingleton.getInstance().getCategories().get(categoryComboBox.getSelectedIndex()).addQuestion(q);
+                        }
+                        JFrame Sframe = new JFrame("SuccessMessage");
+                        JOptionPane.showMessageDialog(Sframe, "Success "+listQ.size() +" questions", "Valid input", JOptionPane.INFORMATION_MESSAGE);
 
-                    JFrame newGUI21 = new GUI21(getWidth(), getHeight());
-                    dispose();
+                        JFrame newGUI21 = new GUI21(getWidth(), getHeight());
+                        dispose();
+                    }
+                }
+                else {
+                    JFrame FBframe = new JFrame("Format_Problems");
+                    JOptionPane.showMessageDialog(FBframe, "Wrong Format", "Invalid input", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
