@@ -89,7 +89,7 @@ public class GUI21 extends DefaultJFrame implements DropTargetListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                new GUI32(1024, 768, categoryComboBox.getSelectedIndex());
+                new GUI32Add(1024, 768, categoryComboBox.getSelectedIndex());
             }
         });
         ADDCATEGORYButton.addActionListener(new ActionListener() {
@@ -133,7 +133,7 @@ public class GUI21 extends DefaultJFrame implements DropTargetListener {
             public void actionPerformed(ActionEvent e) {
                 int row = Integer.parseInt(e.getActionCommand());
                 dispose();
-                new GUI32(getWidth(), getHeight(), categoryComboBox.getSelectedIndex(), row);
+                new GUI32Edit(getWidth(), getHeight(), categoryComboBox.getSelectedIndex(), row);
             }
         };
 
@@ -164,8 +164,6 @@ public class GUI21 extends DefaultJFrame implements DropTargetListener {
     }
 
     private void createUIComponents() {
-        // TODO: place custom component creation code here
-
         //categoryComboBox
         categoryComboBox = new JComboBox(CategoriesSingleton.getInstance().getCategoryNameList());
 
