@@ -57,8 +57,8 @@ public class Aiken_Checker {
                 if(beforeString.trim().equals("")) {
                     String txtQ[] = line.split("\\.\\s", 2);
                     q = new Question();
-                    q.setQuestionName(txtQ[0]);
-                    q.setQuestionText(txtQ[1]);
+                    q.setName(txtQ[0]);
+                    q.setText(txtQ[1]);
                     beforeString = "text";
                     listC = new ArrayList<>();
                     continue;
@@ -73,8 +73,8 @@ public class Aiken_Checker {
                     if(!txtCorA[0].equals("ANSWER:")) {
                         if(txtCorA[0].length()==2 && txtCorA[0].charAt(1)=='.' && txtCorA[0].charAt(0)>='A' && txtCorA[0].charAt(0)<='Z' && txtCorA[1].charAt(0)!=' ') {
                             Choice c = new Choice();
-                            c.setChoiceName(txtCorA[0]);
-                            c.setChoiceText(txtCorA[1]);
+                            c.setName(txtCorA[0]);
+                            c.setText(txtCorA[1]);
                             listC.add(c);
                             listCN.add(txtCorA[0]);
                         }
@@ -89,7 +89,7 @@ public class Aiken_Checker {
                             String ans = txtCorA[1] + ".";
             //# setGrade cho tung choice, chu y doc file thi cau hoi chi co 1 cau tra loi
                             for(Choice c : listC) {
-                                if ((c.getChoiceName()).equals(ans)) {
+                                if ((c.getName()).equals(ans)) {
                                     c.setGrade(1);
                                     q.setAnswer(c);
                                 }

@@ -3,26 +3,26 @@ package DataObjects;
 import java.io.Serializable;
 
 public class Choice implements Serializable {
-    private String choiceText;
-    private String choiceName;              // them thuoc tinh nay de setGrade khi doc tu file ben ngoai
+    private String text;
+    private String name;              // them thuoc tinh nay de setGrade khi doc tu file ben ngoai
     private int grade;
 
-    public String getChoiceText() {
-        return choiceText;
+    public String getText() {
+        return text;
     }
 
     public int getGrade() {
         return grade;
     }
-    public String getChoiceName() { return choiceName;}
+    public String getName() { return name;}
 
-    public void setChoiceText(String choiceText) {
-        this.choiceText = choiceText;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public void setGrade(int grade) {
         this.grade = grade;
     }
 
-    public void setChoiceName(String choiceName) {this.choiceName = choiceName;}
+    public void setName(String name) {this.name = name;}
 }
