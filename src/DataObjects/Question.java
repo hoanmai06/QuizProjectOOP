@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Question implements Serializable {
     private String questionName;
     private String questionText;
-    private final float defaultMark = 1;
+    private final double defaultMark = 1.0;
     private ArrayList<Choice> choices = new ArrayList<Choice>();            // loai bo final
     private Answer ans;                                                 // them vao thuoc tinh Answer
 
@@ -26,7 +26,7 @@ public class Question implements Serializable {
         return questionName;
     }
 
-    public int getDefaultMark() {
+    public double getDefaultMark() {
         return defaultMark;
     }
 
