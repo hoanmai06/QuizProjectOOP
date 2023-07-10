@@ -74,6 +74,7 @@ public class Aiken_Checker {
                     if(!txtCorA[0].equals("ANSWER:")) {
                         if(txtCorA[0].length()==2 && txtCorA[0].charAt(1)=='.' && txtCorA[0].charAt(0)>='A' && txtCorA[0].charAt(0)<='Z' && txtCorA[1].charAt(0)!=' ') {
                             Choice c = new Choice();
+                            c.setChoiceName(txtCorA[0]);
                             c.setChoiceText(txtCorA[1]);
                             listC.add(c);
                             listCN.add(txtCorA[0]);
@@ -89,6 +90,13 @@ public class Aiken_Checker {
                             char a = txtCorA[1].charAt(0);
                             q.setAnswer(new Answer(a));
                             q.setChoices(listC);
+
+            //# setGrade cho tung choice, chu y doc file thi cau hoi chi co 1 cau tra loi
+                            for(Choice c : listC) {
+                                if ((c.getChoiceName()).equals(txtCorA[1]+"."))
+                                    c.setGrade(1);
+                                else c.setGrade(0);
+                            }
                             listCN.clear();
                             listQ.add(q);
                             beforeString = "ANS";
