@@ -9,6 +9,8 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -24,7 +26,10 @@ public class GUI73 extends DefaultJFrame {
     private JPanel navigationCheckBoxPanel;
     private JButton finishAttemptButton;
     private JScrollPane navigationScrollPane;
-    private QuestionPanelManager[] questionPanelManager;
+    private JButton finishReviewButton;
+    private JPanel timerPanel;
+    private JTable summaryTable;
+    private QuestionPanelManager[] questionPanelManagers;
 
     public GUI73(int width, int height, Quiz quiz) {
         super(width, height);
@@ -61,10 +66,10 @@ public class GUI73 extends DefaultJFrame {
         // Insert all questionPanel into questionPanelContainer, which is the viewport.
         questionPanelContainer.setLayout(new GridLayoutManager(numberOfQuestion + 1, 1, new Insets(0, 0, 0, 0), -1, 20));
 
-        questionPanelManager = new QuestionPanelManager[numberOfQuestion];
+        questionPanelManagers = new QuestionPanelManager[numberOfQuestion];
         for (int i = 0; i < numberOfQuestion; i++) {
-            questionPanelManager[i] = new QuestionPanelManager(i + 1, quiz.getQuestions().get(i), navigationCheckBoxes[i]);
-            questionPanelContainer.add(questionPanelManager[i].getQuestionPanel(), new GridConstraints(i, 0, 1, 1, GridConstraints.ANCHOR_NORTHWEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+            questionPanelManagers[i] = new QuestionPanelManager(i + 1, quiz.getQuestions().get(i), navigationCheckBoxes[i]);
+            questionPanelContainer.add(questionPanelManagers[i].getQuestionPanel(), new GridConstraints(i, 0, 1, 1, GridConstraints.ANCHOR_NORTHWEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         }
 
         // Insert vertical spacer at the bottom of questionPaneContainer to push all questionPanel up
@@ -75,13 +80,72 @@ public class GUI73 extends DefaultJFrame {
         questionsScrollPane.getVerticalScrollBar().setUnitIncrement(6);
 
         // Listener
+        finishAttemptButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Disable finishAttempt button
+                finishAttemptButton.setEnabled(false);
+                finishAttemptButton.setVisible(false);
+
+                // Hide timer
+                timerPanel.setVisible(false);
+
+                // Disable all button and show answer
+                for (QuestionPanelManager questionPanelManager : questionPanelManagers) {
+                    questionPanelManager.disableButton();
+                    questionPanelManager.showAnswer();
+                }
+
+                // Display summaryTable
+                DefaultTableCellRenderer firstColumnRenderer = new DefaultTableCellRenderer() {
+                    @Override
+                    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                        super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                        setFont(new Font("Inter", Font.BOLD, 12));
+                        return this;
+                    }
+                };
+
+                firstColumnRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
+                firstColumnRenderer.setForeground(new Color(0xBB3630));
+
+                summaryTable.setVisible(true);
+                summaryTable.setModel(new DefaultTableModel(
+                        new Object[][]{
+                                {"State", "Finished"},
+                                {"Time taken", "Not implemented"},
+                                {"Marks", "Not implemented"},
+                                {"Grade", "Not implemented"}
+                        },
+                        new String[]{"0", "1"}
+                ));
+                summaryTable.getColumn("0").setCellRenderer(firstColumnRenderer);
+                summaryTable.getColumnModel().getColumn(0).setMinWidth(150);
+                summaryTable.getColumnModel().getColumn(0).setMaxWidth(150);
+                summaryTable.setEnabled(false);
+
+                // Enable finishReview button
+                finishReviewButton.setVisible(true);
+
+                // Set currentAttempt status to submitted
+                quiz.getPreviousAttemptList().set(quiz.getPreviousAttemptList().size() - 1, "Submitted");
+
+            }
+        });
+        finishReviewButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new GUI11(getWidth(), getHeight());
+                dispose();
+            }
+        });
     }
 
     public int questionScrollBarValue(int index) {
         int scrollBarValue = 0;
 
         for (int i = 0; i < index; i++) {
-            scrollBarValue += questionPanelManager[i].getQuestionPanel().getHeight();
+            scrollBarValue += questionPanelManagers[i].getQuestionPanel().getHeight();
             scrollBarValue += 20;
         }
 
@@ -110,6 +174,7 @@ public class GUI73 extends DefaultJFrame {
         question1.setText("Hello World");
         question1.getChoices().add(choice1);
         question1.getChoices().add(choice2);
+        question1.setAnswer(choice1);
 
         // Test choice1
         Choice choice11 = new Choice();
@@ -124,10 +189,12 @@ public class GUI73 extends DefaultJFrame {
         question2.getChoices().add(choice12);
         question2.getChoices().add(choice12);
         question2.getChoices().add(choice12);
+        question2.setAnswer(choice11);
 
         // Test question3
         Question question3 = new Question();
         question3.addChoice(choice11);
+        question3.setAnswer(choice11);
 
         // Test quiz
         Quiz quiz = new Quiz();
