@@ -14,6 +14,8 @@ import java.awt.datatransfer.Transferable;
 import java.awt.dnd.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +43,7 @@ public class GUI21 extends DefaultJFrame implements DropTargetListener {
     private JComboBox parentCategoryComboBox;
     private JLabel fileNameLabel;
     private JLabel dropfilename;
+    private JLabel IT;
     private DropTarget dt;
     private String idFile = "";
 
@@ -155,6 +158,13 @@ public class GUI21 extends DefaultJFrame implements DropTargetListener {
         };
 
         new EditButtonColumn(questionTable, edit, 2);
+        IT.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                new GUI11(getWidth(), getHeight());
+                dispose();
+            }
+        });
     }
 
     public GUI21(int width, int height, int categoryIndex) {

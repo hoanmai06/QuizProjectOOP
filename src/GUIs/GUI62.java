@@ -9,6 +9,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class GUI62 extends DefaultJFrame {
 
@@ -31,6 +33,7 @@ public class GUI62 extends DefaultJFrame {
     private JPanel addPanel;
     private JPanel ZeroVerticalGap;
     private JTable questionTable;
+    private JLabel IT;
     private JScrollPane tableScrollPane;
     private JPanel layeredPaneContainer;
 
@@ -74,6 +77,13 @@ public class GUI62 extends DefaultJFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new GUI65(getWidth(), getHeight(), quiz);
+                dispose();
+            }
+        });
+        IT.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                new GUI11(getWidth(), getHeight());
                 dispose();
             }
         });

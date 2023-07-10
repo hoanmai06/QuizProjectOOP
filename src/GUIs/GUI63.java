@@ -14,10 +14,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
 import java.util.Locale;
 
 public class GUI63 extends DefaultJFrame {
@@ -33,6 +30,7 @@ public class GUI63 extends DefaultJFrame {
     private JPanel guiPanel;
     private JButton ADDSELECTEDQUESTIONTOButton;
     private JCheckBox selectAllCheckBox;
+    private JLabel IT;
 
     public GUI63(int width, int height, Quiz quiz) {
         // TODO the constructor must have a quiz parameter
@@ -92,6 +90,13 @@ public class GUI63 extends DefaultJFrame {
                 }
 
                 new GUI62(getWidth(), getHeight(), quiz);
+                dispose();
+            }
+        });
+        IT.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                new GUI11(getWidth(), getHeight());
                 dispose();
             }
         });

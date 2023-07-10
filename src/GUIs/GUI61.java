@@ -17,6 +17,8 @@ import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Locale;
 
 public class GUI61 extends DefaultJFrame {
@@ -33,6 +35,7 @@ public class GUI61 extends DefaultJFrame {
     private JTable attemptTable;
     private JScrollPane tableScrollPane;
     private JLabel timeLimitLabel;
+    private JLabel IT;
 
     public GUI61(int width, int height, Quiz quiz) {
         super(width, height);
@@ -94,6 +97,13 @@ public class GUI61 extends DefaultJFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new GUI72(getWidth(), getHeight(), quiz);
+                dispose();
+            }
+        });
+        IT.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                new GUI11(getWidth(), getHeight());
                 dispose();
             }
         });

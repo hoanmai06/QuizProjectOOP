@@ -108,6 +108,8 @@ public class GUI32Edit extends DefaultJFrame {
                     choice.setText(choicePanelManager.getChoiceText());
                     choice.setGrade(choicePanelManager.getGrade());
 
+                    if (choice.getGrade() == 1) editingQuestion.setAnswer(choice);
+
                     editingQuestion.addChoice(choice);
                 }
 

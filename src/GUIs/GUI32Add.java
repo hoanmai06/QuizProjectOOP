@@ -127,6 +127,8 @@ public class GUI32Add extends DefaultJFrame {
                     choice.setText(choicePanelManager.getChoiceText());
                     choice.setGrade(choicePanelManager.getGrade());
 
+                    if (choice.getGrade() == 1) newQuestion.setAnswer(choice);
+
                     newQuestion.addChoice(choice);
                 }
 
