@@ -17,23 +17,7 @@ public class Choice implements Serializable {
     public String getChoiceName() { return choiceName;}
 
     public void setChoiceText(String choiceText) {
-        String newstr="";
-        for(int i=0;i<choiceText.length();i++)
-            if(choiceText.charAt(i)=='\'')
-                newstr = newstr + "&#39;";
-            else if (choiceText.charAt(i)=='\"')
-                newstr = newstr + "&#34;";
-            else if(choiceText.charAt(i)=='&')
-                newstr = newstr + "&#38;";
-            else if(choiceText.charAt(i)=='<')
-                newstr = newstr + "&#60;";
-            else if(choiceText.charAt(i)=='>')
-                newstr = newstr + "&#39;";
-            else
-                newstr= newstr + String.copyValueOf(choiceText.toCharArray(),i,1);
-
-        this.choiceText = newstr;
-
+        this.choiceText = choiceText;
     }
 
     public void setGrade(int grade) {

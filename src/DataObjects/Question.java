@@ -43,20 +43,6 @@ public class Question implements Serializable {
     }
 
     public void setQuestionText(String questionText) {
-        String newstr="";
-        for(int i=0;i<questionText.length();i++)
-            if(questionText.charAt(i)=='\'')
-                newstr = newstr + "&#39;";
-            else if (questionText.charAt(i)=='\"')
-                newstr = newstr + "&#34;";
-            else if(questionText.charAt(i)=='&')
-                newstr = newstr + "&#38;";
-            else if(questionText.charAt(i)=='<')
-                newstr = newstr + "&#60;";
-            else if(questionText.charAt(i)=='>')
-                newstr = newstr + "&#39;";
-            else
-                newstr= newstr + String.copyValueOf(questionText.toCharArray(),i,1);
         this.questionText = questionText;
     }
 
