@@ -8,12 +8,16 @@ import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.dnd.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
-public class GUI21 extends DefaultJFrame {
+public class GUI21 extends DefaultJFrame implements DropTargetListener {
     private JPanel TopBar;
     private JPanel MidZone1Container;
     private JPanel MidZone1;
@@ -35,6 +39,9 @@ public class GUI21 extends DefaultJFrame {
     private JButton IMPORTButton;
     private JComboBox parentCategoryComboBox;
     private JLabel fileNameLabel;
+    private JLabel dropfilename;
+    private DropTarget dt;
+    private String idFile = "";
 
     public GUI21(int width, int height) {
         super(width, height);
@@ -43,8 +50,9 @@ public class GUI21 extends DefaultJFrame {
         setVisible(true);
 
         dashedBorderPanel.setBorder(BorderFactory.createDashedBorder(Color.GRAY, 7, 3));
+        dt = new DropTarget(dashedBorderPanel, this);
 
-        final String[] idFile = {new String("")};
+
         CHOOSEAFILEButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -53,17 +61,17 @@ public class GUI21 extends DefaultJFrame {
                 // fd nay la mot trang so ra khi bam vao nut choose a file, chu khong phai la con tro tro toi file vua chon
 
                 File selected = new File(fd.getDirectory());
-                idFile[0] = selected.getAbsolutePath() + File.separator + fd.getFile();
+                idFile = selected.getAbsolutePath() + File.separator + fd.getFile();
 
                 fileNameLabel.setText(fd.getFile());
+
             }
         });
-
         IMPORTButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Aiken_Checker check = new Aiken_Checker();
-                ArrayList<Question> listQ = check.readFromFile(idFile[0]);
+                ArrayList<Question> listQ = check.readFromFile(idFile);
                 if(listQ.size()>0) {
                     for(Question q : listQ) {
                         CategoriesSingleton.getInstance().getCategories().get(categoryComboBox.getSelectedIndex()).addQuestion(q);
@@ -166,4 +174,41 @@ public class GUI21 extends DefaultJFrame {
 
     }
 
+    @Override
+    public void dragEnter(DropTargetDragEvent dtde) {
+    }
+
+    @Override
+    public void dragOver(DropTargetDragEvent dtde) {
+    }
+
+    @Override
+    public void dropActionChanged(DropTargetDragEvent dtde) {
+    }
+
+    @Override
+    public void dragExit(DropTargetEvent dte) {
+    }
+
+    @Override
+    public void drop(DropTargetDropEvent dtde) {
+        try {
+            Transferable tr = dtde.getTransferable();
+            DataFlavor[] flavors = tr.getTransferDataFlavors();
+            for (int i = 0; i < flavors.length; i++) {
+                if (flavors[i].isFlavorJavaFileListType()) {
+                    dtde.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
+                    java.util.List list = (List) tr.getTransferData(flavors[i]);
+                    dropfilename.setText(list.get(0) + "");
+                    idFile = list.get(0) + "";
+                    dtde.dropComplete(true);
+
+                }
+            }
+            dtde.rejectDrop();
+        } catch (Exception e) {
+            e.printStackTrace();
+            dtde.rejectDrop();
+        }
+    }
 }
