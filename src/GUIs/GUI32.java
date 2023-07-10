@@ -6,17 +6,12 @@ import DataObjects.Choice;
 import DataObjects.Question;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.intellij.uiDesigner.core.GridConstraints;
-import com.intellij.uiDesigner.core.GridLayoutManager;
-import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import javax.swing.plaf.FontUIResource;
-import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Locale;
+import java.util.ArrayList;
 
 public class GUI32 extends DefaultJFrame {
     private JPanel TopBar;
@@ -28,19 +23,18 @@ public class GUI32 extends DefaultJFrame {
     private JComboBox categoryComboBox;
     private JTextField questionNameField;
     private JTextArea questionTextField;
-    private JPanel choicePanel1;
     private JComboBox grade1ComboBox;
-    private JPanel choicePanel2;
     private JButton BLANKSFOR3MOREButton;
     private JScrollPane mainScrollPane;
     private JButton cancelButton;
     private JButton saveButton;
-    private JPanel choicePanel;
+    private JPanel choicePanelContainer;
     private JTextField defaultMarkField;
     private JTextArea choice1TextArea;
     private JTextArea choice2TextArea;
     private JComboBox grade2ComboBox;
     private JLabel titleLabel;
+    private ArrayList<ChoicePanelManager> choicePanelManagers;
 
     public GUI32(int width, int height) {
         super(width, height);
@@ -49,13 +43,17 @@ public class GUI32 extends DefaultJFrame {
 
         mainScrollPane.getVerticalScrollBar().setUnitIncrement(9);
 
+        // Setup first 2 choicePanels
+
+
         BLANKSFOR3MOREButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                choicePanel.add(new ChoicePanelFactory().getJPanel(3), new GridConstraints(2, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, true));
-                choicePanel.add(new ChoicePanelFactory().getJPanel(4), new GridConstraints(3, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, true));
-                choicePanel.add(new ChoicePanelFactory().getJPanel(5), new GridConstraints(4, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, true));
-                SwingUtilities.updateComponentTreeUI(choicePanel);
+                choicePanelContainer.add(new ChoicePanelManager(3).getChoicePanel(), new GridConstraints(2, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, true));
+                choicePanelContainer.add(new ChoicePanelManager(4).getChoicePanel(), new GridConstraints(3, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, true));
+                choicePanelContainer.add(new ChoicePanelManager(5).getChoicePanel(), new GridConstraints(4, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, true));
+//                SwingUtilities.updateComponentTreeUI(choicePanelContainer);
+                choicePanelContainer.revalidate();
             }
         });
         cancelButton.addActionListener(new ActionListener() {
@@ -72,6 +70,8 @@ public class GUI32 extends DefaultJFrame {
      */
     public GUI32(int width, int height, int categoryIndex) {
         this(width, height);
+
+        // Setup categoryComboBox
         categoryComboBox.setSelectedIndex(categoryIndex);
 
         saveButton.addActionListener(new ActionListener() {

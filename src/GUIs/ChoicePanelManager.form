@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="GUIs.ChoicePanelFactory">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="GUIs.ChoicePanelManager">
   <grid id="27dc6" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
@@ -36,7 +36,7 @@
             </properties>
             <border type="none"/>
             <children>
-              <component id="6972" class="javax.swing.JTextArea" default-binding="true">
+              <component id="6972" class="javax.swing.JTextArea" binding="choiceTextArea">
                 <constraints/>
                 <properties>
                   <enabled value="true"/>
@@ -55,7 +55,7 @@
               <text value="Grade"/>
             </properties>
           </component>
-          <component id="3eef0" class="javax.swing.JComboBox" binding="gradeBox">
+          <component id="3eef0" class="javax.swing.JComboBox" binding="choiceGradeBox">
             <constraints>
               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
