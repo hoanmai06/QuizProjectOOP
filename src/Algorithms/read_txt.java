@@ -19,7 +19,7 @@ public class read_txt {
         JOptionPane.showMessageDialog(frame, "Error at line "+i, "Invalid input", JOptionPane.ERROR_MESSAGE);
     }
     public int indexOfLines = 0;
-    public ArrayList<Question> read_txt(String absPath) {
+    public ArrayList<Question> readFromTXT(String absPath) {
         ArrayList<Question> listQ = new ArrayList<>();
 
         String beforeString = new String("");
