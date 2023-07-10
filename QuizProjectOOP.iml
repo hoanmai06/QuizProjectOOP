@@ -25,6 +25,34 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="poi-bin-5.2" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/POI_apache/commons-codec-1.15.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/POI_apache/commons-collections4-4.4.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/POI_apache/commons-compress-1.21.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/POI_apache/commons-io-2.11.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/POI_apache/commons-logging-1.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/POI_apache/commons-math3-3.6.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/POI_apache/curvesapi-1.06.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/POI_apache/log4j-api-2.14.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/POI_apache/log4j-core-2.14.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/POI_apache/poi-5.1.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/POI_apache/poi-examples-5.1.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/POI_apache/poi-excelant-5.1.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/POI_apache/poi-ooxml-5.1.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/POI_apache/poi-ooxml-full-5.1.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/POI_apache/poi-ooxml-lite-5.1.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/POI_apache/poi-scratchpad-5.1.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/POI_apache/slf4j-api-1.7.32.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/POI_apache/SparseBitSet-1.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/src/POI_apache/xmlbeans-5.0.2.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$MODULE_DIR$/src/POI_apache/poi-javadoc-5.1.0.jar!/" />
+        </JAVADOC>
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
