@@ -1,6 +1,7 @@
 package GUIs;
 
-import Algorithms.Aiken_Checker;
+import Algorithms.read_docx;
+import Algorithms.read_txt;
 import DataObjects.CategoriesSingleton;
 import DataObjects.Category;
 import DataObjects.Question;
@@ -67,8 +68,15 @@ public class GUI21 extends DefaultJFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (formatFile[0].equals("txt") || formatFile[0].equals("doc") || formatFile[0].equals("docx")) {
-                    Aiken_Checker check = new Aiken_Checker();
-                    ArrayList<Question> listQ = check.readFromFile(idFile[0]);
+                    ArrayList<Question> listQ = new ArrayList<>();
+                    if(formatFile[0].equals("txt") ) {
+                        read_txt rt = new read_txt();
+                        listQ = rt.readFromFile(idFile[0]);
+                    }
+                    if(formatFile[0].equals("docx")) {
+                        read_docx rd = new read_docx();
+                        listQ = rd.readFromDOCX(idFile[0]);
+                    }
                     if(listQ.size()>0) {
                         for(Question q : listQ) {
                             CategoriesSingleton.getInstance().getCategories().get(categoryComboBox.getSelectedIndex()).addQuestion(q);

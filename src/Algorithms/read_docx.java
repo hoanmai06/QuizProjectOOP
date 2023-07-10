@@ -113,15 +113,15 @@ public class read_docx {
         return listQ;
     }
 
-    public static void main(String[] args) {
-        read_docx r = new read_docx();
-        ArrayList<Question> list = r.readFromDOCX("C:\\Users\\ADMIN\\OneDrive - Hanoi University of Science and Technology\\Desktop\\demo_read_from_file.docx");
-        if(list.size() > 0) {
-            JFrame Sframe = new JFrame("SuccessMessage");
-            JOptionPane.showMessageDialog(Sframe, "Success "+list.size() +" questions", "Valid input", JOptionPane.INFORMATION_MESSAGE);
-            for(Question o : list) {
-                System.out.println(o.getAnswer());
-            }
-        }
-    }
+//    public static void main(String[] args) {
+//        read_docx r = new read_docx();
+//        ArrayList<Question> list = r.readFromDOCX("C:\\Users\\ADMIN\\OneDrive - Hanoi University of Science and Technology\\Desktop\\demo_read_from_file.docx");
+//        if(list.size() > 0) {
+//            JFrame Sframe = new JFrame("SuccessMessage");
+//            JOptionPane.showMessageDialog(Sframe, "Success "+list.size() +" questions", "Valid input", JOptionPane.INFORMATION_MESSAGE);
+//            for(Question o : list) {
+//                System.out.println(o.getAnswer());
+//            }
+//        }
+//    }
 }
