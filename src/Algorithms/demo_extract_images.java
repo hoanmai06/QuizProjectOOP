@@ -62,7 +62,6 @@ public class demo_extract_images {
                         frame.add(label);
 
                         j++;
-                        if(j==piclist.size()) break;
                 }
                 document.close();
 
