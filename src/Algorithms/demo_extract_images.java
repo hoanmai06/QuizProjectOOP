@@ -5,19 +5,15 @@ import javax.swing.*;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
-import org.apache.poi.xwpf.usermodel.IBody;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFPictureData;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTP;
+
 
 
 public class demo_extract_images {
@@ -48,7 +44,8 @@ public class demo_extract_images {
             int j = 0;
             for (int i=0; i<paragraphList.size(); i++) {
                     if(typeOfLine.get(i).equals("images")) {
-                        ByteArrayInputStream bais = new ByteArrayInputStream(bytes.get(j));img = ImageIO.read(bais);
+                        ByteArrayInputStream bais = new ByteArrayInputStream(bytes.get(j));
+                        img = ImageIO.read(bais);
 
                         ImageIcon image = new ImageIcon(img);
 
@@ -62,6 +59,7 @@ public class demo_extract_images {
                         frame.add(label);
 
                         j++;
+                        if(j==piclist.size()) break;
                 }
                 document.close();
 
