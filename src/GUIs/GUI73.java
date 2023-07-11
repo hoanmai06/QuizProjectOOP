@@ -95,7 +95,7 @@ public class GUI73 extends DefaultJFrame {
                 for (QuestionPanelManager questionPanelManager : questionPanelManagers) {
                     questionPanelManager.disableButton();
                     questionPanelManager.showAnswer();
-                    mark += questionPanelManager.getMark();
+                    mark += questionPanelManager.formatFinishAndGetMark();
                 }
 
                 double grade = quiz.getMaxGrade() * mark / quiz.getTotalMark();
