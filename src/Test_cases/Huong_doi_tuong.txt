@@ -1,0 +1,23 @@
+C7B5E1. Theo em thế nào là một chương trình sạch?
+A. Tất cả mã lệnh nằm trên 1 dòng duy nhất.
+B. Tất cả mã lệnh nằm trong một hàm main() duy nhất.
+C. Đặt tên biến đúng quy tắc và dễ gợi nhớ.
+D. Chép Code chép cả comments của LTV khác.
+ANSWER: C
+
+C7B5E2. Theo em thế nào là một chương trình nhanh?
+A. Tất cả mã lệnh nằm trên 1 dòng duy nhất.
+B. Chạy trong thời gian kiểm định ngắn.
+C. Code ít dòng thì chạy nhanh.
+D. Chép code của người khác thì chạy nhanh.
+ANSWER: B
+
+
+
+C7B5E3. Một con vịt xòe ra mấy cái cánh?
+A. một
+B. hai
+C. ba
+D. bốn
+E. năm
+ANSWER: B
