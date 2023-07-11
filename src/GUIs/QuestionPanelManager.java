@@ -26,9 +26,11 @@ public class QuestionPanelManager {
     JRadioButton[] choiceRadioButtonList;
     JRadioButton answerRadioButton;
     Question question;
+    JCheckBox navigationCheckBox;
 
     public QuestionPanelManager(int index, Question question, JCheckBox navigationCheckBox) {
         this.question = question;
+        this.navigationCheckBox = navigationCheckBox;
         // Customize JLabel
         questionIndex.setText(String.valueOf(index));
         questionText.setText("<html>" + FormatHTMLSafe.format(question.getText()) + "</html>");
@@ -88,8 +90,13 @@ public class QuestionPanelManager {
         return questionPanel;
     }
 
-    public double getMark() {
-        if (answerRadioButton.isSelected()) return question.getDefaultMark();
+    public double formatFinishAndGetMark() {
+        if (answerRadioButton.isSelected()) {
+            answerPanel.setBackground(new Color(0xDEFFDE));
+            navigationCheckBox.setForeground(new Color(0xDEFFDE));
+            return question.getDefaultMark();
+        }
+        navigationCheckBox.setForeground(new Color(0xE7F3F5));
         return 0;
     }
 
