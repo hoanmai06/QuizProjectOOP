@@ -8,6 +8,7 @@ public class Quiz extends QuestionListContainer implements Serializable {
     public static final int TIME_TYPE_MINUTE = 0;
     private String name;
     private String description;
+    private double maxGrade = 10;
     private int timeLimit = -1;
     private int timeLimitType = Quiz.TIME_TYPE_HOUR;
     private ArrayList<String> previousAttemptList = new ArrayList<>();
@@ -59,5 +60,21 @@ public class Quiz extends QuestionListContainer implements Serializable {
 
     public ArrayList<String> getPreviousAttemptList() {
         return previousAttemptList;
+    }
+
+    public double getTotalMark() {
+        double totalMark = 0;
+        for (Question question : getQuestions()) {
+            totalMark += question.getDefaultMark();
+        }
+        return totalMark;
+    }
+
+    public double getMaxGrade() {
+        return maxGrade;
+    }
+
+    public void setMaxGrade(double maxGrade) {
+        this.maxGrade = maxGrade;
     }
 }

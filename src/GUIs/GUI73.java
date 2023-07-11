@@ -63,7 +63,7 @@ public class GUI73 extends DefaultJFrame {
             navigationCheckBoxPanel.add(navigationCheckBoxes[i], new GridConstraints(i/5, i%5, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         }
 
-        // Insert all questionPanel into questionPanelContainer, which is the viewport.
+        // Insert all questionPanel into questionPanelContainer.
         questionPanelContainer.setLayout(new GridLayoutManager(numberOfQuestion + 1, 1, new Insets(0, 0, 0, 0), -1, 20));
 
         questionPanelManagers = new QuestionPanelManager[numberOfQuestion];
@@ -90,11 +90,15 @@ public class GUI73 extends DefaultJFrame {
                 // Hide timer
                 timerPanel.setVisible(false);
 
-                // Disable all button and show answer
+                // Disable all button, show answer, calculate mark and grade
+                double mark = 0;
                 for (QuestionPanelManager questionPanelManager : questionPanelManagers) {
                     questionPanelManager.disableButton();
                     questionPanelManager.showAnswer();
+                    mark += questionPanelManager.getMark();
                 }
+
+                double grade = quiz.getMaxGrade() * mark / quiz.getTotalMark();
 
                 // Display summaryTable
                 DefaultTableCellRenderer firstColumnRenderer = new DefaultTableCellRenderer() {
@@ -114,21 +118,22 @@ public class GUI73 extends DefaultJFrame {
                         new Object[][]{
                                 {"State", "Finished"},
                                 {"Time taken", "Not implemented"},
-                                {"Marks", "Not implemented"},
-                                {"Grade", "Not implemented"}
+                                {"Marks", "%.2f/%.2f".formatted(mark, quiz.getTotalMark())},
+                                {"Grade", "%.2f/%.2f".formatted(grade, quiz.getMaxGrade())}
                         },
                         new String[]{"0", "1"}
                 ));
                 summaryTable.getColumn("0").setCellRenderer(firstColumnRenderer);
                 summaryTable.getColumnModel().getColumn(0).setMinWidth(150);
                 summaryTable.getColumnModel().getColumn(0).setMaxWidth(150);
+                summaryTable.setRowHeight(20);
                 summaryTable.setEnabled(false);
 
                 // Enable finishReview button
                 finishReviewButton.setVisible(true);
 
                 // Set currentAttempt status to submitted
-                quiz.getPreviousAttemptList().set(quiz.getPreviousAttemptList().size() - 1, "Submitted");
+                quiz.getPreviousAttemptList().set(quiz.getPreviousAttemptList().size() - 1, "%.2f/%.2f".formatted(grade, quiz.getMaxGrade()));
 
             }
         });

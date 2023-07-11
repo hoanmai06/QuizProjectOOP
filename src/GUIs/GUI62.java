@@ -23,7 +23,7 @@ public class GUI62 extends DefaultJFrame {
     private JPanel MidZone2;
     private JLabel quizNameLabel;
     private JButton SAVEButton;
-    private JTextField textField1;
+    private JTextField maxGradeField;
     private JCheckBox shuffleCheckBox;
     private JButton addButton;
     private JButton fromQuestionBankButton;
@@ -34,6 +34,8 @@ public class GUI62 extends DefaultJFrame {
     private JPanel ZeroVerticalGap;
     private JTable questionTable;
     private JLabel IT;
+    private JLabel totalMarkLabel;
+    private JLabel invalidMaxGradeLabel;
     private JScrollPane tableScrollPane;
     private JPanel layeredPaneContainer;
 
@@ -44,6 +46,8 @@ public class GUI62 extends DefaultJFrame {
 
         // Set GUI component related to quiz
         quizNameLabel.setText("Editing quiz: " + quiz.getName());
+        totalMarkLabel.setText("Total of marks: %.2f".formatted(quiz.getTotalMark()));
+        maxGradeField.setText("%.2f".formatted(quiz.getMaxGrade()));
 
         // Setup questionTable
         String[] columnNames = {"Index", "Question name", "Delete button", "Mark"};
@@ -69,6 +73,13 @@ public class GUI62 extends DefaultJFrame {
         SAVEButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try {
+                    quiz.setMaxGrade(Double.parseDouble(maxGradeField.getText()));
+                } catch (NumberFormatException exception) {
+                    invalidMaxGradeLabel.setVisible(true);
+                    return;
+                }
+
                 new GUI61(getWidth(), getHeight(), quiz);
                 dispose();
             }
