@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class read_txt {
@@ -56,12 +57,18 @@ public class read_txt {
             else {
                 if(beforeString.trim().equals("")) {
                     String txtQ[] = line.split("\\.\\s", 2);
-                    q = new Question();
-                    q.setName(txtQ[0]);
-                    q.setText(txtQ[1]);
-                    beforeString = "text";
-                    listC = new ArrayList<>();
-                    continue;
+                    if(Arrays.stream(txtQ).count() < 2) {
+                        showError(indexOfLines);
+                        listQ.clear();
+                        break;
+                    } else {
+                        q = new Question();
+                        q.setName(txtQ[0]);
+                        q.setText(txtQ[1]);
+                        beforeString = "text";
+                        listC = new ArrayList<>();
+                        continue;
+                    }
                 }
                 if(beforeString.trim().equals("ANS")) {
                     showError(indexOfLines);
@@ -114,7 +121,7 @@ public class read_txt {
     }
 //    public static void main(String[] args) {
 //        read_txt m = new read_txt();
-//        ArrayList<Question> list = m.readFromFile("D:\\HelloJava\\helloSwing\\Aiken\\out\\production\\Aiken\\BaoHiemQuestion.txt");
+//        ArrayList<Question> list = m.readFromFile();
 //        if(list.size() > 0) {
 //            JFrame Sframe = new JFrame("SuccessMessage");
 //            JOptionPane.showMessageDialog(Sframe, "Success "+list.size() +" questions", "Valid input", JOptionPane.INFORMATION_MESSAGE);
