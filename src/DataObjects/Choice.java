@@ -6,6 +6,7 @@ public class Choice implements Serializable {
     private String text;
     private String name;              // them thuoc tinh nay de setGrade khi doc tu file ben ngoai
     private int grade;
+    private byte[] imageData;
 
     public String getText() {
         return text;
@@ -15,6 +16,7 @@ public class Choice implements Serializable {
         return grade;
     }
     public String getName() { return name;}
+    public byte[] getImageData() {return imageData;}
 
     public void setText(String text) {
         this.text = text;
@@ -25,4 +27,5 @@ public class Choice implements Serializable {
     }
 
     public void setName(String name) {this.name = name;}
+    public void setImageData(byte[] imageData) {this.imageData = imageData;}
 }

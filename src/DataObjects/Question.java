@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class Question implements Serializable {
     private String name;
     private String text;
+    private byte[] imageData;
     private final double defaultMark = 1.0;
     private ArrayList<Choice> choices = new ArrayList<Choice>();            // loai bo final
     private Choice answer;                                                 // them vao thuoc tinh Answer ls 1 trong so cac choices
@@ -32,6 +33,9 @@ public class Question implements Serializable {
 
     public Choice getAnswer() {return answer;}                 // them getter setter cho Answer
     public void setAnswer(Choice ans) {this.answer = ans;}
+    public byte[] getImageData() {return imageData;}
+
+    public void setImageData(byte[] imageData) {this.imageData = imageData;}
 
     public Object[] getQuestionTableRow() {
         Object[] questionTableRow = {Boolean.FALSE, text, "Edit"};
