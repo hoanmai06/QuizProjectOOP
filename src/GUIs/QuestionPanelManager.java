@@ -22,7 +22,7 @@ public class QuestionPanelManager {
     private JLabel questionMarkLabel;
     private JPanel questionContent;
     private JPanel choicePanel;
-//    private JLabel choiceImage;                                     // neu co anh trong choice
+    private JLabel choiceImage;                                     // neu co anh trong choice
     private JPanel questionPanel;
     private JLabel questionText;
     private JLabel questionImage;                                   // neu co anh trong text
@@ -44,13 +44,19 @@ public class QuestionPanelManager {
 
         // Check if the questionText contains image and show the image in a Label
         if(question.getq_ImageData()!=null) {
-            ByteArrayInputStream bais = new ByteArrayInputStream(question.getq_ImageData());
-            BufferedImage img = ImageIO.read(bais);
-            ImageIcon image = new ImageIcon(img);
+            ImageIcon image = toImageIcon(question.getq_ImageData());
             questionImage.setIcon(image);
         }
 
         answerLabel.setText("<html>The correct answer is: " + FormatHTMLSafe.format(question.getAnswer().getText()) + "</html>");
+
+        // Check if the answer contains image and add a Label of it to answerPanel
+//        if(question.getAnswer().getc_ImageData()!=null) {
+//            answerImage = new JLabel();
+//            ImageIcon image = toImageIcon(question.getAnswer().getc_ImageData());
+//            answerImage.setIcon(image);
+//            answerPanel.add(answerImage);
+//        }
 
         // Setup choice panel
         int numberOfChoices = question.getChoices().size();
@@ -67,8 +73,23 @@ public class QuestionPanelManager {
         };
 
         for (int i = 0; i < numberOfChoices; i++) {
+
+            // creat one Panel for each choice
+            JPanel thisChoice = new JPanel();
+            BoxLayout box = new BoxLayout(thisChoice, BoxLayout.Y_AXIS);            // xep cac components theo chieu doc
+            thisChoice.setLayout(box);
+
             Choice currentChoice = question.getChoices().get(i);
             JRadioButton currentChoiceRadioButton = new JRadioButton("<html>" + FormatHTMLSafe.format(question.getChoices().get(i).getText()) + "</html>");
+            thisChoice.add(currentChoiceRadioButton);
+
+            // Check if the choice contains image and show the image in a Label
+            choiceImage = new JLabel();
+            if(currentChoice.getc_ImageData()!=null) {
+                ImageIcon image = toImageIcon(currentChoice.getc_ImageData());
+                choiceImage.setIcon(image);
+                thisChoice.add(choiceImage);
+            }
             choiceRadioButtonList[i] = currentChoiceRadioButton;
 
             currentChoiceRadioButton.addActionListener(radioButtonListener);
@@ -76,7 +97,7 @@ public class QuestionPanelManager {
             if (question.getAnswer() == currentChoice) answerRadioButton = currentChoiceRadioButton;
 
             choiceButtonGroup.add(currentChoiceRadioButton);
-            choicePanel.add(currentChoiceRadioButton, new GridConstraints(i, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+            choicePanel.add(thisChoice, new GridConstraints(i, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         }
         // Listener
         clearSelectionButton.addActionListener(new ActionListener() {
@@ -86,6 +107,15 @@ public class QuestionPanelManager {
                 navigationCheckBox.setSelected(false);
             }
         });
+    }
+
+    //# funtion to re_write an image from its data
+    public ImageIcon toImageIcon(byte[] data) throws IOException {
+        ByteArrayInputStream bais = new ByteArrayInputStream(data);
+        BufferedImage img = ImageIO.read(bais);
+        Image dimg = img.getScaledInstance(520, 400, Image.SCALE_SMOOTH);               // set default size for the output image
+        ImageIcon image = new ImageIcon(dimg);
+        return image;
     }
 
     public void disableButton() {
