@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class GUI72 extends DefaultJFrame {
     private JPanel guiPanel;
@@ -43,7 +44,11 @@ public class GUI72 extends DefaultJFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 quiz.getPreviousAttemptList().add("Never submitted");
-                new GUI73(getWidth(), getHeight(), quiz);
+                try {
+                    new GUI73(getWidth(), getHeight(), quiz);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
                 dispose();
             }
         });

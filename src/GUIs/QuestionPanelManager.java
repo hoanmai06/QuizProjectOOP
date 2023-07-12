@@ -6,10 +6,14 @@ import DataObjects.Question;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
 public class QuestionPanelManager {
     private JPanel questionIndexPanel;
@@ -18,22 +22,33 @@ public class QuestionPanelManager {
     private JLabel questionMarkLabel;
     private JPanel questionContent;
     private JPanel choicePanel;
+//    private JLabel choiceImage;                                     // neu co anh trong choice
     private JPanel questionPanel;
     private JLabel questionText;
+    private JLabel questionImage;                                   // neu co anh trong text
     private JButton clearSelectionButton;
     private JPanel answerPanel;
     private JLabel answerLabel;
+    private JLabel answerImage;                                     // neu co anh trong answer
     JRadioButton[] choiceRadioButtonList;
     JRadioButton answerRadioButton;
     Question question;
     JCheckBox navigationCheckBox;
 
-    public QuestionPanelManager(int index, Question question, JCheckBox navigationCheckBox) {
+    public QuestionPanelManager(int index, Question question, JCheckBox navigationCheckBox) throws IOException {
         this.question = question;
         this.navigationCheckBox = navigationCheckBox;
         // Customize JLabel
         questionIndex.setText(String.valueOf(index));
         questionText.setText("<html>" + FormatHTMLSafe.format(question.getText()) + "</html>");
+
+        // Check if the questionText contains image and show the image in a Label
+        if(question.getq_ImageData()!=null) {
+            ByteArrayInputStream bais = new ByteArrayInputStream(question.getq_ImageData());
+            BufferedImage img = ImageIO.read(bais);
+            ImageIcon image = new ImageIcon(img);
+            questionImage.setIcon(image);
+        }
 
         answerLabel.setText("<html>The correct answer is: " + FormatHTMLSafe.format(question.getAnswer().getText()) + "</html>");
 
@@ -99,7 +114,6 @@ public class QuestionPanelManager {
         navigationCheckBox.setForeground(new Color(0xE7F3F5));
         return 0;
     }
-
     public JRadioButton[] getChoiceRadioButtonList() {
         return choiceRadioButtonList;
     }
