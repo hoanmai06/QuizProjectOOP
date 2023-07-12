@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 
 public class GUI73 extends DefaultJFrame {
     private JPanel TopBar;
@@ -31,7 +32,7 @@ public class GUI73 extends DefaultJFrame {
     private JTable summaryTable;
     private QuestionPanelManager[] questionPanelManagers;
 
-    public GUI73(int width, int height, Quiz quiz) {
+    public GUI73(int width, int height, Quiz quiz) throws IOException {
         super(width, height);
         setContentPane(guiPanel);
         setVisible(true);
@@ -223,7 +224,11 @@ public class GUI73 extends DefaultJFrame {
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new GUI73(1024, 768, quiz);
+                try {
+                    new GUI73(1024, 768, quiz);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
     }
