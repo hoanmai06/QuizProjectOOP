@@ -67,6 +67,7 @@ public class GUI21 extends DefaultJFrame implements DropTargetListener {
 
                 File selected = new File(fd.getDirectory());
                 idFile = selected.getAbsolutePath() + File.separator + fd.getFile();
+                dropfilename.setText(idFile);                                           // dong bo Jlabel ten file o DropFile area
 
                 String[] end = fd.getFile().split("\\.");
                 fileFormat = end[end.length-1];
@@ -224,12 +225,14 @@ public class GUI21 extends DefaultJFrame implements DropTargetListener {
                 if (flavors[i].isFlavorJavaFileListType()) {
                     dtde.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
                     java.util.List list = (List) tr.getTransferData(flavors[i]);
-                    dropfilename.setText(list.get(0) + "");
                     idFile = list.get(0) + "";
+                    dropfilename.setText(idFile);
                     String[] last = idFile.split("\\.");
                     fileFormat = last[last.length-1];
                     dtde.dropComplete(true);
 
+                    String[] idFileName = idFile.split("\\\\");                 // dong bo JLabel ten file o ChooseAfile
+                    fileNameLabel.setText(idFileName[idFileName.length-1]);
                 }
             }
             dtde.rejectDrop();
