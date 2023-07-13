@@ -51,12 +51,10 @@ public class QuestionPanelManager {
         answerLabel.setText("<html>The correct answer is: " + FormatHTMLSafe.format(question.getAnswer().getText()) + "</html>");
 
         // Check if the answer contains image and add a Label of it to answerPanel
-//        if(question.getAnswer().getc_ImageData()!=null) {
-//            answerImage = new JLabel();
-//            ImageIcon image = toImageIcon(question.getAnswer().getc_ImageData());
-//            answerImage.setIcon(image);
-//            answerPanel.add(answerImage);
-//        }
+        if(question.getAnswer().getc_ImageData()!=null) {
+            ImageIcon image = toImageIcon(question.getAnswer().getc_ImageData());
+            answerImage.setIcon(image);
+        }
 
         // Setup choice panel
         int numberOfChoices = question.getChoices().size();
