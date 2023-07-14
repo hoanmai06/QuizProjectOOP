@@ -43,7 +43,7 @@ public class GUI73 extends DefaultJFrame {
         navigationScrollPane.getVerticalScrollBar().setUnitIncrement(4);
         int numberOfQuestion = quiz.getQuestions().size();
 
-        navigationEntitiesPanel.setLayout(new GridLayoutManager(numberOfQuestion/8 + 1, 8, new Insets(0, 0, 0, 0), 0, 4));
+        navigationEntitiesPanel.setLayout(new GridLayoutManager(numberOfQuestion/8 + 1, 8, new Insets(0, 0, 0, 0), 5, 4));
         NavigationEntityManager[] navigationEntityManagers = new NavigationEntityManager[numberOfQuestion];
         for (int i = 0; i < numberOfQuestion; i++) {
             int finalI = i;

@@ -25,11 +25,9 @@ public class QuestionPanelManager {
     private JLabel choiceImage;                                     // neu co anh trong choice
     private JPanel questionPanel;
     private JLabel questionText;
-    private JLabel questionImage;                                   // neu co anh trong text
     private JButton clearSelectionButton;
     private JPanel answerPanel;
     private JLabel answerLabel;
-    private JLabel answerImage;                                     // neu co anh trong answer
     JRadioButton[] choiceRadioButtonList;
     JRadioButton answerRadioButton;
     Question question;
@@ -46,7 +44,8 @@ public class QuestionPanelManager {
         // Check if the questionText contains image and show the image in a Label
         if(question.getq_ImageData()!=null) {
             ImageIcon image = toImageIcon(question.getq_ImageData());
-            questionImage.setIcon(image);
+            JLabel questionImage = new JLabel(image);
+            questionContent.add(questionImage, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         }
 
         answerLabel.setText("<html>The correct answer is: " + FormatHTMLSafe.format(question.getAnswer().getText()) + "</html>");
@@ -54,7 +53,8 @@ public class QuestionPanelManager {
         // Check if the answer contains image and add a Label of it to answerPanel
         if(question.getAnswer().getc_ImageData()!= null) {
             ImageIcon image = toImageIcon(question.getAnswer().getc_ImageData());
-            answerImage.setIcon(image);
+            JLabel answerImage = new JLabel(image);
+            answerPanel.add(answerImage, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         }
 
         // Setup choice panel
