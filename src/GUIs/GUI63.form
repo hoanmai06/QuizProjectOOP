@@ -188,7 +188,7 @@
                       <color color="-4473925"/>
                     </border>
                     <children>
-                      <component id="50947" class="javax.swing.JTable" binding="questionTable" custom-create="true">
+                      <component id="50947" class="javax.swing.JTable" binding="questionTable">
                         <constraints/>
                         <properties/>
                       </component>

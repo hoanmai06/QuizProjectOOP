@@ -5,17 +5,12 @@ import DataObjects.Category;
 import DataObjects.Question;
 import DataObjects.Quiz;
 import com.formdev.flatlaf.FlatLightLaf;
-import com.intellij.uiDesigner.core.GridConstraints;
-import com.intellij.uiDesigner.core.GridLayoutManager;
-import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import javax.swing.plaf.FontUIResource;
-import javax.swing.text.StyleContext;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Locale;
+import java.util.ArrayList;
 
 public class GUI63 extends DefaultJFrame {
     private JPanel TopBar;
@@ -33,35 +28,49 @@ public class GUI63 extends DefaultJFrame {
     private JLabel IT;
 
     public GUI63(int width, int height, Quiz quiz) {
-        // TODO the constructor must have a quiz parameter
         super(width, height);
         setContentPane(guiPanel);
         setVisible(true);
 
+        // Setup questionTable
+        ArrayList<Category> categories = CategoriesSingleton.getInstance().getCategories();
+        DefaultTableModel questionTableModel = new DefaultTableModel(
+                categories.get(0).getGUI63QuestionTableData(),
+                new Object[]{"isSelected", "questionText"}
+        ) {
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                return getValueAt(0, columnIndex).getClass();
+            }
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column != 1;
+            }
+        };
+
+        questionTable.setModel(questionTableModel);
+        questionTable.getColumn("isSelected").setMaxWidth(25);
+        questionTable.getColumn("isSelected").setCellRenderer(new CheckBoxRenderer());
+        questionTable.setRowHeight(35);
+        questionTable.getTableHeader().setUI(null);
+
+        // Listener
         categoryComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int selectedIndex = categoryComboBox.getSelectedIndex();
-                Category selectedCategory = CategoriesSingleton.getInstance().getCategories().get(selectedIndex);
+                Category selectedCategory = categories.get(selectedIndex);
 
-                QuestionTableModel questionTableModel = (QuestionTableModel) questionTable.getModel();
+                DefaultTableModel questionTableModel = (DefaultTableModel) questionTable.getModel();
                 questionTableModel.setRowCount(0);
                 for (Question question : selectedCategory.getQuestions()) {
-                    questionTableModel.addRow(question.getQuestionTableRow());
+                    questionTableModel.addRow(question.getGUI63QuestionTableRow());
                 }
+
+                selectAllCheckBox.setSelected(false);
             }
         });
-
-        Action edit = new AbstractAction("Edit") {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int row = Integer.parseInt(e.getActionCommand());
-                dispose();
-                new GUI62(getWidth(), getHeight(), quiz);
-            }
-        };
-
-        new EditButtonColumn(questionTable, edit, 2);
 
         selectAllCheckBox.addActionListener(new ActionListener() {
             // Go through all row and set value at the first column to the value of selectAllCheckBox
@@ -126,10 +135,6 @@ public class GUI63 extends DefaultJFrame {
     private void createUIComponents() {
         //categoryComboBox
         categoryComboBox = new JComboBox(CategoriesSingleton.getInstance().getCategoryNameList());
-
-        // questionTable
-        questionTable = new QuestionTable(CategoriesSingleton.getInstance().getCategories().get(0));
-
     }
 
 }

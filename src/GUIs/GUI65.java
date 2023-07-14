@@ -7,9 +7,11 @@ import DataObjects.Quiz;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class GUI65 extends DefaultJFrame {
     private JPanel guiPanel;
@@ -32,14 +34,35 @@ public class GUI65 extends DefaultJFrame {
         setContentPane(guiPanel);
         setVisible(true);
 
+        // Setup questionTable
+        ArrayList<Category> categories = CategoriesSingleton.getInstance().getCategories();
+        DefaultTableModel questionTableModel = new DefaultTableModel(
+                categories.get(0).getGUI65QuestionTableData(),
+                new Object[]{"questionText"}
+        ) {
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                return getValueAt(0, columnIndex).getClass();
+            }
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+//        questionTable.getColumn("questionText").setCellRenderer(new QuestionRenderer());
+        questionTable.setModel(questionTableModel);
+        questionTable.setRowHeight(35);
+        questionTable.getTableHeader().setUI(null);
+
         // Set up number of random question combo box
-        int numberOfQuestion =
-                CategoriesSingleton
+        int numberOfQuestion = CategoriesSingleton
                         .getInstance()
                         .getCategories()
-                        .get(categoryComboBox.getSelectedIndex())
+                        .get(0)
                         .getQuestions()
                         .size();
+
         String[] comboBoxList = new String[numberOfQuestion + 1];
         for (int i = 0; i <= numberOfQuestion; i++)
             comboBoxList[i] = String.valueOf(i);
@@ -52,24 +75,28 @@ public class GUI65 extends DefaultJFrame {
                 int selectedIndex = categoryComboBox.getSelectedIndex();
                 Category selectedCategory = CategoriesSingleton.getInstance().getCategories().get(selectedIndex);
 
-                QuestionTableModel questionTableModel = (QuestionTableModel) questionTable.getModel();
+                DefaultTableModel questionTableModel = (DefaultTableModel) questionTable.getModel();
                 questionTableModel.setRowCount(0);
                 for (Question question : selectedCategory.getQuestions()) {
-                    questionTableModel.addRow(question.getQuestionTableRow());
+                    questionTableModel.addRow(question.getGUI65QuestionTableRow());
                 }
+
+                int numberOfQuestion = selectedCategory.getQuestions().size();
+                String[] comboBoxList = new String[numberOfQuestion + 1];
+                for (int i = 0; i <= numberOfQuestion; i++)
+                    comboBoxList[i] = String.valueOf(i);
+
+                numberOfRandomQuestionComboBox.setModel(new DefaultComboBoxModel(comboBoxList));
             }
         });
 
-        Action edit = new AbstractAction("Edit") {
+        ADDRANDOMQUESTIONTOButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int row = Integer.parseInt(e.getActionCommand());
+                new GUI62(getWidth(), getHeight(), quiz);
                 dispose();
-                new GUI32Edit(getWidth(), getHeight(), categoryComboBox.getSelectedIndex(), row);
             }
-        };
-
-        new EditButtonColumn(questionTable, edit, 2);
+        });
     }
 
     public static void main(String[] args) {
@@ -94,10 +121,6 @@ public class GUI65 extends DefaultJFrame {
     private void createUIComponents() {
         //categoryComboBox
         categoryComboBox = new JComboBox(CategoriesSingleton.getInstance().getCategoryNameList());
-
-        // questionTable
-        questionTable = new QuestionTable(CategoriesSingleton.getInstance().getCategories().get(0));
-
     }
 
 }
