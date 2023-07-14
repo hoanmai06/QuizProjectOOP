@@ -4,8 +4,8 @@ import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 
-public class QuestionRenderer extends JLabel implements TableCellRenderer {
-    public QuestionRenderer() {
+public class StringRenderer extends JLabel implements TableCellRenderer {
+    public StringRenderer() {
         setOpaque(true);
     }
     @Override
