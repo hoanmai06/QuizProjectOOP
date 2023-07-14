@@ -50,11 +50,43 @@ public class GUI62 extends DefaultJFrame {
         maxGradeField.setText("%.2f".formatted(quiz.getMaxGrade()));
 
         // Setup questionTable
-        String[] columnNames = {"Index", "Question name", "Delete button", "Mark"};
-        DefaultTableModel tableModel = new DefaultTableModel(getQuestionTableData(quiz), columnNames);
+        String[] columnNames = {"Index", "Question name", "Delete", "Mark"};
+        DefaultTableModel questionTableModel = new DefaultTableModel(getQuestionTableData(quiz), columnNames) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column == 2;
+            }
+        };
 
-        questionTable.setModel(tableModel);
-        questionTable.setRowHeight(30);
+        questionTable.setModel(questionTableModel);
+        questionTable.setRowSelectionAllowed(false);
+        questionTable.setDefaultRenderer(Object.class, new StringRenderer());
+        questionTable.setRowHeight(35);
+
+        questionTable.getColumn("Index").setMaxWidth(35);
+        questionTable.getColumn("Mark").setMaxWidth(35);
+        questionTable.getColumn("Delete").setMaxWidth(35);
+
+        questionTable.getTableHeader().setUI(null);
+
+        StringRenderer indexRenderer = new StringRenderer();
+        indexRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        questionTable.getColumn("Index").setCellRenderer(indexRenderer);
+
+        Action delete = new AbstractAction("Delete") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int row = Integer.parseInt(e.getActionCommand());
+                quiz.getQuestions().remove(row);
+                questionTableModel.removeRow(row);
+
+                for (int i = 0; i < questionTable.getRowCount(); i++) {
+                    questionTableModel.setValueAt(String.valueOf(i + 1), i, 0);
+                }
+            }
+        };
+
+        new DeleteButtonColumn(questionTable, delete, 2);
 
         // Listener
         addButton.addActionListener(new ActionListener() {
@@ -105,7 +137,7 @@ public class GUI62 extends DefaultJFrame {
 
         Object[][] questionTableData = new Object[numberOfQuestions][4];
         for (int i = 0; i < numberOfQuestions; i++) {
-            questionTableData[i] = new Object[]{i, quiz.getQuestions().get(i).getText(), "", "1"};
+            questionTableData[i] = new Object[]{String.valueOf(i + 1), quiz.getQuestions().get(i).getText(), "", "1.00"};
         }
         return questionTableData;
     }

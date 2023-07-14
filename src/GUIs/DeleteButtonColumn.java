@@ -166,21 +166,23 @@ public class DeleteButtonColumn extends AbstractCellEditor
 //		}
 
 //		renderButton.setText( (value == null) ? "" : value.toString() );
-		if (value == null)
-		{
-			renderButton.setText( "" );
-			renderButton.setIcon( null );
-		}
-		else if (value instanceof Icon)
-		{
-			renderButton.setText( "" );
-			renderButton.setIcon( (Icon)value );
-		}
-		else
-		{
-			renderButton.setText( value.toString() );
-			renderButton.setIcon( null );
-		}
+//		if (value == null)
+//		{
+//			renderButton.setText( "" );
+//			renderButton.setIcon( null );
+//		}
+//		else if (value instanceof Icon)
+//		{
+//			renderButton.setText( "" );
+//			renderButton.setIcon( (Icon)value );
+//		}
+//		else
+//		{
+//			renderButton.setText( value.toString() );
+//			renderButton.setIcon( null );
+//		}
+
+		renderButton.setIcon(new ImageIcon("src/icons/trash.png"));
 
 		return renderButton;
 	}
