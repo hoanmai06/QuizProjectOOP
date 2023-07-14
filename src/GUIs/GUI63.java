@@ -52,6 +52,7 @@ public class GUI63 extends DefaultJFrame {
         questionTable.setModel(questionTableModel);
         questionTable.getColumn("isSelected").setMaxWidth(25);
         questionTable.getColumn("isSelected").setCellRenderer(new CheckBoxRenderer());
+        questionTable.getColumn("questionText").setCellRenderer(new StringRenderer());
         questionTable.setRowHeight(35);
         questionTable.getTableHeader().setUI(null);
 
