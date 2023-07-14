@@ -33,11 +33,12 @@ public class QuestionPanelManager {
     JRadioButton[] choiceRadioButtonList;
     JRadioButton answerRadioButton;
     Question question;
-    JCheckBox navigationCheckBox;
+    NavigationEntityManager navigationEntity;
+    ButtonGroup choiceButtonGroup;
 
-    public QuestionPanelManager(int index, Question question, JCheckBox navigationCheckBox) throws IOException {
+    public QuestionPanelManager(int index, Question question, NavigationEntityManager navigationEntity) throws IOException {
         this.question = question;
-        this.navigationCheckBox = navigationCheckBox;
+        this.navigationEntity = navigationEntity;
         // Customize JLabel
         questionIndex.setText(String.valueOf(index));
         questionText.setText("<html>" + FormatHTMLSafe.format(question.getText()) + "</html>");
@@ -62,11 +63,11 @@ public class QuestionPanelManager {
         choicePanel.setLayout(new GridLayoutManager(numberOfChoices, 1, new Insets(0, 0, 0, 0), -1, 8));
 
         choiceRadioButtonList = new JRadioButton[numberOfChoices];
-        ButtonGroup choiceButtonGroup = new ButtonGroup();
+        choiceButtonGroup = new ButtonGroup();
         ActionListener radioButtonListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                navigationCheckBox.setSelected(true);
+                navigationEntity.setColor(NavigationEntityManager.SELECTED);
                 answerStatus.setText("<html>Answered<br>&nbsp;</html>");
             }
         };
@@ -76,7 +77,7 @@ public class QuestionPanelManager {
             // Create one JPanel for each choice
             JPanel thisChoice = new JPanel();
             thisChoice.setBackground(new Color(0xE7F3F5));
-            BoxLayout box = new BoxLayout(thisChoice, BoxLayout.Y_AXIS);            // xep cac components theo chieu doc
+            BoxLayout box = new BoxLayout(thisChoice, BoxLayout.Y_AXIS); // xep cac components theo chieu doc
             thisChoice.setLayout(box);
 
             Choice currentChoice = question.getChoices().get(i);
@@ -104,7 +105,7 @@ public class QuestionPanelManager {
             @Override
             public void actionPerformed(ActionEvent e) {
                 choiceButtonGroup.clearSelection();
-                navigationCheckBox.setSelected(false);
+                navigationEntity.setColor(NavigationEntityManager.NOT_SELECTED);
                 answerStatus.setText("<html>Not yet answered</html>");
             }
         });
@@ -139,10 +140,13 @@ public class QuestionPanelManager {
     public double formatFinishAndGetMark() {
         if (answerRadioButton.isSelected()) {
             answerPanel.setBackground(new Color(0xDEFFDE));
-            navigationCheckBox.setForeground(new Color(0xDEFFDE));
+            navigationEntity.setColor(NavigationEntityManager.CORRECT);
             return question.getDefaultMark();
         }
-        navigationCheckBox.setForeground(new Color(0xE7F3F5));
+
+        if (choiceButtonGroup.getSelection() != null)
+            navigationEntity.setColor(NavigationEntityManager.INCORRECT);
+
         return 0;
     }
     public JRadioButton[] getChoiceRadioButtonList() {

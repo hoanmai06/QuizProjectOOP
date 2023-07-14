@@ -24,7 +24,7 @@ public class GUI73 extends DefaultJFrame {
     private JPanel MidZone2Container;
     private JPanel MidZone2;
     private JScrollPane questionsScrollPane;
-    private JPanel navigationCheckBoxPanel;
+    private JPanel navigationEntitiesPanel;
     private JButton finishAttemptButton;
     private JScrollPane navigationScrollPane;
     private JButton finishReviewButton;
@@ -43,25 +43,22 @@ public class GUI73 extends DefaultJFrame {
         navigationScrollPane.getVerticalScrollBar().setUnitIncrement(4);
         int numberOfQuestion = quiz.getQuestions().size();
 
-        MouseListener mouseListener = new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                JCheckBox source = (JCheckBox) e.getSource();
-                int sourceIndex = Integer.parseInt(source.getActionCommand());
-
-                questionsScrollPane.getVerticalScrollBar().setValue(questionScrollBarValue(sourceIndex));
-            }
-        };
-
-        navigationCheckBoxPanel.setLayout(new GridLayoutManager(numberOfQuestion/5 + 1, 6, new Insets(0, 0, 0, 0), 0, 4));
-        JCheckBox[] navigationCheckBoxes = new JCheckBox[numberOfQuestion];
+        navigationEntitiesPanel.setLayout(new GridLayoutManager(numberOfQuestion/8 + 1, 8, new Insets(0, 0, 0, 0), 0, 4));
+        NavigationEntityManager[] navigationEntityManagers = new NavigationEntityManager[numberOfQuestion];
         for (int i = 0; i < numberOfQuestion; i++) {
-            navigationCheckBoxes[i] = new JCheckBox(String.valueOf(i+1));
-            navigationCheckBoxes[i].setEnabled(false);
-            navigationCheckBoxes[i].setActionCommand(String.valueOf(i));
-            navigationCheckBoxes[i].addMouseListener(mouseListener);
+            int finalI = i;
+            MouseListener mouseListener = new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    JPanel source = (JPanel) e.getSource();
+                    questionsScrollPane.getVerticalScrollBar().setValue(questionScrollBarValue(finalI));
+                }
+            };
 
-            navigationCheckBoxPanel.add(navigationCheckBoxes[i], new GridConstraints(i/5, i%5, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+            navigationEntityManagers[i] = new NavigationEntityManager(i + 1);
+            navigationEntityManagers[i].getEntity().addMouseListener(mouseListener);
+
+            navigationEntitiesPanel.add(navigationEntityManagers[i].getEntity(), new GridConstraints(i/8, i%8, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         }
 
         // Insert all questionPanel into questionPanelContainer.
@@ -69,7 +66,7 @@ public class GUI73 extends DefaultJFrame {
 
         questionPanelManagers = new QuestionPanelManager[numberOfQuestion];
         for (int i = 0; i < numberOfQuestion; i++) {
-            questionPanelManagers[i] = new QuestionPanelManager(i + 1, quiz.getQuestions().get(i), navigationCheckBoxes[i]);
+            questionPanelManagers[i] = new QuestionPanelManager(i + 1, quiz.getQuestions().get(i), navigationEntityManagers[i]);
             questionPanelContainer.add(questionPanelManagers[i].getQuestionPanel(), new GridConstraints(i, 0, 1, 1, GridConstraints.ANCHOR_NORTHWEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         }
 
@@ -78,7 +75,7 @@ public class GUI73 extends DefaultJFrame {
         questionPanelContainer.add(spacer, new GridConstraints(numberOfQuestion, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
 
         // Increase scrollPaneSpeed
-        questionsScrollPane.getVerticalScrollBar().setUnitIncrement(6);
+        questionsScrollPane.getVerticalScrollBar().setUnitIncrement(8);
 
         // Listener
         finishAttemptButton.addActionListener(new ActionListener() {
