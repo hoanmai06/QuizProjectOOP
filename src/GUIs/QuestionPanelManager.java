@@ -51,7 +51,7 @@ public class QuestionPanelManager {
         answerLabel.setText("<html>The correct answer is: " + FormatHTMLSafe.format(question.getAnswer().getText()) + "</html>");
 
         // Check if the answer contains image and add a Label of it to answerPanel
-        if(question.getAnswer().getc_ImageData()!=null) {
+        if(question.getAnswer().getc_ImageData()!= null) {
             ImageIcon image = toImageIcon(question.getAnswer().getc_ImageData());
             answerImage.setIcon(image);
         }
@@ -67,13 +67,15 @@ public class QuestionPanelManager {
             @Override
             public void actionPerformed(ActionEvent e) {
                 navigationCheckBox.setSelected(true);
+                answerStatus.setText("<html>Answered<br>&nbsp;</html>");
             }
         };
 
         for (int i = 0; i < numberOfChoices; i++) {
 
-            // creat one Panel for each choice
+            // Create one JPanel for each choice
             JPanel thisChoice = new JPanel();
+            thisChoice.setBackground(new Color(0xE7F3F5));
             BoxLayout box = new BoxLayout(thisChoice, BoxLayout.Y_AXIS);            // xep cac components theo chieu doc
             thisChoice.setLayout(box);
 
@@ -103,6 +105,7 @@ public class QuestionPanelManager {
             public void actionPerformed(ActionEvent e) {
                 choiceButtonGroup.clearSelection();
                 navigationCheckBox.setSelected(false);
+                answerStatus.setText("<html>Not yet answered</html>");
             }
         });
     }
