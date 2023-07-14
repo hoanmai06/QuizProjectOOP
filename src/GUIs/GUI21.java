@@ -144,7 +144,7 @@ public class GUI21 extends DefaultJFrame implements DropTargetListener {
                 QuestionTableModel questionTableModel = (QuestionTableModel) questionTable.getModel();
                 questionTableModel.setRowCount(0);
                 for (Question question : selectedCategory.getQuestions()) {
-                    questionTableModel.addRow(question.getQuestionTableRow());
+                    questionTableModel.addRow(question.getGUI21QuestionTableRow());
                 }
             }
         });
