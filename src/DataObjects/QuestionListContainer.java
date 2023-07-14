@@ -18,11 +18,31 @@ public class QuestionListContainer implements Serializable {
         this.questions = questions;
     }
 
-    public Object[][] getQuestionTableData() {
+    public Object[][] getGUI21QuestionTableData() {
         Object[][] questionTaleData = new Object[questions.size()][3];
 
         for (int i = 0; i < questions.size(); i++) {
-            questionTaleData[i] = questions.get(i).getQuestionTableRow();
+            questionTaleData[i] = questions.get(i).getGUI21QuestionTableRow();
+        }
+
+        return questionTaleData;
+    }
+
+    public Object[][] getGUI63QuestionTableData() {
+        Object[][] questionTaleData = new Object[questions.size()][2];
+
+        for (int i = 0; i < questions.size(); i++) {
+            questionTaleData[i] = questions.get(i).getGUI63QuestionTableRow();
+        }
+
+        return questionTaleData;
+    }
+
+    public Object[][] getGUI65QuestionTableData() {
+        Object[][] questionTaleData = new Object[questions.size()][1];
+
+        for (int i = 0; i < questions.size(); i++) {
+            questionTaleData[i] = questions.get(i).getGUI65QuestionTableRow();
         }
 
         return questionTaleData;

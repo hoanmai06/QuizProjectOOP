@@ -35,9 +35,16 @@ public class Question implements Serializable {
     public byte[] getq_ImageData() {return q_imageData;}
 
     public void setAnswer(Choice ans) {this.answer = ans;}
-    public Object[] getQuestionTableRow() {
-        Object[] questionTableRow = {Boolean.FALSE, text, "Edit"};
-        return questionTableRow;
+    public Object[] getGUI21QuestionTableRow() {
+        return new Object[]{Boolean.FALSE, text, "Edit"};
+    }
+
+    public Object[] getGUI63QuestionTableRow() {
+        return new Object[]{Boolean.FALSE, text};
+    }
+
+    public Object[] getGUI65QuestionTableRow() {
+        return new Object[]{text};
     }
 
     public ArrayList<Choice> getChoices() {
