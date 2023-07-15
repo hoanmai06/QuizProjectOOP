@@ -67,7 +67,7 @@ public class QuestionPanelManager {
         ActionListener radioButtonListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                navigationEntity.setColor(NavigationEntityManager.SELECTED);
+                navigationEntity.setColor(GUIConfig.NAVIGATION_SELECTED);
                 answerStatus.setText("<html>Answered<br>&nbsp;</html>");
             }
         };
@@ -105,7 +105,7 @@ public class QuestionPanelManager {
             @Override
             public void actionPerformed(ActionEvent e) {
                 choiceButtonGroup.clearSelection();
-                navigationEntity.setColor(NavigationEntityManager.NOT_SELECTED);
+                navigationEntity.setColor(GUIConfig.NAVIGATION_NOT_SELECTED);
                 answerStatus.setText("<html>Not yet answered</html>");
             }
         });
@@ -115,9 +115,12 @@ public class QuestionPanelManager {
     public ImageIcon toImageIcon(byte[] data) throws IOException {
         ByteArrayInputStream bais = new ByteArrayInputStream(data);
         BufferedImage img = ImageIO.read(bais);
-        Image dimg = img.getScaledInstance(520, 400, Image.SCALE_SMOOTH);               // set default size for the output image
-        ImageIcon image = new ImageIcon(dimg);
-        return image;
+
+        if (img.getWidth() <= GUIConfig.imageWidth) return new ImageIcon(img);
+        else {
+            Image newIMG = img.getScaledInstance(GUIConfig.imageWidth, GUIConfig.imageWidth*img.getHeight()/img.getWidth(), Image.SCALE_SMOOTH);               // set default size for the output image
+            return new ImageIcon(newIMG);
+        }
     }
 
     public void disableButton() {
@@ -140,12 +143,12 @@ public class QuestionPanelManager {
     public double formatFinishAndGetMark() {
         if (answerRadioButton.isSelected()) {
             answerPanel.setBackground(new Color(0xDEFFDE));
-            navigationEntity.setColor(NavigationEntityManager.CORRECT);
+            navigationEntity.setColor(GUIConfig.NAVIGATION_CORRECT);
             return question.getDefaultMark();
         }
 
         if (choiceButtonGroup.getSelection() != null)
-            navigationEntity.setColor(NavigationEntityManager.INCORRECT);
+            navigationEntity.setColor(GUIConfig.NAVIGATION_INCORRECT);
 
         return 0;
     }
