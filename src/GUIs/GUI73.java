@@ -14,6 +14,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GUI73 extends DefaultJFrame {
     private JPanel TopBar;
@@ -29,7 +31,10 @@ public class GUI73 extends DefaultJFrame {
     private JScrollPane navigationScrollPane;
     private JButton finishReviewButton;
     private JPanel timerPanel;
+
+    private JLabel countdown;
     private JTable summaryTable;
+    private JLabel labelClock;
     private QuestionPanelManager[] questionPanelManagers;
 
     public GUI73(int width, int height, Quiz quiz) throws IOException {
@@ -81,15 +86,34 @@ public class GUI73 extends DefaultJFrame {
         // Increase scrollPaneSpeed
         questionsScrollPane.getVerticalScrollBar().setUnitIncrement(8);
 
+        // Creat count down clock
+
+        int seconds = 60*60;
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            int i = seconds;
+            public void run() {
+                int hour = i / 3600;
+                int minute = (i % 3600) / 60;
+                int second = i % 60;
+                labelClock.setText("Time left: " + String.format("%02d:%02d:%02d", hour, minute, second));
+                if (i <= 0) {
+                    timer.cancel();
+                    finishAttemptButton.doClick();
+                }
+                i--;
+            }
+        }, 0, 1000);
+
         // Listener
-        finishAttemptButton.addActionListener(new ActionListener() {
+        finishAttemptButton.addActionListener(new ActionListener()  {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Disable finishAttempt button
                 finishAttemptButton.setEnabled(false);
                 finishAttemptButton.setVisible(false);
 
-                // Hide timer
+                // Hide time:
                 timerPanel.setVisible(false);
 
                 // Disable all button, show answer, calculate mark and grade
