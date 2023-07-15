@@ -52,8 +52,15 @@ public class QuestionPanelManager {
 
         // Check if the answer contains image and add a Label of it to answerPanel
         if(question.getAnswer().getc_ImageData()!=null) {
+            // 14/7/2023: khi ma cau hoi có ảnh thì mới thêm jlabel ảnh:
+             answerImage = new JLabel();
+            // set cho answerPanel -> boxlaytout
+            BoxLayout box = new BoxLayout(answerPanel, BoxLayout.Y_AXIS);            // xep cac components theo chieu doc
+            answerPanel.setLayout(box);
+
             ImageIcon image = toImageIcon(question.getAnswer().getc_ImageData());
             answerImage.setIcon(image);
+            answerPanel.add(answerImage);
         }
 
         // Setup choice panel
