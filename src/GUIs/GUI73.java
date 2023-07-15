@@ -39,11 +39,12 @@ public class GUI73 extends DefaultJFrame {
 
         // Set GUI component related to quiz
 
-        // Setup navigationCheckBoxPanel
+        // Setup navigationEntitiesPanel
         navigationScrollPane.getVerticalScrollBar().setUnitIncrement(4);
         int numberOfQuestion = quiz.getQuestions().size();
+        int ePL = GUIConfig.navigationEntitiesPerLine;
 
-        navigationEntitiesPanel.setLayout(new GridLayoutManager(numberOfQuestion/8 + 1, 8, new Insets(0, 0, 0, 0), 5, 4));
+        navigationEntitiesPanel.setLayout(new GridLayoutManager(numberOfQuestion/ePL + 1, ePL + 1, new Insets(0, 0, 0, 0), 5, 4));
         NavigationEntityManager[] navigationEntityManagers = new NavigationEntityManager[numberOfQuestion];
         for (int i = 0; i < numberOfQuestion; i++) {
             int finalI = i;
@@ -58,8 +59,11 @@ public class GUI73 extends DefaultJFrame {
             navigationEntityManagers[i] = new NavigationEntityManager(i + 1);
             navigationEntityManagers[i].getEntity().addMouseListener(mouseListener);
 
-            navigationEntitiesPanel.add(navigationEntityManagers[i].getEntity(), new GridConstraints(i/8, i%8, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+            navigationEntitiesPanel.add(navigationEntityManagers[i].getEntity(), new GridConstraints(i/ePL, i%ePL, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         }
+        final Spacer horizontalSpacer = new Spacer();
+        navigationEntitiesPanel.add(horizontalSpacer, new GridConstraints(0, ePL, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+
 
         // Insert all questionPanel into questionPanelContainer.
         questionPanelContainer.setLayout(new GridLayoutManager(numberOfQuestion + 1, 1, new Insets(0, 0, 0, 0), -1, 20));
@@ -71,8 +75,8 @@ public class GUI73 extends DefaultJFrame {
         }
 
         // Insert vertical spacer at the bottom of questionPaneContainer to push all questionPanel up
-        final Spacer spacer = new Spacer();
-        questionPanelContainer.add(spacer, new GridConstraints(numberOfQuestion, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        final Spacer verticalSpacer = new Spacer();
+        questionPanelContainer.add(verticalSpacer, new GridConstraints(numberOfQuestion, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
 
         // Increase scrollPaneSpeed
         questionsScrollPane.getVerticalScrollBar().setUnitIncrement(8);
