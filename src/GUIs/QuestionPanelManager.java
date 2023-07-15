@@ -113,14 +113,17 @@ public class QuestionPanelManager {
 
     //# funtion to re_write an image from its data
     public ImageIcon toImageIcon(byte[] data) throws IOException {
-        ByteArrayInputStream bais = new ByteArrayInputStream(data);
-        BufferedImage img = ImageIO.read(bais);
+        ImageIcon imageIcon = new ImageIcon(data);
 
-        if (img.getWidth() <= GUIConfig.imageWidth) return new ImageIcon(img);
-        else {
-            Image newIMG = img.getScaledInstance(GUIConfig.imageWidth, GUIConfig.imageWidth*img.getHeight()/img.getWidth(), Image.SCALE_SMOOTH);               // set default size for the output image
-            return new ImageIcon(newIMG);
+        int oldHeight = imageIcon.getIconHeight();
+        int oldWidth = imageIcon.getIconWidth();
+        int newWidth = GUIConfig.imageWidth;
+
+        if (oldWidth < newWidth) {
+            return imageIcon;
         }
+        Image scaledImage = imageIcon.getImage().getScaledInstance(newWidth, newWidth*oldHeight/oldWidth, Image.SCALE_DEFAULT);
+        return new ImageIcon(scaledImage);
     }
 
     public void disableButton() {
