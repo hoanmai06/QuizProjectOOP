@@ -1,5 +1,6 @@
 package GUIs;
 
+import Algorithms.Countdown;
 import DataObjects.Choice;
 import DataObjects.Question;
 import DataObjects.Quiz;
@@ -88,22 +89,30 @@ public class GUI73 extends DefaultJFrame {
 
         // Creat count down clock
 
-        int seconds = 60*60;
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            int i = seconds;
-            public void run() {
-                int hour = i / 3600;
-                int minute = (i % 3600) / 60;
-                int second = i % 60;
-                labelClock.setText("Time left: " + String.format("%02d:%02d:%02d", hour, minute, second));
-                if (i <= 0) {
-                    timer.cancel();
-                    finishAttemptButton.doClick();
-                }
-                i--;
+        class countdownAndFinish extends Countdown {
+            @Override
+            public void showCountDown(JLabel label, int seconds) {
+                Timer timer = new Timer();
+                timer.schedule(new TimerTask() {
+                    int i = seconds;
+                    public void run() {
+                        int hour = i / 3600;
+                        int minute = (i % 3600) / 60;
+                        int second = i % 60;
+                        label.setText("Time left: " + String.format("%02d:%02d:%02d", hour, minute, second));
+                        if (i < 0) {
+                            timer.cancel();
+                            finishAttemptButton.doClick();
+                        }
+                        i--;
+                    }
+                }, 0, 1000);
             }
-        }, 0, 1000);
+        }
+
+        countdownAndFinish countdownClock = new countdownAndFinish();
+        countdownClock.showCountDown(labelClock, 10);
+
 
         // Listener
         finishAttemptButton.addActionListener(new ActionListener()  {
