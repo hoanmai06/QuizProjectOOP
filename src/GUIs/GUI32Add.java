@@ -132,7 +132,7 @@ public class GUI32Add extends DefaultJFrame {
                     newQuestion.addChoice(choice);
                 }
 
-                CategoriesSingleton.getInstance().getCategories().get(categoryComboBox.getSelectedIndex()).addQuestion(newQuestion);
+                CategoriesSingleton.getInstance().findcategory(CategoriesSingleton.getInstance().getCategory(),categoryComboBox.getSelectedIndex()).addQuestion(newQuestion);
                 CategoriesSingleton.getInstance().setAddingQuestion(null);
 
                 dispose();

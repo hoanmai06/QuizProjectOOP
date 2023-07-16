@@ -52,6 +52,7 @@ public class GUI21 extends DefaultJFrame implements DropTargetListener {
     public GUI21(int width, int height) {
         super(width, height);
         categoryComboBox.setSelectedIndex(0);
+        parentCategoryComboBox.setSelectedIndex(0);
         setContentPane(guiPanel);
         setVisible(true);
 
@@ -90,7 +91,7 @@ public class GUI21 extends DefaultJFrame implements DropTargetListener {
                     }
                     if(listQ.size()>0) {
                         for(Question q : listQ) {
-                            CategoriesSingleton.getInstance().getCategories().get(categoryComboBox.getSelectedIndex()).addQuestion(q);
+                            CategoriesSingleton.getInstance().findcategory(CategoriesSingleton.getInstance().getCategory(),categoryComboBox.getSelectedIndex()).addQuestion(q);
                         }
                         JFrame Sframe = new JFrame("SuccessMessage");
                         JOptionPane.showMessageDialog(Sframe, "Success "+listQ.size() +" questions", "Valid input", JOptionPane.INFORMATION_MESSAGE);
@@ -116,6 +117,7 @@ public class GUI21 extends DefaultJFrame implements DropTargetListener {
         ADDCATEGORYButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 if (categoryNameTextField.getText().isEmpty())
                     JOptionPane.showMessageDialog(null, "Category name is required.");
                 else {
@@ -128,9 +130,15 @@ public class GUI21 extends DefaultJFrame implements DropTargetListener {
                     categoryNameTextField.setText("");
                     categoryInfoTextArea.setText("");
                     categoryIDNumberTextField.setText("");
+                    int selectedIndex = categoryComboBox.getSelectedIndex();
 
-                    CategoriesSingleton.getInstance().addCategory(new_category);
-                    categoryComboBox.addItem(String.format("%s (0)", new_category.getCategoryName()));
+                    CategoriesSingleton.getInstance().addCategory(new_category,selectedIndex);
+
+                    categoryComboBox.revalidate();
+                    categoryComboBox = new JComboBox(CategoriesSingleton.getInstance().getCategoryNameList());
+                    parentCategoryComboBox.revalidate();
+
+                    parentCategoryComboBox = new JComboBox(CategoriesSingleton.getInstance().getCategoryNameList());
                     JOptionPane.showMessageDialog(null, String.format("Added category \"%s\"", new_category.getCategoryName()));
                 }
             }
@@ -139,7 +147,7 @@ public class GUI21 extends DefaultJFrame implements DropTargetListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int selectedIndex = categoryComboBox.getSelectedIndex();
-                Category selectedCategory = CategoriesSingleton.getInstance().getCategories().get(selectedIndex);
+                Category selectedCategory = CategoriesSingleton.getInstance().findcategory(CategoriesSingleton.getInstance().getCategory(),selectedIndex);
 
                 QuestionTableModel questionTableModel = (QuestionTableModel) questionTable.getModel();
                 questionTableModel.setRowCount(0);
@@ -194,9 +202,11 @@ public class GUI21 extends DefaultJFrame implements DropTargetListener {
     private void createUIComponents() {
         //categoryComboBox
         categoryComboBox = new JComboBox(CategoriesSingleton.getInstance().getCategoryNameList());
+        parentCategoryComboBox = new JComboBox(CategoriesSingleton.getInstance().getCategoryNameList());
 
         // questionTable
-        questionTable = new QuestionTable(CategoriesSingleton.getInstance().getCategories().get(0));
+        questionTable = new QuestionTable(CategoriesSingleton.getInstance().getCategory());
+
 
     }
 

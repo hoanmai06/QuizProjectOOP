@@ -56,12 +56,7 @@ public class GUI65 extends DefaultJFrame {
         questionTable.getTableHeader().setUI(null);
 
         // Set up number of random question combo box
-        int numberOfQuestion = CategoriesSingleton
-                        .getInstance()
-                        .getCategories()
-                        .get(0)
-                        .getQuestions()
-                        .size();
+        int numberOfQuestion = CategoriesSingleton.getInstance().getCategory().getQuestions().size();
 
         String[] comboBoxList = new String[numberOfQuestion + 1];
         for (int i = 0; i <= numberOfQuestion; i++)
@@ -73,7 +68,8 @@ public class GUI65 extends DefaultJFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int selectedIndex = categoryComboBox.getSelectedIndex();
-                Category selectedCategory = CategoriesSingleton.getInstance().getCategories().get(selectedIndex);
+
+                Category selectedCategory = CategoriesSingleton.getInstance().findcategory(CategoriesSingleton.getInstance().getCategory(),selectedIndex);
 
                 DefaultTableModel questionTableModel = (DefaultTableModel) questionTable.getModel();
                 questionTableModel.setRowCount(0);

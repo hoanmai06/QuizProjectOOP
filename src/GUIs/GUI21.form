@@ -434,7 +434,7 @@
                           </component>
                         </children>
                       </scrollpane>
-                      <component id="9f986" class="javax.swing.JComboBox" binding="parentCategoryComboBox">
+                      <component id="9f986" class="javax.swing.JComboBox" binding="parentCategoryComboBox" custom-create="true">
                         <constraints>
                           <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
                             <preferred-size width="-1" height="30"/>
@@ -442,9 +442,7 @@
                           </grid>
                         </constraints>
                         <properties>
-                          <model>
-                            <item value="Default"/>
-                          </model>
+                          <enabled value="true"/>
                         </properties>
                       </component>
                     </children>
