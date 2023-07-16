@@ -20,6 +20,7 @@ public class GUI72 extends DefaultJFrame {
     private JPanel MidZone2;
     private JButton cancelButton;
     private JButton startButton;
+    private JButton exportButton;
 
     public GUI72(int width, int height, Quiz quiz) {
         super(width, height);
@@ -50,6 +51,12 @@ public class GUI72 extends DefaultJFrame {
                     throw new RuntimeException(ex);
                 }
                 dispose();
+            }
+        });
+        exportButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Export");
             }
         });
     }
