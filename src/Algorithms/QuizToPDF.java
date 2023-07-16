@@ -158,14 +158,20 @@ public class QuizToPDF {
 
     public static void exportQuizToPDF(Quiz quiz, String url) throws IOException {
         contentStream.beginText();
-        contentStream.setFont(documentFont, fontSize);
         contentStream.setLeading(leading);
         contentStream.newLineAtOffset(startX, startY);
 
         ArrayList<Question> questions = quiz.getQuestions();
         for (int i = 0; i < questions.size(); i++) {
             Question question = questions.get(i);
-            String questionName = "Câu %d.".formatted(i + 1);
+            String questionName = "Câu %d. ".formatted(i + 1);
+
+            lines = textToLines(questionName + question.getText(), width, documentFont, fontSize);
+            contentStream.setFont(documentFontBold, fontSize);
+            contentStream.showText(questionName);
+            contentStream.setFont(documentFont, fontSize);
+            contentStream.showText(lines.get(0).substring(questionName.length()));
+            contentStream.newLine();
 
         }
 
