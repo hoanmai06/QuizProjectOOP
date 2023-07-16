@@ -90,7 +90,7 @@ public class CategoriesSingleton {
         String tmp="";
         int n= node.getrank();
         for(int i=1;i<=n;i++){
-            tmp=tmp + "   ";
+            tmp=tmp + "     ";
         }
         Namelist.add(String.format("%s (%d)",tmp+node.getCategoryName(),node.getQuestions().size()));
         if(node.Subcategories!=null)
@@ -101,8 +101,7 @@ public class CategoriesSingleton {
     public void addCategory(Category category, int index) {
         category.setrank(findcategory(this.headcategories,index).getrank()+1);
         count=count+1;
-//if (findcategory(this.headcategories,index)!=null)
-  //  System.out.println(findcategory(this.headcategories,index).getCategoryName());
+
         findcategory(this.headcategories,index).Subcategories.add(category);
         writeCategoriesToFile();
     }

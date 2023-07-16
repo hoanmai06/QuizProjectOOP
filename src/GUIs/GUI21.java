@@ -130,16 +130,13 @@ public class GUI21 extends DefaultJFrame implements DropTargetListener {
                     categoryNameTextField.setText("");
                     categoryInfoTextArea.setText("");
                     categoryIDNumberTextField.setText("");
-                    int selectedIndex = categoryComboBox.getSelectedIndex();
+                    int selectedIndex = parentCategoryComboBox.getSelectedIndex();
 
                     CategoriesSingleton.getInstance().addCategory(new_category,selectedIndex);
 
-                    categoryComboBox.revalidate();
-                    categoryComboBox = new JComboBox(CategoriesSingleton.getInstance().getCategoryNameList());
-                    parentCategoryComboBox.revalidate();
 
-                    parentCategoryComboBox = new JComboBox(CategoriesSingleton.getInstance().getCategoryNameList());
                     JOptionPane.showMessageDialog(null, String.format("Added category \"%s\"", new_category.getCategoryName()));
+                    new GUI21(getWidth(), getHeight());
                 }
             }
         });
