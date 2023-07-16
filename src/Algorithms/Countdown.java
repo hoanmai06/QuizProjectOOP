@@ -20,7 +20,6 @@ public class Countdown {
                 labelClock.setText("Time left: " + String.format("%02d:%02d:%02d", hour, minute, second));
 //                System.out.print("\r" + String.format("%02d:%02d:%02d", hour, minute, second));
                 if (i < 0) {
-                    labelClock.setVisible(false);
                     timer.cancel();
                 }
                 i--;

@@ -100,7 +100,7 @@ public class GUI73 extends DefaultJFrame {
                         int minute = (i % 3600) / 60;
                         int second = i % 60;
                         label.setText("Time left: " + String.format("%02d:%02d:%02d", hour, minute, second));
-                        if (i < 0) {
+                        if (i <= 0) {
                             timer.cancel();
                             finishAttemptButton.doClick();
                         }
