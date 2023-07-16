@@ -1,12 +1,66 @@
 package Algorithms;
 
+import DataObjects.Choice;
+import DataObjects.Question;
 import DataObjects.Quiz;
+import DataObjects.QuizzesSingleton;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
+import org.apache.pdfbox.pdmodel.font.PDType0Font;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class QuizToPDF {
+    private static PDRectangle documentMediaBox = PDRectangle.A4;
+    private static PDDocument exportDocument = new PDDocument();
+    private static PDPage currentPage = new PDPage(documentMediaBox);
+    private static PDPageContentStream contentStream;
+
+    static {
+        try {
+            contentStream = new PDPageContentStream(exportDocument, currentPage);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static PDFont documentFont;
+
+    static {
+        try {
+            documentFont = PDType0Font.load(exportDocument, new File("src/PDFBox/TimesNewRoman.ttf"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static PDFont documentFontBold;
+
+    static {
+        try {
+            documentFontBold = PDType0Font.load(exportDocument, new File("src/PDFBox/TimesNewRomanBold.ttf"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static float fontSize = 12;
+    private static float lineSpacing = 1.5f;
+    private static float leading = lineSpacing * fontSize;
+
+    private static float margin = 72;  // 1 inch
+    private static float fontHeight = documentFont.getFontDescriptor().getCapHeight() * fontSize/1000;
+    private static float width = documentMediaBox.getWidth() - 2 * margin;
+    private static float startX = documentMediaBox.getLowerLeftX() + margin;
+    private static float startY = documentMediaBox.getUpperRightY() - margin - fontHeight;
+    private static float heightCounter = 0;
+    private static ArrayList<String> lines;
+
     public static ArrayList<String> textToLines(String text, float width, PDFont font, float fontSize) throws IOException {
         ArrayList<String> lines = new ArrayList<>();
 
@@ -75,7 +129,53 @@ public class QuizToPDF {
         return lines;
     }
 
-    public static void exportQuizToPDF(Quiz quiz, String url) {
+    private static void handleHeightCounterDecreased() throws IOException {
+        if (heightCounter - leading < 0) {
+            contentStream.endText();
+            contentStream.close();
 
+            currentPage = new PDPage(documentMediaBox);
+            exportDocument.addPage(currentPage);
+
+            contentStream = new PDPageContentStream(exportDocument, currentPage);
+            contentStream.beginText();
+            contentStream.setFont(documentFont, fontSize);
+            contentStream.setLeading(leading);
+            contentStream.newLineAtOffset(startX, startY);
+            heightCounter = startY;
+        }
+    }
+
+    private static void addNormalTextToPDF(String text) throws IOException {
+        ArrayList<String> lines = textToLines(text, width, documentFont, fontSize);
+        for (String line : lines) {
+            contentStream.showText(line);
+            contentStream.newLine();
+            heightCounter -= leading;
+            handleHeightCounterDecreased();
+        }
+    }
+
+    public static void exportQuizToPDF(Quiz quiz, String url) throws IOException {
+        contentStream.beginText();
+        contentStream.setFont(documentFont, fontSize);
+        contentStream.setLeading(leading);
+        contentStream.newLineAtOffset(startX, startY);
+
+        ArrayList<Question> questions = quiz.getQuestions();
+        for (int i = 0; i < questions.size(); i++) {
+            Question question = questions.get(i);
+            String questionName = "Câu %d.".formatted(i + 1);
+
+        }
+
+        contentStream.endText();
+        contentStream.close();
+        exportDocument.save(url);
+        exportDocument.close();
+    }
+
+    public static void main(String[] args) throws IOException {
+        exportQuizToPDF(QuizzesSingleton.getInstance().getQuizzes().get(0), "export.pdf");
     }
 }
