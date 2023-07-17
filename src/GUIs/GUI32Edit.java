@@ -58,11 +58,11 @@ public class GUI32Edit extends DefaultJFrame {
         categoryComboBox.setSelectedIndex(categoryIndex);
 
         Category category = CategoriesSingleton.getInstance().getCategories().get(categoryIndex);
-        Question editingQuestion = category.getQuestions().get(questionIndex);
+        Question editingQuestion = category.getQuestions().get(questionIndex);                                          //#1 Lay ra question trong dataCenter
 
         // Dien cac thong tin da co cua editingquestion vua lay ra vao cac o tren GUI
         questionNameField.setText(editingQuestion.getName());
-        QuestionTextField.setText(editingQuestion.getText());
+        QuestionTextField.setText(editingQuestion.getText());                                                           //#1 Fill textField with textQues
 
         if(editingQuestion.getq_ImageData()!=null) {
             edit_qImageData = editingQuestion.getq_ImageData();
@@ -73,48 +73,49 @@ public class GUI32Edit extends DefaultJFrame {
                 throw new RuntimeException(ex);
             }
             label.setVisible(true);
-            QuestionTextField.insertComponent(label);
+            QuestionTextField.insertComponent(label);                                                                   //#1 Fill textField with image if it has
         }
 
         // Fill choices with the choices of editingQuestion
         // Nếu choices.size() < 2 thì vẫn phải có 2 ô trống điền choice nên xử lý riêng
-        ArrayList<Choice> choices = editingQuestion.getChoices();
+        ArrayList<Choice> choices = editingQuestion.getChoices();                                                       //#2 Lay ra choices tu cau hoi da chon
         for (int i = 0; i < 2; i++) {
             if (i >= choices.size()) {
-                ChoicePanelManager newChoicePanelManager = new ChoicePanelManager(i + 1);
+                ChoicePanelManager newChoicePanelManager = new ChoicePanelManager(i + 1);                         //#2 Tao choicePanel moi neu cau hoi lay ra chua du 2 choice
                 choicePanelManagers.add(newChoicePanelManager);
 
                 choicePanelContainer.add(newChoicePanelManager.getPanel(), new GridConstraints(i, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, true));
             } else {
-                Choice choice = choices.get(i);
+                Choice choice = choices.get(i);                                                                         //#2 lay ra choice thu i+1 trong ds choices cua cau hoi lay ra
 
                 ChoicePanelManager newChoicePanelManager = new ChoicePanelManager(i + 1);
                 choicePanelManagers.add(newChoicePanelManager);
 
-                newChoicePanelManager.setChoiceText(choice.getText());
+                newChoicePanelManager.setChoiceText(choice.getText());                                                  //#2 set choicePanel tren GUI theo thong tin tu choice vua chon ra
                 newChoicePanelManager.setGrade(choice.getGrade());
 
                 choicePanelContainer.add(newChoicePanelManager.getPanel(), new GridConstraints(i, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, true));
             }
+                                            //#2 them choicePanel nay vao Container
         }
 
         for (int i = 2; i < choices.size(); i++) {
-            Choice choice = choices.get(i);
+            Choice choice = choices.get(i);                                                                             //#2 tuong tu ben tren
 
             ChoicePanelManager newChoicePanelManager = new ChoicePanelManager(i + 1);
             choicePanelManagers.add(newChoicePanelManager);
 
-            newChoicePanelManager.setChoiceText(choice.getText());
+            newChoicePanelManager.setChoiceText(choice.getText());                                                      //#2
             newChoicePanelManager.setGrade(choice.getGrade());
 
             choicePanelContainer.add(newChoicePanelManager.getPanel(), new GridConstraints(i, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, true));
         }
 
         // Listener
-        saveButton.addActionListener(new ActionListener() {
+        saveButton.addActionListener(new ActionListener() {                                                             //#3 Luu lai thong tin
             @Override
             public void actionPerformed(ActionEvent e) {
-                editingQuestion.getChoices().clear();
+                editingQuestion.getChoices().clear();                                                                   //#3 Xac lap lai cau hoi nhu mot cau hoi moi
 
                 editingQuestion.setName(questionNameField.getText());
                 editingQuestion.setText(QuestionTextField.getText());
@@ -126,8 +127,8 @@ public class GUI32Edit extends DefaultJFrame {
                     editingQuestion.setImageData(null);
                 }
 
-                for (ChoicePanelManager choicePanelManager : choicePanelManagers) {
-                    if (choicePanelManager.getChoiceText().equals("")) continue;
+                for (ChoicePanelManager choicePanelManager : choicePanelManagers) {                                     //#3 lay ra tung ChoicePanel trong ArrayList Panel choice da add tren GUI
+                    if (choicePanelManager.getChoiceText().equals("")) continue;                                        //#3 Bo qua choice rong
 
                     Choice choice = new Choice();
 
