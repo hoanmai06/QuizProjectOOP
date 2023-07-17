@@ -53,7 +53,6 @@ public class QuizExporter {
     private static float lineSpacing = 1.5f;
     private static float questionSpacing = 6;
     private static float leading = lineSpacing * fontSize;
-
     private static float margin = 72;  // 1 inch
     private static float fontHeight = documentFont.getFontDescriptor().getCapHeight() * fontSize/1000;
     private static float width = documentMediaBox.getWidth() - 2 * margin;
@@ -61,74 +60,38 @@ public class QuizExporter {
     private static float startY = documentMediaBox.getUpperRightY() - margin - fontHeight;
     private static float heightCounter = startY;
 
+    // Split a string into multiple strings with length shorter than the specified width
     public static ArrayList<String> textToLines(String text, float width, PDFont font, float fontSize) throws IOException {
         ArrayList<String> lines = new ArrayList<>();
 
-        while(text.length() > 0) {
-            int lastPossibleSplitPos = -1;
-            int currentPos  = text.indexOf(' ');
-            // If there isn't any spaces left, set position to the end of string
-            if (currentPos < 0) {
-                currentPos = text.length();
-            }
+        int lastPos = -1;
+        int currentPos = text.indexOf(' ');
 
-            // This loop complete every successful split
-            while (true) {
-                float substringLength = fontSize * font.getStringWidth(text.substring(0, currentPos)) / 1000;
-                // If substring is longer than the maximum width
-                if (substringLength > width) {
-                    // and there is a last possible split position then split at that position and break
-                    if (lastPossibleSplitPos > 0) {
-                        lines.add(text.substring(0, lastPossibleSplitPos));
-                        text = text.substring(lastPossibleSplitPos).trim();
-                    }
-                    // and there isn't a last possible split position then go back one position until fits and splits at that point
-                    else {
-                        while (substringLength > width) {
-                            currentPos--;
-                            substringLength = fontSize * font.getStringWidth(text.substring(0, currentPos)) / 1000;
-                        }
-                        lines.add(text.substring(0, currentPos));
-                        text = text.substring(currentPos).trim();
-                    }
-                    break;
+        while (true) {
+            float substringLength = fontSize * font.getStringWidth(text.substring(0, currentPos)) / 1000;
+            if (substringLength > width) {
+                if (lastPos > 0) {
+                    lines.add(text.substring(0, lastPos));
+                    text = text.substring(lastPos).trim();
+                    lastPos = -1;
+                    currentPos = text.indexOf(' ');
                 }
-                // If substring is shorter than or equal to the maximum width
-                else {
-                    lastPossibleSplitPos = currentPos;
-                    currentPos = text.indexOf(' ', lastPossibleSplitPos + 1);
-                    // If there isn't any spaces left, set position to the end of string
-                    if (currentPos < 0) {
-                        currentPos = text.length();
-                        substringLength = fontSize * font.getStringWidth(text.substring(0, currentPos)) / 1000;
-                        // If the remaining substring is too long
-                        if (substringLength > width) {
-                            // and there is a last possible split position then split at that position and break
-                            if (lastPossibleSplitPos > 0) {
-                                lines.add(text.substring(0, lastPossibleSplitPos));
-                                text = text.substring(lastPossibleSplitPos).trim();
-                            } else {
-                                while (substringLength > width) {
-                                    currentPos--;
-                                    substringLength = fontSize * font.getStringWidth(text.substring(0, currentPos)) / 1000;
-                                }
-                                lines.add(text.substring(0, currentPos));
-                                text = text.substring(currentPos).trim();
-                            }
-                        }
-                        // If the remaining substring is too short, return it
-                        else {
-                            lines.add(text);
-                            text = "";
-                        }
-                        break;
-                    }
-                }
+                else currentPos--;
+            }
+            else {
+                lastPos = currentPos;
+                currentPos = text.indexOf(' ', lastPos + 1);
+                if (currentPos < 0) currentPos = text.length();
+            }
+            if (lastPos == currentPos) {
+                lines.add(text);
+                break;
             }
         }
         return lines;
     }
 
+    // This function must be call every time heightCounter decreased
     private static void handleHeightCounterDecreased() throws IOException {
         if (heightCounter - leading < margin) {
             contentStream.endText();
