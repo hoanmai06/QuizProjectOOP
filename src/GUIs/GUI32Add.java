@@ -11,6 +11,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class GUI32Add extends DefaultJFrame {
@@ -22,7 +26,6 @@ public class GUI32Add extends DefaultJFrame {
     private JPanel guiPanel;
     private JComboBox categoryComboBox;
     private JTextField questionNameField;
-    private JTextArea questionTextField;
     private JButton BLANKSFOR3MOREButton;
     private JScrollPane mainScrollPane;
     private JButton cancelButton;
@@ -31,7 +34,10 @@ public class GUI32Add extends DefaultJFrame {
     private JTextField defaultMarkField;
     private JLabel titleLabel;
     private JButton saveAndContinueButton;
+    private JTextPane questionTextField;
+    private JButton insertImageButton;
     private ArrayList<ChoicePanelManager> choicePanelManagers = new ArrayList<>();
+    private static byte[] qImageData;
 
     public GUI32Add(int width, int height, int categoryIndex) {
         super(width, height);
@@ -117,7 +123,14 @@ public class GUI32Add extends DefaultJFrame {
             public void actionPerformed(ActionEvent e) {
                 Question newQuestion = new Question();
                 newQuestion.setName(questionNameField.getText());
-                newQuestion.setText(questionTextField.getText());
+                newQuestion.setText(questionTextField.getText());                   // luc nay getText() chi tra ve text be tren cua JtextPane thoi chu kho chua text cua component Jlabel
+
+                if(questionTextField.getComponentCount() != 0) {                    // text cua JtextPane khong duoc tinh la mot component. kiem tra so luong xem co label nao ko thoi.
+                    newQuestion.setImageData(qImageData);
+                }
+                else {
+                    newQuestion.setImageData(null);
+                }
 
                 for (ChoicePanelManager choicePanelManager : choicePanelManagers) {
                     if (choicePanelManager.getChoiceText().equals("")) continue;
@@ -154,6 +167,13 @@ public class GUI32Add extends DefaultJFrame {
                 editingQuestion.setName(questionNameField.getText());
                 editingQuestion.setText(questionTextField.getText());
 
+                if(questionTextField.getComponentCount() != 0) {
+                    editingQuestion.setImageData(qImageData);
+                }
+                else {
+                    editingQuestion.setImageData(null);
+                }
+
                 for (ChoicePanelManager choicePanelManager : choicePanelManagers) {
                     if (choicePanelManager.getChoiceText().equals("")) continue;
 
@@ -166,6 +186,36 @@ public class GUI32Add extends DefaultJFrame {
                 }
 
                 CategoriesSingleton.getInstance().setAddingQuestion(editingQuestion);
+            }
+        });
+        insertImageButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FileDialog fd = new FileDialog((Frame) null, "Choose a file", FileDialog.LOAD);
+                fd.setVisible(true);
+                File selected = new File(fd.getDirectory());
+                String idFile = selected.getAbsolutePath() + File.separator + fd.getFile();
+                try {
+                    qImageData = Files.readAllBytes(Paths.get(idFile));
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+//                StyledDocument doc = (StyledDocument) questionTextField.getDocument();
+//
+//                Style style = doc.addStyle("Image", null);
+//                StyleConstants.setIcon(style, new ImageIcon(idFile));
+//
+//                try {
+//                    doc.insertString(doc.getLength(), "[image]", style);
+//                } catch (BadLocationException ex) {
+//                    throw new RuntimeException(ex);
+//                }
+//            }
+                JLabel label = new JLabel();
+                label.setIcon(new ImageIcon(idFile));
+                label.setVisible(true);
+                questionTextField.insertComponent(label);
+
             }
         });
     }
