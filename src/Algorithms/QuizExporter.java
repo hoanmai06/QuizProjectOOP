@@ -8,60 +8,39 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
+import org.apache.pdfbox.pdmodel.encryption.StandardProtectionPolicy;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class QuizExporter {
-    private static PDRectangle documentMediaBox = PDRectangle.A4;
-    private static PDDocument exportDocument = new PDDocument();
-    private static PDPage currentPage = new PDPage(documentMediaBox);
-    private static PDPageContentStream contentStream;
-
-    static {
-        try {
-            contentStream = new PDPageContentStream(exportDocument, currentPage);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static PDFont documentFont;
-
-    static {
-        try {
-            documentFont = PDType0Font.load(exportDocument, new File("src/PDFBox/TimesNewRoman.ttf"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static PDFont documentFontBold;
-
-    static {
-        try {
-            documentFontBold = PDType0Font.load(exportDocument, new File("src/PDFBox/TimesNewRomanBold.ttf"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static float fontSize = 12;
-    private static float lineSpacing = 1.5f;
-    private static float questionSpacing = 6;
-    private static float leading = lineSpacing * fontSize;
-    private static float margin = 72;  // 1 inch
-    private static float fontHeight = documentFont.getFontDescriptor().getCapHeight() * fontSize/1000;
-    private static float width = documentMediaBox.getWidth() - 2 * margin;
-    private static float startX = documentMediaBox.getLowerLeftX() + margin;
-    private static float startY = documentMediaBox.getUpperRightY() - margin - fontHeight;
-    private static float heightCounter = startY;
+    private  PDRectangle documentMediaBox;
+    private PDDocument exportDocument;
+    private PDPage currentPage;
+    private PDPageContentStream contentStream;
+    private PDFont documentFont;
+    private PDFont documentFontBold;
+    private float fontSize;
+    private float lineSpacing;
+    private float questionSpacing;
+    private float imageTextSpacing;
+    private float leading;
+    private float margin;  // 1 inch
+    private float fontHeight;
+    private float width;
+    private float startX;
+    private float startY;
+    private float heightCounter;
+    private float maxImageWidth;
+    private int keyLength;
 
     // Split a string into multiple strings with length shorter than the specified width
-    public static ArrayList<String> textToLines(String text, float width, PDFont font, float fontSize) throws IOException {
+    private static ArrayList<String> textToLines(String text, float width, PDFont font, float fontSize) throws IOException {
         ArrayList<String> lines = new ArrayList<>();
 
         int lastPos = -1;
@@ -91,31 +70,98 @@ public class QuizExporter {
         return lines;
     }
 
+    private void createNewPageAndSetupContentStream() throws IOException {
+        contentStream.endText();
+        contentStream.close();
+
+        currentPage = new PDPage(documentMediaBox);
+        exportDocument.addPage(currentPage);
+
+        contentStream = new PDPageContentStream(exportDocument, currentPage);
+        contentStream.beginText();
+        contentStream.setFont(documentFont, fontSize);
+        contentStream.setLeading(leading);
+        contentStream.newLineAtOffset(startX, startY);
+        heightCounter = startY;
+    }
+
     // This function must be call every time heightCounter decreased
-    private static void handleHeightCounterDecreased() throws IOException {
+    private void handleHeightCounterDecreased() throws IOException {
         if (heightCounter - leading < margin) {
             contentStream.endText();
             contentStream.beginText();
             contentStream.newLineAtOffset(documentMediaBox.getWidth() / 2, margin / 2);
             contentStream.showText(String.valueOf(exportDocument.getNumberOfPages()));
 
-            contentStream.endText();
-            contentStream.close();
-
-            currentPage = new PDPage(documentMediaBox);
-            exportDocument.addPage(currentPage);
-
-            contentStream = new PDPageContentStream(exportDocument, currentPage);
-            contentStream.beginText();
-            contentStream.setFont(documentFont, fontSize);
-            contentStream.setLeading(leading);
-            contentStream.newLineAtOffset(startX, startY);
-            heightCounter = startY;
+            createNewPageAndSetupContentStream();
         }
     }
 
-    public static void exportQuizToPDF(Quiz quiz, String url) throws IOException {
+    // Header must fit in 1 line
+    private void showLineWithShortHeader(String header, String text, String indent) throws IOException {
+        ArrayList<String> lines = textToLines(header + text, width - fontSize * documentFont.getStringWidth(indent) / 1000, documentFont, fontSize);
+
+        contentStream.setFont(documentFontBold, fontSize);
+        contentStream.showText(indent);
+        contentStream.showText(header);
+        contentStream.setFont(documentFont, fontSize);
+        contentStream.showText(lines.get(0).substring(header.length()));
+        contentStream.newLine();
+        heightCounter -= leading;
+        handleHeightCounterDecreased();
+
+        for (int j = 1; j < lines.size(); j++) {
+            contentStream.showText(indent);
+            contentStream.showText(lines.get(j));
+            contentStream.newLine();
+            heightCounter -= leading;
+            handleHeightCounterDecreased();
+        }
+    }
+    private void showLineWithShortHeader(String header, String text) throws IOException {
+        showLineWithShortHeader(header, text, "");
+    }
+
+    private void showImage(byte[] imageData, String name, String indent) throws IOException {
+        PDImageXObject imageXObject = PDImageXObject.createFromByteArray(exportDocument, imageData, name);
+        float imageWidth = Math.min(imageXObject.getWidth(), maxImageWidth);
+        float imageHeight = imageWidth * imageXObject.getHeight() / imageXObject.getWidth();
+
+        if (imageHeight > documentMediaBox.getHeight() - 2 * margin)
+            throw new RuntimeException("Image %s is too long".formatted(name));
+        if (heightCounter - imageHeight < margin)
+            createNewPageAndSetupContentStream();
+
+        contentStream.endText();
+        contentStream.drawImage(imageXObject, (documentMediaBox.getWidth() - imageWidth) / 2, heightCounter - imageHeight + leading - imageTextSpacing + documentFont.getFontDescriptor().getDescent() * fontSize / 1000, imageWidth, imageHeight);
+        heightCounter -= imageHeight + imageTextSpacing;
+        contentStream.beginText();
+        contentStream.newLineAtOffset(startX, heightCounter);
+        handleHeightCounterDecreased();
+    }
+
+    public void exportQuizToPDF(Quiz quiz, String url, boolean isEncrypted, String password) throws IOException {
+        documentMediaBox = PDRectangle.A4;
+        exportDocument = new PDDocument();
+        currentPage = new PDPage(documentMediaBox);
         exportDocument.addPage(currentPage);
+        contentStream = new PDPageContentStream(exportDocument, currentPage);
+        documentFont = PDType0Font.load(exportDocument, new File("src/PDFBox/TimesNewRoman.ttf"));
+        documentFontBold = PDType0Font.load(exportDocument, new File("src/PDFBox/TimesNewRomanBold.ttf"));
+
+        keyLength = 128;
+        maxImageWidth = 300;
+        fontSize = 12;
+        lineSpacing = 1.5f;
+        questionSpacing = 6;
+        imageTextSpacing = 6;
+        leading = lineSpacing * fontSize;
+        margin = 72;  // 1 inch
+        fontHeight = documentFont.getFontDescriptor().getCapHeight() * fontSize/1000;
+        width = documentMediaBox.getWidth() - 2 * margin;
+        startX = documentMediaBox.getLowerLeftX() + margin;
+        startY = documentMediaBox.getUpperRightY() - margin - fontHeight;
+        heightCounter = startY;
 
         contentStream.beginText();
         contentStream.setLeading(leading);
@@ -124,65 +170,53 @@ public class QuizExporter {
         ArrayList<Question> questions = quiz.getQuestions();
         for (int i = 0; i < questions.size(); i++) {
             Question question = questions.get(i);
-            String questionName = "Câu %d. ".formatted(i + 1);
 
-            ArrayList<String> questionLine = textToLines(questionName + question.getText(), width, documentFont, fontSize);
-
-            contentStream.setFont(documentFontBold, fontSize);
-            contentStream.showText(questionName);
-            contentStream.setFont(documentFont, fontSize);
-            contentStream.showText(questionLine.get(0).substring(questionName.length()));
-            contentStream.newLine();
-            heightCounter -= leading;
-            handleHeightCounterDecreased();
-
-            for (int j = 1; j < questionLine.size(); j++) {
-                contentStream.showText(questionLine.get(j));
-                contentStream.newLine();
-                heightCounter -= leading;
-                handleHeightCounterDecreased();
-            }
+            showLineWithShortHeader("Câu %d. ".formatted(i + 1), question.getText());
+            if (question.getq_ImageData() != null)
+                showImage(question.getq_ImageData(), "%d".formatted(i), "");
 
             ArrayList<Choice> choices = question.getChoices();
             for (int j = 0; j < choices.size(); j++) {
                 Choice choice = choices.get(j);
                 char choiceLabel = (char) (65 + j);
-                String choiceName = choiceLabel + ". ";
+                String choiceHeader = choiceLabel + ". ";
 
-                ArrayList<String> choiceLines = textToLines(choiceName + choice.getText(), width - fontSize * documentFont.getStringWidth("    ")/1000, documentFont, fontSize);
-                contentStream.setFont(documentFontBold, fontSize);
-                contentStream.showText("    " + choiceName);
-                contentStream.setFont(documentFont, fontSize);
-                contentStream.showText(choiceLines.get(0).substring(choiceName.length()));
-                contentStream.newLine();
-                heightCounter -= leading;
-                handleHeightCounterDecreased();
-
-                for (int k = 1; k < choiceLines.size(); k++) {
-                    contentStream.showText("    ");
-                    contentStream.showText(choiceLines.get(k));
-                    contentStream.newLine();
-                    heightCounter -= leading;
-                    handleHeightCounterDecreased();
-                }
+                showLineWithShortHeader(choiceHeader, choice.getText(), "    ");
+                if (choice.getc_ImageData() != null)
+                    showImage(choice.getc_ImageData(), "%d".formatted(i), "    ");
             }
 
+            // Paragraph spacing
             contentStream.newLineAtOffset(0, -questionSpacing);
             heightCounter -= questionSpacing;
             handleHeightCounterDecreased();
         }
 
+        // Add page number
         contentStream.endText();
         contentStream.beginText();
         contentStream.newLineAtOffset(documentMediaBox.getWidth() / 2, margin / 2);
+        contentStream.setFont(documentFont, fontSize);
         contentStream.showText(String.valueOf(exportDocument.getNumberOfPages()));
+
         contentStream.endText();
         contentStream.close();
+
+        if (isEncrypted) {
+            AccessPermission ap = new AccessPermission();
+
+            StandardProtectionPolicy spp = new StandardProtectionPolicy(password, password, ap);
+            password = null;
+            spp.setEncryptionKeyLength(keyLength);
+            spp.setPermissions(ap);
+            exportDocument.protect(spp);
+        }
         exportDocument.save(url);
         exportDocument.close();
     }
 
     public static void main(String[] args) throws IOException {
-        exportQuizToPDF(QuizzesSingleton.getInstance().getQuizzes().get(0), "export.pdf");
+        QuizExporter quizExporter = new QuizExporter();
+        quizExporter.exportQuizToPDF(QuizzesSingleton.getInstance().getQuizzes().get(1), "export.pdf", true, "hello");
     }
 }
