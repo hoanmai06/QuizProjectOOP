@@ -80,7 +80,8 @@ public class GUI72 extends DefaultJFrame {
 
                 if (fileDialog.getFile() != null) {
                     try {
-                        QuizExporter.exportQuizToPDF(quiz, fileDialog.getDirectory() + fileDialog.getFile());
+                        QuizExporter quizExporter = new QuizExporter();
+                        quizExporter.exportQuizToPDF(quiz, fileDialog.getDirectory() + fileDialog.getFile());
                         JOptionPane.showMessageDialog(GUI72.this, "Export successfully", "Export", JOptionPane.INFORMATION_MESSAGE);
                     } catch (IOException ex) {
                         JOptionPane.showMessageDialog(GUI72.this, "Export unsuccessfully", "Export", JOptionPane.ERROR_MESSAGE);
