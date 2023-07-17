@@ -15,7 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class QuizToPDF {
+public class QuizExporter {
     private static PDRectangle documentMediaBox = PDRectangle.A4;
     private static PDDocument exportDocument = new PDDocument();
     private static PDPage currentPage = new PDPage(documentMediaBox);
@@ -51,6 +51,7 @@ public class QuizToPDF {
 
     private static float fontSize = 12;
     private static float lineSpacing = 1.5f;
+    private static float questionSpacing = 6;
     private static float leading = lineSpacing * fontSize;
 
     private static float margin = 72;  // 1 inch
@@ -58,8 +59,7 @@ public class QuizToPDF {
     private static float width = documentMediaBox.getWidth() - 2 * margin;
     private static float startX = documentMediaBox.getLowerLeftX() + margin;
     private static float startY = documentMediaBox.getUpperRightY() - margin - fontHeight;
-    private static float heightCounter = 0;
-    private static ArrayList<String> lines;
+    private static float heightCounter = startY;
 
     public static ArrayList<String> textToLines(String text, float width, PDFont font, float fontSize) throws IOException {
         ArrayList<String> lines = new ArrayList<>();
@@ -130,7 +130,12 @@ public class QuizToPDF {
     }
 
     private static void handleHeightCounterDecreased() throws IOException {
-        if (heightCounter - leading < 0) {
+        if (heightCounter - leading < margin) {
+            contentStream.endText();
+            contentStream.beginText();
+            contentStream.newLineAtOffset(documentMediaBox.getWidth() / 2, margin / 2);
+            contentStream.showText(String.valueOf(exportDocument.getNumberOfPages()));
+
             contentStream.endText();
             contentStream.close();
 
@@ -146,17 +151,9 @@ public class QuizToPDF {
         }
     }
 
-    private static void addNormalTextToPDF(String text) throws IOException {
-        ArrayList<String> lines = textToLines(text, width, documentFont, fontSize);
-        for (String line : lines) {
-            contentStream.showText(line);
-            contentStream.newLine();
-            heightCounter -= leading;
-            handleHeightCounterDecreased();
-        }
-    }
-
     public static void exportQuizToPDF(Quiz quiz, String url) throws IOException {
+        exportDocument.addPage(currentPage);
+
         contentStream.beginText();
         contentStream.setLeading(leading);
         contentStream.newLineAtOffset(startX, startY);
@@ -166,15 +163,56 @@ public class QuizToPDF {
             Question question = questions.get(i);
             String questionName = "Câu %d. ".formatted(i + 1);
 
-            lines = textToLines(questionName + question.getText(), width, documentFont, fontSize);
+            ArrayList<String> questionLine = textToLines(questionName + question.getText(), width, documentFont, fontSize);
+
             contentStream.setFont(documentFontBold, fontSize);
             contentStream.showText(questionName);
             contentStream.setFont(documentFont, fontSize);
-            contentStream.showText(lines.get(0).substring(questionName.length()));
+            contentStream.showText(questionLine.get(0).substring(questionName.length()));
             contentStream.newLine();
+            heightCounter -= leading;
+            handleHeightCounterDecreased();
 
+            for (int j = 1; j < questionLine.size(); j++) {
+                contentStream.showText(questionLine.get(j));
+                contentStream.newLine();
+                heightCounter -= leading;
+                handleHeightCounterDecreased();
+            }
+
+            ArrayList<Choice> choices = question.getChoices();
+            for (int j = 0; j < choices.size(); j++) {
+                Choice choice = choices.get(j);
+                char choiceLabel = (char) (65 + j);
+                String choiceName = choiceLabel + ". ";
+
+                ArrayList<String> choiceLines = textToLines(choiceName + choice.getText(), width - fontSize * documentFont.getStringWidth("    ")/1000, documentFont, fontSize);
+                contentStream.setFont(documentFontBold, fontSize);
+                contentStream.showText("    " + choiceName);
+                contentStream.setFont(documentFont, fontSize);
+                contentStream.showText(choiceLines.get(0).substring(choiceName.length()));
+                contentStream.newLine();
+                heightCounter -= leading;
+                handleHeightCounterDecreased();
+
+                for (int k = 1; k < choiceLines.size(); k++) {
+                    contentStream.showText("    ");
+                    contentStream.showText(choiceLines.get(k));
+                    contentStream.newLine();
+                    heightCounter -= leading;
+                    handleHeightCounterDecreased();
+                }
+            }
+
+            contentStream.newLineAtOffset(0, -questionSpacing);
+            heightCounter -= questionSpacing;
+            handleHeightCounterDecreased();
         }
 
+        contentStream.endText();
+        contentStream.beginText();
+        contentStream.newLineAtOffset(documentMediaBox.getWidth() / 2, margin / 2);
+        contentStream.showText(String.valueOf(exportDocument.getNumberOfPages()));
         contentStream.endText();
         contentStream.close();
         exportDocument.save(url);

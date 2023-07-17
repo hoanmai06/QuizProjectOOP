@@ -1,5 +1,6 @@
 package GUIs;
 
+import Algorithms.QuizExporter;
 import DataObjects.Question;
 import DataObjects.Quiz;
 import com.formdev.flatlaf.FlatLightLaf;
@@ -21,6 +22,11 @@ public class GUI72 extends DefaultJFrame {
     private JButton cancelButton;
     private JButton startButton;
     private JButton exportButton;
+    private JPanel exportPanel;
+    private JCheckBox encryptPDFCheckBox;
+    private JButton CHOOSEADIRECTORYButton;
+    private JPanel passwordPanel;
+    private JPasswordField passwordField1;
 
     public GUI72(int width, int height, Quiz quiz) {
         super(width, height);
@@ -56,7 +62,31 @@ public class GUI72 extends DefaultJFrame {
         exportButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Export");
+                exportPanel.setVisible(!exportPanel.isVisible());
+            }
+        });
+        encryptPDFCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                passwordPanel.setVisible(encryptPDFCheckBox.isSelected());
+            }
+        });
+        CHOOSEADIRECTORYButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FileDialog fileDialog = new FileDialog(GUI72.this, "Export" , FileDialog.SAVE);
+                fileDialog.setFile("Untitled.pdf");
+                fileDialog.setVisible(true);
+
+                if (fileDialog.getFile() != null) {
+                    try {
+                        QuizExporter.exportQuizToPDF(quiz, fileDialog.getDirectory() + fileDialog.getFile());
+                        JOptionPane.showMessageDialog(GUI72.this, "Export successfully", "Export", JOptionPane.INFORMATION_MESSAGE);
+                    } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(GUI72.this, "Export unsuccessfully", "Export", JOptionPane.ERROR_MESSAGE);
+                        throw new RuntimeException(ex);
+                    }
+                }
             }
         });
     }
