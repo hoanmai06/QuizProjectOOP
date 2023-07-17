@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class GUI72 extends DefaultJFrame {
     private JPanel guiPanel;
@@ -26,7 +27,7 @@ public class GUI72 extends DefaultJFrame {
     private JCheckBox encryptPDFCheckBox;
     private JButton CHOOSEADIRECTORYButton;
     private JPanel passwordPanel;
-    private JPasswordField passwordField1;
+    private JPasswordField passwordField;
 
     public GUI72(int width, int height, Quiz quiz) {
         super(width, height);
@@ -80,8 +81,12 @@ public class GUI72 extends DefaultJFrame {
 
                 if (fileDialog.getFile() != null) {
                     try {
+                        char[] password = passwordField.getPassword();
+
                         QuizExporter quizExporter = new QuizExporter();
-                        quizExporter.exportQuizToPDF(quiz, fileDialog.getDirectory() + fileDialog.getFile());
+                        quizExporter.exportQuizToPDF(quiz, fileDialog.getDirectory() + fileDialog.getFile(), encryptPDFCheckBox.isSelected(), new String(password));
+
+                        Arrays.fill(password, '0');
                         JOptionPane.showMessageDialog(GUI72.this, "Export successfully", "Export", JOptionPane.INFORMATION_MESSAGE);
                     } catch (IOException ex) {
                         JOptionPane.showMessageDialog(GUI72.this, "Export unsuccessfully", "Export", JOptionPane.ERROR_MESSAGE);

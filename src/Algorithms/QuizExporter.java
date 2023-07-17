@@ -8,6 +8,8 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
+import org.apache.pdfbox.pdmodel.encryption.StandardProtectionPolicy;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
@@ -35,6 +37,7 @@ public class QuizExporter {
     private float startY;
     private float heightCounter;
     private float maxImageWidth;
+    private int keyLength;
 
     // Split a string into multiple strings with length shorter than the specified width
     private static ArrayList<String> textToLines(String text, float width, PDFont font, float fontSize) throws IOException {
@@ -137,7 +140,7 @@ public class QuizExporter {
         handleHeightCounterDecreased();
     }
 
-    public void exportQuizToPDF(Quiz quiz, String url) throws IOException {
+    public void exportQuizToPDF(Quiz quiz, String url, boolean isEncrypted, String password) throws IOException {
         documentMediaBox = PDRectangle.A4;
         exportDocument = new PDDocument();
         currentPage = new PDPage(documentMediaBox);
@@ -146,6 +149,7 @@ public class QuizExporter {
         documentFont = PDType0Font.load(exportDocument, new File("src/PDFBox/TimesNewRoman.ttf"));
         documentFontBold = PDType0Font.load(exportDocument, new File("src/PDFBox/TimesNewRomanBold.ttf"));
 
+        keyLength = 128;
         maxImageWidth = 300;
         fontSize = 12;
         lineSpacing = 1.5f;
@@ -192,16 +196,27 @@ public class QuizExporter {
         contentStream.endText();
         contentStream.beginText();
         contentStream.newLineAtOffset(documentMediaBox.getWidth() / 2, margin / 2);
+        contentStream.setFont(documentFont, fontSize);
         contentStream.showText(String.valueOf(exportDocument.getNumberOfPages()));
 
         contentStream.endText();
         contentStream.close();
+
+        if (isEncrypted) {
+            AccessPermission ap = new AccessPermission();
+
+            StandardProtectionPolicy spp = new StandardProtectionPolicy(password, password, ap);
+            password = null;
+            spp.setEncryptionKeyLength(keyLength);
+            spp.setPermissions(ap);
+            exportDocument.protect(spp);
+        }
         exportDocument.save(url);
         exportDocument.close();
     }
 
     public static void main(String[] args) throws IOException {
         QuizExporter quizExporter = new QuizExporter();
-        quizExporter.exportQuizToPDF(QuizzesSingleton.getInstance().getQuizzes().get(1), "export.pdf");
+        quizExporter.exportQuizToPDF(QuizzesSingleton.getInstance().getQuizzes().get(1), "export.pdf", true, "hello");
     }
 }
