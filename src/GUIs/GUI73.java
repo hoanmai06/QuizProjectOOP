@@ -1,5 +1,6 @@
 package GUIs;
 
+import Algorithms.Countdown;
 import DataObjects.Choice;
 import DataObjects.Question;
 import DataObjects.Quiz;
@@ -13,6 +14,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GUI73 extends DefaultJFrame {
     private JPanel TopBar;
@@ -23,71 +27,102 @@ public class GUI73 extends DefaultJFrame {
     private JPanel MidZone2Container;
     private JPanel MidZone2;
     private JScrollPane questionsScrollPane;
-    private JPanel navigationCheckBoxPanel;
+    private JPanel navigationEntitiesPanel;
     private JButton finishAttemptButton;
     private JScrollPane navigationScrollPane;
     private JButton finishReviewButton;
     private JPanel timerPanel;
+
+    private JLabel countdown;
     private JTable summaryTable;
+    private JLabel labelClock;
     private QuestionPanelManager[] questionPanelManagers;
 
-    public GUI73(int width, int height, Quiz quiz) {
+    public GUI73(int width, int height, Quiz quiz) throws IOException {
         super(width, height);
         setContentPane(guiPanel);
         setVisible(true);
 
         // Set GUI component related to quiz
 
-        // Setup navigationCheckBoxPanel
+        // Setup navigationEntitiesPanel
         navigationScrollPane.getVerticalScrollBar().setUnitIncrement(4);
         int numberOfQuestion = quiz.getQuestions().size();
+        int ePL = GUIConfig.navigationEntitiesPerLine;
 
-        MouseListener mouseListener = new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                JCheckBox source = (JCheckBox) e.getSource();
-                int sourceIndex = Integer.parseInt(source.getActionCommand());
-
-                questionsScrollPane.getVerticalScrollBar().setValue(questionScrollBarValue(sourceIndex));
-            }
-        };
-
-        navigationCheckBoxPanel.setLayout(new GridLayoutManager(numberOfQuestion/5 + 1, 6, new Insets(0, 0, 0, 0), 0, 4));
-        JCheckBox[] navigationCheckBoxes = new JCheckBox[numberOfQuestion];
+        navigationEntitiesPanel.setLayout(new GridLayoutManager(numberOfQuestion/ePL + 1, ePL + 1, new Insets(0, 0, 0, 0), 5, 4));
+        NavigationEntityManager[] navigationEntityManagers = new NavigationEntityManager[numberOfQuestion];
         for (int i = 0; i < numberOfQuestion; i++) {
-            navigationCheckBoxes[i] = new JCheckBox(String.valueOf(i+1));
-            navigationCheckBoxes[i].setEnabled(false);
-            navigationCheckBoxes[i].setActionCommand(String.valueOf(i));
-            navigationCheckBoxes[i].addMouseListener(mouseListener);
+            int finalI = i;
+            MouseListener mouseListener = new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    JPanel source = (JPanel) e.getSource();
+                    questionsScrollPane.getVerticalScrollBar().setValue(questionScrollBarValue(finalI));
+                }
+            };
 
-            navigationCheckBoxPanel.add(navigationCheckBoxes[i], new GridConstraints(i/5, i%5, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+            navigationEntityManagers[i] = new NavigationEntityManager(i + 1);
+            navigationEntityManagers[i].getEntity().addMouseListener(mouseListener);
+
+            navigationEntitiesPanel.add(navigationEntityManagers[i].getEntity(), new GridConstraints(i/ePL, i%ePL, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         }
+        final Spacer horizontalSpacer = new Spacer();
+        navigationEntitiesPanel.add(horizontalSpacer, new GridConstraints(0, ePL, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+
 
         // Insert all questionPanel into questionPanelContainer.
         questionPanelContainer.setLayout(new GridLayoutManager(numberOfQuestion + 1, 1, new Insets(0, 0, 0, 0), -1, 20));
 
         questionPanelManagers = new QuestionPanelManager[numberOfQuestion];
         for (int i = 0; i < numberOfQuestion; i++) {
-            questionPanelManagers[i] = new QuestionPanelManager(i + 1, quiz.getQuestions().get(i), navigationCheckBoxes[i]);
+            questionPanelManagers[i] = new QuestionPanelManager(i + 1, quiz.getQuestions().get(i), navigationEntityManagers[i]);
             questionPanelContainer.add(questionPanelManagers[i].getQuestionPanel(), new GridConstraints(i, 0, 1, 1, GridConstraints.ANCHOR_NORTHWEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         }
 
         // Insert vertical spacer at the bottom of questionPaneContainer to push all questionPanel up
-        final Spacer spacer = new Spacer();
-        questionPanelContainer.add(spacer, new GridConstraints(numberOfQuestion, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        final Spacer verticalSpacer = new Spacer();
+        questionPanelContainer.add(verticalSpacer, new GridConstraints(numberOfQuestion, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
 
         // Increase scrollPaneSpeed
-        questionsScrollPane.getVerticalScrollBar().setUnitIncrement(6);
+        questionsScrollPane.getVerticalScrollBar().setUnitIncrement(8);
+
+        // Creat count down clock
+
+        class countdownAndFinish extends Countdown {
+            @Override
+            public void showCountDown(JLabel label, int seconds) {
+                Timer timer = new Timer();
+                timer.schedule(new TimerTask() {
+                    int i = seconds;
+                    public void run() {
+                        int hour = i / 3600;
+                        int minute = (i % 3600) / 60;
+                        int second = i % 60;
+                        label.setText("Time left: " + String.format("%02d:%02d:%02d", hour, minute, second));
+                        if (i <= 0) {
+                            timer.cancel();
+                            finishAttemptButton.doClick();
+                        }
+                        i--;
+                    }
+                }, 0, 1000);
+            }
+        }
+
+        countdownAndFinish countdownClock = new countdownAndFinish();
+        countdownClock.showCountDown(labelClock, 10);
+
 
         // Listener
-        finishAttemptButton.addActionListener(new ActionListener() {
+        finishAttemptButton.addActionListener(new ActionListener()  {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Disable finishAttempt button
                 finishAttemptButton.setEnabled(false);
                 finishAttemptButton.setVisible(false);
 
-                // Hide timer
+                // Hide time:
                 timerPanel.setVisible(false);
 
                 // Disable all button, show answer, calculate mark and grade
@@ -223,7 +258,11 @@ public class GUI73 extends DefaultJFrame {
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new GUI73(1024, 768, quiz);
+                try {
+                    new GUI73(1024, 768, quiz);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
     }

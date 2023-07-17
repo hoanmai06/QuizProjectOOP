@@ -8,7 +8,7 @@ public class QuestionTableModel extends DefaultTableModel {
     private final static String[] columnNames = {"isSelected", "Question name", "Actions"};
 
     public QuestionTableModel(QuestionListContainer questionListContainer) {
-        super(questionListContainer.getQuestionTableData(), columnNames);
+        super(questionListContainer.getGUI21QuestionTableData(), columnNames);
     }
     @Override
     public Class<?> getColumnClass(int columnIndex) {

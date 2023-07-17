@@ -78,19 +78,18 @@ public class read_docx {
                     if (typeOfLine.get(indexOfLine).equals("text")) {
                         if (beforeString.trim().equals("")) {
                             typeOfLine.set(indexOfLine, "ques");
-                            String txtQ[] = line.split("\\.\\s", 2);
-                            if(Arrays.stream(txtQ).count() < 2) {
-                                showError(indexOfLine);
-                                listQ.clear();
-                                break;
+                            q = new Question();
+                            String txtQ[] = line.split("\\s", 2);
+                            if(txtQ[0].charAt(txtQ[0].length()-1) != '.' && txtQ[0].charAt(txtQ[0].length()-1) != ':') {
+                                q.setName("");
+                                q.setText(txtQ[0] + " " + txtQ[1]);
                             } else {
-                                q = new Question();
                                 q.setName(txtQ[0]);
                                 q.setText(txtQ[1]);
-                                beforeString = "text";
-                                listC = new ArrayList<>();
-                                continue;
                             }
+                            beforeString = "text";
+                            listC = new ArrayList<>();
+                            continue;
                         }
                         if (beforeString.trim().equals("ANS")) {
                             showError(indexOfLine);
