@@ -12,6 +12,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class GUI32Edit extends DefaultJFrame {
@@ -23,7 +27,6 @@ public class GUI32Edit extends DefaultJFrame {
     private JPanel guiPanel;
     private JComboBox categoryComboBox;
     private JTextField questionNameField;
-    private JTextArea questionTextField;
     private JComboBox grade1ComboBox;
     private JButton BLANKSFOR3MOREButton;
     private JScrollPane mainScrollPane;
@@ -35,7 +38,10 @@ public class GUI32Edit extends DefaultJFrame {
     private JTextArea choice2TextArea;
     private JComboBox grade2ComboBox;
     private JLabel titleLabel;
+    private JTextPane QuestionTextField;
+    private JButton insertImageButton;
     private ArrayList<ChoicePanelManager> choicePanelManagers = new ArrayList<>();
+    private static byte[] edit_qImageData;
 
     public GUI32Edit(int width, int height, int categoryIndex, int questionIndex) {
         super(width, height);
@@ -54,8 +60,21 @@ public class GUI32Edit extends DefaultJFrame {
         Category category = CategoriesSingleton.getInstance().getCategories().get(categoryIndex);
         Question editingQuestion = category.getQuestions().get(questionIndex);
 
+        // Dien cac thong tin da co cua editingquestion vua lay ra vao cac o tren GUI
         questionNameField.setText(editingQuestion.getName());
-        questionTextField.setText(editingQuestion.getText());
+        QuestionTextField.setText(editingQuestion.getText());
+
+        if(editingQuestion.getq_ImageData()!=null) {
+            edit_qImageData = editingQuestion.getq_ImageData();
+            JLabel label = new JLabel();
+            try {
+                label.setIcon(toImageIcon(edit_qImageData));
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            label.setVisible(true);
+            QuestionTextField.insertComponent(label);
+        }
 
         // Fill choices with the choices of editingQuestion
         // Nếu choices.size() < 2 thì vẫn phải có 2 ô trống điền choice nên xử lý riêng
@@ -98,7 +117,14 @@ public class GUI32Edit extends DefaultJFrame {
                 editingQuestion.getChoices().clear();
 
                 editingQuestion.setName(questionNameField.getText());
-                editingQuestion.setText(questionTextField.getText());
+                editingQuestion.setText(QuestionTextField.getText());
+
+                if(QuestionTextField.getComponentCount() != 0) {
+                    editingQuestion.setImageData(edit_qImageData);
+                }
+                else {
+                    editingQuestion.setImageData(null);
+                }
 
                 for (ChoicePanelManager choicePanelManager : choicePanelManagers) {
                     if (choicePanelManager.getChoiceText().equals("")) continue;
@@ -142,6 +168,44 @@ public class GUI32Edit extends DefaultJFrame {
                 new GUI21(getWidth(), getHeight(), categoryComboBox.getSelectedIndex());
             }
         });
+        insertImageButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FileDialog fd = new FileDialog((Frame) null, "Choose a file", FileDialog.LOAD);
+                fd.setVisible(true);
+                File selected = new File(fd.getDirectory());
+                String idFile = selected.getAbsolutePath() + File.separator + fd.getFile();
+                try {
+                    edit_qImageData = Files.readAllBytes(Paths.get(idFile));
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+                JLabel label = new JLabel();
+                try {
+                    label.setIcon(toImageIcon(edit_qImageData));
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                label.setVisible(true);
+                QuestionTextField.insertComponent(label);
+
+            }
+        });
+    }
+
+    public ImageIcon toImageIcon(byte[] data) throws IOException {
+        ImageIcon imageIcon = new ImageIcon(data);
+
+        int oldHeight = imageIcon.getIconHeight();
+        int oldWidth = imageIcon.getIconWidth();
+        int newWidth = GUIConfig.imageWidth;
+
+        if (oldWidth < newWidth) {
+            return imageIcon;
+        }
+        Image scaledImage = imageIcon.getImage().getScaledInstance(newWidth, newWidth*oldHeight/oldWidth, Image.SCALE_DEFAULT);
+        return new ImageIcon(scaledImage);
     }
 
     public static void main(String[] args) {

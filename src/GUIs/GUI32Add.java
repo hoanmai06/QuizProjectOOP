@@ -160,6 +160,8 @@ public class GUI32Add extends DefaultJFrame {
                 new GUI21(getWidth(), getHeight(), categoryComboBox.getSelectedIndex());
             }
         });
+
+
         saveAndContinueButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -200,24 +202,32 @@ public class GUI32Add extends DefaultJFrame {
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
-//                StyledDocument doc = (StyledDocument) questionTextField.getDocument();
-//
-//                Style style = doc.addStyle("Image", null);
-//                StyleConstants.setIcon(style, new ImageIcon(idFile));
-//
-//                try {
-//                    doc.insertString(doc.getLength(), "[image]", style);
-//                } catch (BadLocationException ex) {
-//                    throw new RuntimeException(ex);
-//                }
-//            }
+
                 JLabel label = new JLabel();
-                label.setIcon(new ImageIcon(idFile));
+                try {
+                    label.setIcon(toImageIcon(qImageData));
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
                 label.setVisible(true);
                 questionTextField.insertComponent(label);
 
             }
         });
+    }
+
+    public ImageIcon toImageIcon(byte[] data) throws IOException {
+        ImageIcon imageIcon = new ImageIcon(data);
+
+        int oldHeight = imageIcon.getIconHeight();
+        int oldWidth = imageIcon.getIconWidth();
+        int newWidth = GUIConfig.imageWidth;
+
+        if (oldWidth < newWidth) {
+            return imageIcon;
+        }
+        Image scaledImage = imageIcon.getImage().getScaledInstance(newWidth, newWidth*oldHeight/oldWidth, Image.SCALE_DEFAULT);
+        return new ImageIcon(scaledImage);
     }
 
     public static void main(String[] args) {
