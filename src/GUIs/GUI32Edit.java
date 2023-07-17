@@ -94,6 +94,10 @@ public class GUI32Edit extends DefaultJFrame {
                 newChoicePanelManager.setChoiceText(choice.getText());                                                  //#2 set choicePanel tren GUI theo thong tin tu choice vua chon ra
                 newChoicePanelManager.setGrade(choice.getGrade());
 
+                if(choice.getc_ImageData()!=null) {
+                    newChoicePanelManager.setChoiceImage(choice.getc_ImageData());                                      //#2 neu choice co anh thi moi set vao Pane
+                }
+
                 choicePanelContainer.add(newChoicePanelManager.getPanel(), new GridConstraints(i, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, true));
             }
                                             //#2 them choicePanel nay vao Container
@@ -107,6 +111,10 @@ public class GUI32Edit extends DefaultJFrame {
 
             newChoicePanelManager.setChoiceText(choice.getText());                                                      //#2
             newChoicePanelManager.setGrade(choice.getGrade());
+
+            if(choice.getc_ImageData()!=null) {
+                newChoicePanelManager.setChoiceImage(choice.getc_ImageData());                                      //#2 neu choice co anh thi moi set vao Pane
+            }
 
             choicePanelContainer.add(newChoicePanelManager.getPanel(), new GridConstraints(i, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, true));
         }
@@ -134,6 +142,10 @@ public class GUI32Edit extends DefaultJFrame {
 
                     choice.setText(choicePanelManager.getChoiceText());
                     choice.setGrade(choicePanelManager.getGrade());
+
+                    if(choicePanelManager.getChoiceImageData() != null) {
+                        choice.setc_ImageData(choicePanelManager.getChoiceImageData());                                 //#3 Neu tren pane co anh thi moi set choice data
+                    }
 
                     if (choice.getGrade() == 1) editingQuestion.setAnswer(choice);
 

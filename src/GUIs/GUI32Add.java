@@ -59,6 +59,18 @@ public class GUI32Add extends DefaultJFrame {
             questionNameField.setText(addingQuestion.getName());
             questionTextField.setText(addingQuestion.getText());
 
+            if(addingQuestion.getq_ImageData()!=null) {
+                qImageData = addingQuestion.getq_ImageData();
+                JLabel label = new JLabel();
+                try {
+                    label.setIcon(toImageIcon(qImageData));
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                label.setVisible(true);
+                questionTextField.insertComponent(label);                                                                   //#1 Fill textField with image if it has
+            }
+
             // Fill choices with the choices of addingQuestion
             // Nếu choices.size() < 2 thì vẫn phải có 2 ô trống điền choice nên xử lý riêng
             ArrayList<Choice> choices = addingQuestion.getChoices();                                                    //#1: Lay ra choices cua cau hoi dang adding ra Fill vao GUI
@@ -77,6 +89,10 @@ public class GUI32Add extends DefaultJFrame {
                     newChoicePanelManager.setChoiceText(choice.getText());
                     newChoicePanelManager.setGrade(choice.getGrade());
 
+                    if(choice.getc_ImageData()!=null) {
+                        newChoicePanelManager.setChoiceImage(choice.getc_ImageData());                                  //#1 Neu choice lay ra co anh thi moi setcImage
+                    }
+
                     choicePanelContainer.add(newChoicePanelManager.getPanel(), new GridConstraints(i, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, true));
                 }
             }
@@ -90,6 +106,10 @@ public class GUI32Add extends DefaultJFrame {
 
                 newChoicePanelManager.setChoiceText(choice.getText());
                 newChoicePanelManager.setGrade(choice.getGrade());
+
+                if(choice.getc_ImageData()!=null) {
+                    newChoicePanelManager.setChoiceImage(choice.getc_ImageData());                                  //#1 Neu choice lay ra co anh thi moi setcImage
+                }
 
                 choicePanelContainer.add(newChoicePanelManager.getPanel(), new GridConstraints(i, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, true));
             }
@@ -144,6 +164,10 @@ public class GUI32Add extends DefaultJFrame {
                     choice.setText(choicePanelManager.getChoiceText());                                 //#4 Lay thong tin tu choicePanel set vao choice
                     choice.setGrade(choicePanelManager.getGrade());
 
+                    if(choicePanelManager.getChoiceImageData() != null) {
+                        choice.setc_ImageData(choicePanelManager.getChoiceImageData());                 //#4 neu trong GUI co anh thi moi set data cho choice
+                    }
+
                     if (choice.getGrade() == 1) newQuestion.setAnswer(choice);
 
                     newQuestion.addChoice(choice);
@@ -187,6 +211,10 @@ public class GUI32Add extends DefaultJFrame {
 
                     choice.setText(choicePanelManager.getChoiceText());                                     //#6 Lay cac thong tin trong choicePanel gan vao choice moi
                     choice.setGrade(choicePanelManager.getGrade());
+
+                    if(choicePanelManager.getChoiceImageData() != null) {
+                        choice.setc_ImageData(choicePanelManager.getChoiceImageData());                 //#6 neu trong GUI co anh thi moi set data cho choice
+                    }
 
                     editingQuestion.addChoice(choice);
                 }
