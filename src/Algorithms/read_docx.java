@@ -17,7 +17,7 @@ public class read_docx {
 
     public static void showError(int i) {
         JFrame frame = new JFrame("ErrorMessageBox");
-        JOptionPane.showMessageDialog(frame, "Error at line "+i, "Invalid input", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frame, "Error at line "+(i+1), "Invalid input", JOptionPane.ERROR_MESSAGE);
     }
     public ArrayList<Question> readFromDOCX(String absPath) {
 
