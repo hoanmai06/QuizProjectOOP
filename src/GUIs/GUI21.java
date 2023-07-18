@@ -65,14 +65,16 @@ public class GUI21 extends DefaultJFrame implements DropTargetListener {
                 fd.setVisible(true);
                 // fd nay la mot trang so ra khi bam vao nut choose a file, chu khong phai la con tro tro toi file vua chon
 
-                File selected = new File(fd.getDirectory());
-                idFile = selected.getAbsolutePath() + File.separator + fd.getFile();
-                dropfilename.setText(idFile);                                           // dong bo Jlabel ten file o DropFile area
+                if (fd.getDirectory() != null) {
+                    File selected = new File(fd.getDirectory());
+                    idFile = selected.getAbsolutePath() + File.separator + fd.getFile();
+                    dropfilename.setText(idFile);                                           // dong bo Jlabel ten file o DropFile area
 
-                String[] end = fd.getFile().split("\\.");
-                fileFormat = end[end.length-1];
+                    String[] end = fd.getFile().split("\\.");
+                    fileFormat = end[end.length - 1];
 
-                fileNameLabel.setText(fd.getFile());
+                    fileNameLabel.setText(fd.getFile());
+                }
             }
         });
         IMPORTButton.addActionListener(new ActionListener() {
