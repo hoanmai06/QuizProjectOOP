@@ -90,12 +90,7 @@ public class GUI63 extends DefaultJFrame {
                     // Go through all row and add selected row to quiz.questions
                     if ((boolean) questionTable.getModel().getValueAt(i, 0))
                         quiz.addQuestion(
-                                CategoriesSingleton
-                                        .getInstance()
-                                        .getCategories()
-                                        .get(categoryComboBox.getSelectedIndex())
-                                        .getQuestions()
-                                        .get(i)
+                                CategoriesSingleton.getInstance().findcategory(CategoriesSingleton.getInstance().getCategory(),categoryComboBox.getSelectedIndex()).getQuestions().get(i)
                         );
                 }
 

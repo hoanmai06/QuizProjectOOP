@@ -57,8 +57,8 @@ public class GUI32Edit extends DefaultJFrame {
         // Fill GUI components with the value of editingQuestion
         categoryComboBox.setSelectedIndex(categoryIndex);
 
-        Category category = CategoriesSingleton.getInstance().getCategories().get(categoryIndex);
-        Question editingQuestion = category.getQuestions().get(questionIndex);                                          //#1 Lay ra question trong dataCenter
+        Category category = CategoriesSingleton.getInstance().findcategory(CategoriesSingleton.getInstance().getCategory(),categoryIndex);
+        Question editingQuestion = category.getQuestions().get(questionIndex);
 
         // Dien cac thong tin da co cua editingquestion vua lay ra vao cac o tren GUI
         questionNameField.setText(editingQuestion.getName());

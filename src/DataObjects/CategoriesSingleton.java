@@ -1,11 +1,17 @@
 package DataObjects;
 
+import javax.lang.model.type.NullType;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class CategoriesSingleton {
+
+    Category NULL;
+    public int count;
+    ArrayList<String> Namelist=new ArrayList<>();
+    ArrayList<Category> categories=new ArrayList<>();
     private static final String filePath;
     static {
         try {
@@ -17,8 +23,9 @@ public class CategoriesSingleton {
     }
 
     private static CategoriesSingleton instance;
-    private ArrayList<Category> categories = new ArrayList<>();
+    private Category headcategories=new Category() ;
     private Question addingQuestion;
+
 
     private CategoriesSingleton() {
         if (new File(filePath).exists())
@@ -27,7 +34,9 @@ public class CategoriesSingleton {
             Category default_category = new Category();
             default_category.setCategoryName("Default");
             default_category.setCategoryInfo("This is the default category.");
-            categories.add(default_category);
+            default_category.setrank(0);
+            default_category.Subcategories=new ArrayList<>();
+            headcategories = default_category;
         }
     }
 
@@ -36,7 +45,7 @@ public class CategoriesSingleton {
             FileOutputStream f = new FileOutputStream(filePath);
             ObjectOutputStream o = new ObjectOutputStream(f);
 
-            o.writeObject(categories);
+            o.writeObject(headcategories);
 
             o.close();
             f.close();
@@ -52,7 +61,7 @@ public class CategoriesSingleton {
             FileInputStream fi = new FileInputStream(filePath);
             ObjectInputStream oi = new ObjectInputStream(fi);
 
-            categories = (ArrayList<Category>) oi.readObject();
+            headcategories = (Category) oi.readObject();
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -62,9 +71,38 @@ public class CategoriesSingleton {
             throw new RuntimeException(e);
         }
     }
+    public Category findcategory (Category node,int index){
+        categories.clear();
+        pregetcategories(node);
 
-    public void addCategory(Category category) {
-        categories.add(category);
+
+    return categories.get(index);
+    }
+    public  void pregetcategories(Category node){
+       categories.add(node);
+        if(node.Subcategories!=null)
+        for(Category subnode :node.Subcategories) {
+            pregetcategories(subnode);
+        }
+    }
+    public  void pregetnamelist(Category node){
+
+        String tmp="";
+        int n= node.getrank();
+        for(int i=1;i<=n;i++){
+            tmp=tmp + "     ";
+        }
+        Namelist.add(String.format("%s (%d)",tmp+node.getCategoryName(),node.getQuestions().size()));
+        if(node.Subcategories!=null)
+        for(Category subnode :node.Subcategories) {
+            pregetnamelist(subnode);
+        }
+    }
+    public void addCategory(Category category, int index) {
+        category.setrank(findcategory(this.headcategories,index).getrank()+1);
+        count=count+1;
+
+        findcategory(this.headcategories,index).Subcategories.add(category);
         writeCategoriesToFile();
     }
 
@@ -75,21 +113,26 @@ public class CategoriesSingleton {
         return instance;
     }
 
+    public Category getCategory() {
+        return headcategories;
+    }
     public ArrayList<Category> getCategories() {
+        categories.clear();
+        pregetcategories(headcategories);
         return categories;
     }
 
     public String[] getCategoryNameList() {
-        String[] name_list = new String[categories.size()];
+        if(Namelist!=null)
+        Namelist.clear();
+        pregetnamelist(headcategories);
+        String[] list= new String[Namelist.size()];
+        for(int i=0;i<=(Namelist.size()-1);i++)
+            list[i]=Namelist.get(i);
 
-        for (int i = 0; i < categories.size(); i++) {
-            name_list[i] = String.format(
-                    "%s (%d)",
-                    categories.get(i).getCategoryName(),
-                    categories.get(i).getQuestions().size());
-        }
 
-        return name_list;
+
+        return list;
     }
 
     public Question getAddingQuestion() {
