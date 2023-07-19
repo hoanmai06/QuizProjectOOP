@@ -92,7 +92,10 @@ public class CategoriesSingleton {
         for(int i=1;i<=n;i++){
             tmp=tmp + "     ";
         }
-        Namelist.add(String.format("%s (%d)",tmp+node.getCategoryName(),node.getQuestions().size()));
+        if(node.getQuestions().size() > 0)
+            Namelist.add(String.format("%s (%d)",tmp+node.getCategoryName(),node.getQuestions().size()));
+        else
+            Namelist.add(String.format("%s",tmp+node.getCategoryName()));
         if(node.Subcategories!=null)
         for(Category subnode :node.Subcategories) {
             pregetnamelist(subnode);
