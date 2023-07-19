@@ -110,8 +110,16 @@ public class GUI73 extends DefaultJFrame {
             }
         }
 
-        countdownAndFinish countdownClock = new countdownAndFinish();
-        countdownClock.showCountDown(labelClock, 10);
+        int time;
+        if(quiz.getTimeLimitType()==1)
+            time = quiz.getTimeLimit()*3600;
+        else
+            time = quiz.getTimeLimit()*60;
+        if(time > 0) {
+            countdownAndFinish countdownClock = new countdownAndFinish();
+            countdownClock.showCountDown(labelClock, time);
+        }
+        else timerPanel.setVisible(false);
 
 
         // Listener

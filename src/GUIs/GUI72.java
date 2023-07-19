@@ -37,6 +37,18 @@ public class GUI72 extends DefaultJFrame {
         // Set GUI component related to quiz
 
         // Setup attemptTextArea
+        if(quiz.getTimeLimit()==1) {
+            if(quiz.getTimeLimitType()==0)
+                attemptTextArea.setText("Your attempt will have a time limit of 1 minute. When you start, the timer will begin to count down and cannot be paused. You must finish your attempt before it expires. Are you sure you wish to start now?");
+            else
+                attemptTextArea.setText("Your attempt will have a time limit of 1 hour. When you start, the timer will begin to count down and cannot be paused. You must finish your attempt before it expires. Are you sure you wish to start now?");
+        }
+        else {
+            String strType = new String();
+            if(quiz.getTimeLimitType()==0) strType = "minutes";
+            else strType = "hours";
+            attemptTextArea.setText("Your attempt will have a time limit of " + quiz.getTimeLimit() + " " + strType + ". When you start, the timer will begin to count down and cannot be paused. You must finish your attempt before it expires. Are you sure you wish to start now?");
+        }
         attemptTextArea.getCaret().setVisible(false);
 //        attemptTextArea.getCaret().setSelectionVisible(false);
 

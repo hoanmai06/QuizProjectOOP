@@ -67,10 +67,49 @@ public class GUI51 extends DefaultJFrame {
                 newQuiz.setName(nameTextField.getText());
                 newQuiz.setDescription(descriptionTextArea.getText());
 
-                QuizzesSingleton.getInstance().getQuizzes().add(newQuiz);
+                boolean isValidCreat = true;
+                if(timeLimitField.isEnabled() && !timeLimitField.getText().isEmpty()) {
+                    double time = Double.parseDouble(timeLimitField.getText());
+                    if(time <= 0) {
+                        isValidCreat = false;
+                        JFrame FBframe = new JFrame("Time_Limit_Problems");
+                        JOptionPane.showMessageDialog(FBframe, "Time limit must be positive number!", "Invalid input", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    else {
+                        if ((timeLimitType.getSelectedIndex() == 1)) {
+                            if (time % 1 == 0) {
+                                newQuiz.setTimeLimitType(1);
+                                newQuiz.setTimeLimit((int) time);
+                            } else {
+                                newQuiz.setTimeLimitType(0);
+                                newQuiz.setTimeLimit((int) (time * 60));
+                            }
+                        } else {
+                            newQuiz.setTimeLimitType(0);
+                            newQuiz.setTimeLimit((int) time);
+                        }
+                    }
+                }
+                else {
+                    if(timeLimitField.isEnabled() && timeLimitField.getText().isEmpty()) {
+                        isValidCreat = false;
+                        JFrame FBframe = new JFrame("Time_Limit_Problems");
+                        JOptionPane.showMessageDialog(FBframe, "Time limit has not be set!", "Invalid input", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    else {
+                        newQuiz.setTimeLimitType(0);
+                        newQuiz.setTimeLimit(-1);
+                    }
+                }
 
-                new GUI11(getWidth(), getHeight());
-                dispose();
+                if(isValidCreat) {
+
+                    QuizzesSingleton.getInstance().getQuizzes().add(newQuiz);
+
+                    new GUI11(getWidth(), getHeight());
+                    dispose();
+                }
+
             }
         });
 
@@ -102,6 +141,7 @@ public class GUI51 extends DefaultJFrame {
                 boolean checkBoxStatus = e.getStateChange() == ItemEvent.SELECTED;
                 timeLimitField.setEnabled(checkBoxStatus);
                 timeLimitType.setEnabled(checkBoxStatus);
+
             }
         });
     }
