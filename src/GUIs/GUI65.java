@@ -1,5 +1,6 @@
 package GUIs;
 
+import Algorithms.Randomfeature;
 import DataObjects.CategoriesSingleton;
 import DataObjects.Category;
 import DataObjects.Question;
@@ -106,6 +107,11 @@ public class GUI65 extends DefaultJFrame {
         ADDRANDOMQUESTIONTOButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int selectedIndex = categoryComboBox.getSelectedIndex();
+                Category selectedCategory = CategoriesSingleton.getInstance().findcategory(CategoriesSingleton.getInstance().getCategory(),selectedIndex);
+
+                quiz.getQuestions().addAll(Randomfeature.randomQuestion(numberOfRandomQuestionComboBox.getSelectedIndex(), selectedCategory.getQuestions()));
+
                 new GUI62(getWidth(), getHeight(), quiz);
                 dispose();
             }

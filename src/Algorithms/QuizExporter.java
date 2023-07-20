@@ -42,29 +42,45 @@ public class QuizExporter {
     // Split a string into multiple strings with length shorter than the specified width
     private static ArrayList<String> textToLines(String text, float width, PDFont font, float fontSize) throws IOException {
         ArrayList<String> lines = new ArrayList<>();
+        text = text.replaceAll("\r", "");
 
         int lastPos = -1;
         int currentPos = text.indexOf(' ');
 
-        while (true) {
-            float substringLength = fontSize * font.getStringWidth(text.substring(0, currentPos)) / 1000;
-            if (substringLength > width) {
-                if (lastPos > 0) {
-                    lines.add(text.substring(0, lastPos));
-                    text = text.substring(lastPos).trim();
+        while (text.length() > 0) {
+            int lineFeedPos = text.indexOf('\n');
+            if (lineFeedPos >= 0) {
+                float substringBeforeLineFeedLength = fontSize * font.getStringWidth(text.substring(0, lineFeedPos)) / 1000;
+                if (substringBeforeLineFeedLength < width) {
+                    lines.add(text.substring(0, lineFeedPos));
+                    text = text.substring(lineFeedPos + 1);
                     lastPos = -1;
                     currentPos = text.indexOf(' ');
+                    if (currentPos < 0) currentPos = text.length();
                 }
-                else currentPos--;
             }
             else {
-                lastPos = currentPos;
-                currentPos = text.indexOf(' ', lastPos + 1);
-                if (currentPos < 0) currentPos = text.length();
-            }
-            if (lastPos == currentPos) {
-                lines.add(text);
-                break;
+                float substringBeforeSpaceLength = fontSize * font.getStringWidth(text.substring(0, currentPos)) / 1000;
+                if (substringBeforeSpaceLength > width) {
+                    if (lastPos > 0) {
+                        lines.add(text.substring(0, lastPos));
+                        if (text.charAt(lastPos) == ' ') {
+                            text = text.substring(lastPos + 1);
+                        } else {
+                            text = text.substring(lastPos);
+                        }
+                        lastPos = -1;
+                        currentPos = text.indexOf(' ');
+                    } else currentPos--;
+                } else {
+                    lastPos = currentPos;
+                    currentPos = text.indexOf(' ', lastPos + 1);
+                    if (currentPos < 0) currentPos = text.length();
+                }
+                if (lastPos == currentPos) {
+                    lines.add(text);
+                    text = "";
+                }
             }
         }
         return lines;
