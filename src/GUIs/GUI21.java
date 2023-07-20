@@ -145,14 +145,29 @@ public class GUI21 extends DefaultJFrame implements DropTargetListener {
         categoryComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int selectedIndex = categoryComboBox.getSelectedIndex();
-                Category selectedCategory = CategoriesSingleton.getInstance().findcategory(CategoriesSingleton.getInstance().getCategory(),selectedIndex);
 
-                QuestionTableModel questionTableModel = (QuestionTableModel) questionTable.getModel();
-                questionTableModel.setRowCount(0);
-                for (Question question : selectedCategory.getQuestions()) {
-                    questionTableModel.addRow(question.getGUI21QuestionTableRow());
+
+
+                if(alsoShowQuestionsFromCheckBox.isSelected())
+                {
+                    int selectedIndex = categoryComboBox.getSelectedIndex();
+                    Category selectedCategory = CategoriesSingleton.getInstance().findcategory(CategoriesSingleton.getInstance().getCategory(), selectedIndex);
+
+                    QuestionTableModel questionTableModel = (QuestionTableModel) questionTable.getModel();
+                    questionTableModel.setRowCount(0);
+                    CategoriesSingleton.getInstance().addSubcategiesgui21(selectedCategory,questionTableModel);
                 }
+                else{
+                    int selectedIndex = categoryComboBox.getSelectedIndex();
+                    Category selectedCategory = CategoriesSingleton.getInstance().findcategory(CategoriesSingleton.getInstance().getCategory(), selectedIndex);
+
+                    QuestionTableModel questionTableModel = (QuestionTableModel) questionTable.getModel();
+                    questionTableModel.setRowCount(0);
+                    for (Question question : selectedCategory.getQuestions()) {
+                        questionTableModel.addRow(question.getGUI21QuestionTableRow());
+                    }
+                }
+
             }
         });
 
@@ -171,6 +186,30 @@ public class GUI21 extends DefaultJFrame implements DropTargetListener {
             public void mousePressed(MouseEvent e) {
                 new GUI11(getWidth(), getHeight());
                 dispose();
+            }
+        });
+        alsoShowQuestionsFromCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(alsoShowQuestionsFromCheckBox.isSelected())
+                {
+                    int selectedIndex = categoryComboBox.getSelectedIndex();
+                    Category selectedCategory = CategoriesSingleton.getInstance().findcategory(CategoriesSingleton.getInstance().getCategory(), selectedIndex);
+
+                    QuestionTableModel questionTableModel = (QuestionTableModel) questionTable.getModel();
+                    questionTableModel.setRowCount(0);
+                    CategoriesSingleton.getInstance().addSubcategiesgui21(selectedCategory,questionTableModel);
+                }
+                else{
+                    int selectedIndex = categoryComboBox.getSelectedIndex();
+                    Category selectedCategory = CategoriesSingleton.getInstance().findcategory(CategoriesSingleton.getInstance().getCategory(), selectedIndex);
+
+                    QuestionTableModel questionTableModel = (QuestionTableModel) questionTable.getModel();
+                    questionTableModel.setRowCount(0);
+                    for (Question question : selectedCategory.getQuestions()) {
+                        questionTableModel.addRow(question.getGUI21QuestionTableRow());
+                    }
+                }
             }
         });
     }

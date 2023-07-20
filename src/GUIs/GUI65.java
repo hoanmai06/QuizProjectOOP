@@ -68,21 +68,38 @@ public class GUI65 extends DefaultJFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int selectedIndex = categoryComboBox.getSelectedIndex();
+                Category selectedCategory = categories.get(selectedIndex);
 
-                Category selectedCategory = CategoriesSingleton.getInstance().findcategory(CategoriesSingleton.getInstance().getCategory(),selectedIndex);
+                if(includeQuestionsFromSubcategoriesCheckBox.isSelected())
+                {
+                    DefaultTableModel questionTableModel = (DefaultTableModel) questionTable.getModel();
+                    questionTableModel.setRowCount(0);
+                    CategoriesSingleton.getInstance().addSubcategiesgui65(selectedCategory,questionTableModel);
+                    int numberOfQuestion = CategoriesSingleton.getInstance().getAllQuestion(selectedCategory).size();
+                    numberOfRandomQuestionComboBox.removeAllItems();
+                    String[] comboBoxList = new String[numberOfQuestion + 1];
+                    for (int i = 0; i <= numberOfQuestion; i++)
+                        comboBoxList[i] = String.valueOf(i);
 
-                DefaultTableModel questionTableModel = (DefaultTableModel) questionTable.getModel();
-                questionTableModel.setRowCount(0);
-                for (Question question : selectedCategory.getQuestions()) {
-                    questionTableModel.addRow(question.getGUI65QuestionTableRow());
+                    numberOfRandomQuestionComboBox.setModel(new DefaultComboBoxModel(comboBoxList));
+                }
+                else{
+                    DefaultTableModel questionTableModel = (DefaultTableModel) questionTable.getModel();
+                    questionTableModel.setRowCount(0);
+                    for (Question question : selectedCategory.getQuestions()) {
+                        questionTableModel.addRow(question.getGUI65QuestionTableRow());
+                    }
+                    numberOfRandomQuestionComboBox.removeAllItems();
+                    int numberOfQuestion = selectedCategory.getQuestions().size();
+                    String[] comboBoxList = new String[numberOfQuestion + 1];
+                    for (int i = 0; i <= numberOfQuestion; i++)
+                        comboBoxList[i] = String.valueOf(i);
+
+                    numberOfRandomQuestionComboBox.setModel(new DefaultComboBoxModel(comboBoxList));
                 }
 
-                int numberOfQuestion = selectedCategory.getQuestions().size();
-                String[] comboBoxList = new String[numberOfQuestion + 1];
-                for (int i = 0; i <= numberOfQuestion; i++)
-                    comboBoxList[i] = String.valueOf(i);
 
-                numberOfRandomQuestionComboBox.setModel(new DefaultComboBoxModel(comboBoxList));
+
             }
         });
 
@@ -91,6 +108,45 @@ public class GUI65 extends DefaultJFrame {
             public void actionPerformed(ActionEvent e) {
                 new GUI62(getWidth(), getHeight(), quiz);
                 dispose();
+            }
+        });
+        includeQuestionsFromSubcategoriesCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedIndex = categoryComboBox.getSelectedIndex();
+                Category selectedCategory = categories.get(selectedIndex);
+
+                if(includeQuestionsFromSubcategoriesCheckBox.isSelected())
+                {
+                    DefaultTableModel questionTableModel = (DefaultTableModel) questionTable.getModel();
+                    questionTableModel.setRowCount(0);
+                    CategoriesSingleton.getInstance().addSubcategiesgui65(selectedCategory,questionTableModel);
+                    int numberOfQuestion = CategoriesSingleton.getInstance().getAllQuestion(selectedCategory).size();
+                    numberOfRandomQuestionComboBox.removeAllItems();
+                    String[] comboBoxList = new String[numberOfQuestion + 1];
+                    for (int i = 0; i <= numberOfQuestion; i++)
+                        comboBoxList[i] = String.valueOf(i);
+
+                    numberOfRandomQuestionComboBox.setModel(new DefaultComboBoxModel(comboBoxList));
+                }
+                else{
+                    DefaultTableModel questionTableModel = (DefaultTableModel) questionTable.getModel();
+                    questionTableModel.setRowCount(0);
+                    for (Question question : selectedCategory.getQuestions()) {
+                        questionTableModel.addRow(question.getGUI65QuestionTableRow());
+                    }
+                    numberOfRandomQuestionComboBox.removeAllItems();
+                    int numberOfQuestion = selectedCategory.getQuestions().size();
+                    String[] comboBoxList = new String[numberOfQuestion + 1];
+                    for (int i = 0; i <= numberOfQuestion; i++)
+                        comboBoxList[i] = String.valueOf(i);
+
+                    numberOfRandomQuestionComboBox.setModel(new DefaultComboBoxModel(comboBoxList));
+                }
+
+
+
+
             }
         });
     }

@@ -38,6 +38,7 @@ public class GUI63 extends DefaultJFrame {
                 categories.get(0).getGUI63QuestionTableData(),
                 new Object[]{"isSelected", "questionText"}
         ) {
+
             @Override
             public Class<?> getColumnClass(int columnIndex) {
                 return getValueAt(0, columnIndex).getClass();
@@ -53,20 +54,32 @@ public class GUI63 extends DefaultJFrame {
         questionTable.getColumn("isSelected").setMaxWidth(25);
         questionTable.getColumn("isSelected").setCellRenderer(new CheckBoxRenderer());
         questionTable.getColumn("questionText").setCellRenderer(new StringRenderer());
-        questionTable.setRowHeight(35);
+       questionTable.setRowHeight(35);
         questionTable.getTableHeader().setUI(null);
 
         // Listener
         categoryComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int selectedIndex = categoryComboBox.getSelectedIndex();
-                Category selectedCategory = categories.get(selectedIndex);
 
-                DefaultTableModel questionTableModel = (DefaultTableModel) questionTable.getModel();
-                questionTableModel.setRowCount(0);
-                for (Question question : selectedCategory.getQuestions()) {
-                    questionTableModel.addRow(question.getGUI63QuestionTableRow());
+                if(alsoShowQuestionsFromCheckBox.isSelected())
+                {
+                    int selectedIndex = categoryComboBox.getSelectedIndex();
+                    Category selectedCategory = categories.get(selectedIndex);
+
+                    DefaultTableModel questionTableModel = (DefaultTableModel) questionTable.getModel();
+                    questionTableModel.setRowCount(0);
+                    CategoriesSingleton.getInstance().addSubcategiesgui63(selectedCategory,questionTableModel);
+                }
+                else{
+                    int selectedIndex = categoryComboBox.getSelectedIndex();
+                    Category selectedCategory = categories.get(selectedIndex);
+
+                    DefaultTableModel questionTableModel = (DefaultTableModel) questionTable.getModel();
+                    questionTableModel.setRowCount(0);
+                    for (Question question : selectedCategory.getQuestions()) {
+                        questionTableModel.addRow(question.getGUI63QuestionTableRow());
+                    }
                 }
 
                 selectAllCheckBox.setSelected(false);
@@ -86,14 +99,26 @@ public class GUI63 extends DefaultJFrame {
             // Go through all row and add question of the selected tow to quiz.question
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (int i = 0; i < questionTable.getRowCount(); i++) {
-                    // Go through all row and add selected row to quiz.questions
-                    if ((boolean) questionTable.getModel().getValueAt(i, 0))
-                        quiz.addQuestion(
-                                CategoriesSingleton.getInstance().findcategory(CategoriesSingleton.getInstance().getCategory(),categoryComboBox.getSelectedIndex()).getQuestions().get(i)
-                        );
+                int selectedIndex = categoryComboBox.getSelectedIndex();
+                Category selectedCategory = categories.get(selectedIndex);
+                if (alsoShowQuestionsFromCheckBox.isSelected()){
+                    for (int i = 0; i < CategoriesSingleton.getInstance().getAllQuestion(selectedCategory).size(); i++) {
+                        // Go through all row and add selected row to quiz.questions
+                        if ((boolean) questionTable.getModel().getValueAt(i, 0))
+                            quiz.addQuestion(
+                                    CategoriesSingleton.getInstance().getAllQuestion(selectedCategory).get(i)
+                            );
+                    }
                 }
-
+                else {
+                    for (int i = 0; i < questionTable.getRowCount(); i++) {
+                        // Go through all row and add selected row to quiz.questions
+                        if ((boolean) questionTable.getModel().getValueAt(i, 0))
+                            quiz.addQuestion(
+                                    CategoriesSingleton.getInstance().findcategory(CategoriesSingleton.getInstance().getCategory(), categoryComboBox.getSelectedIndex()).getQuestions().get(i)
+                            );
+                    }
+                }
                 new GUI62(getWidth(), getHeight(), quiz);
                 dispose();
             }
@@ -103,6 +128,32 @@ public class GUI63 extends DefaultJFrame {
             public void mousePressed(MouseEvent e) {
                 new GUI11(getWidth(), getHeight());
                 dispose();
+            }
+        });
+        alsoShowQuestionsFromCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(alsoShowQuestionsFromCheckBox.isSelected())
+                {
+                    int selectedIndex = categoryComboBox.getSelectedIndex();
+                    Category selectedCategory = categories.get(selectedIndex);
+
+                    QuestionTableModel questionTableModel = (QuestionTableModel) questionTable.getModel();
+                    questionTableModel.setRowCount(0);
+                    CategoriesSingleton.getInstance().addSubcategiesgui63(selectedCategory,questionTableModel);
+                }
+                else{
+                    int selectedIndex = categoryComboBox.getSelectedIndex();
+                    Category selectedCategory = categories.get(selectedIndex);
+
+                    DefaultTableModel questionTableModel = (DefaultTableModel) questionTable.getModel();
+                    questionTableModel.setRowCount(0);
+                    for (Question question : selectedCategory.getQuestions()) {
+                        questionTableModel.addRow(question.getGUI63QuestionTableRow());
+                    }
+                }
+
+                selectAllCheckBox.setSelected(false);
             }
         });
     }

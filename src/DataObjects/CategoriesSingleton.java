@@ -1,6 +1,9 @@
 package DataObjects;
 
+import GUIs.QuestionTableModel;
+
 import javax.lang.model.type.NullType;
+import javax.swing.table.DefaultTableModel;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
@@ -12,6 +15,7 @@ public class CategoriesSingleton {
     public int count;
     ArrayList<String> Namelist=new ArrayList<>();
     ArrayList<Category> categories=new ArrayList<>();
+    ArrayList<Question> allQuestion=new ArrayList<>();
     private static final String filePath;
     static {
         try {
@@ -71,12 +75,57 @@ public class CategoriesSingleton {
             throw new RuntimeException(e);
         }
     }
+    public ArrayList<Question> getAllQuestion(Category node){
+        allQuestion.clear();
+        preGetallquestion(node);
+        return allQuestion;
+    }
+    public void preGetallquestion(Category node){
+        for(Question question:node.getQuestions()){
+            allQuestion.add(question);
+        }
+        if(node.Subcategories!=null)
+            for(Category subnode :node.Subcategories) {
+               pregetcategories(subnode);
+            }
+    }
     public Category findcategory (Category node,int index){
         categories.clear();
         pregetcategories(node);
 
 
     return categories.get(index);
+    }
+
+    public  void addSubcategiesgui65(Category node, DefaultTableModel qtm){
+
+        for (Question question : node.getQuestions()) {
+            qtm.addRow(question.getGUI65QuestionTableRow());
+        }
+        if(node.Subcategories!=null)
+            for(Category subnode :node.Subcategories) {
+                addSubcategiesgui65(subnode, qtm);
+            }
+    }
+    public  void addSubcategiesgui21(Category node, QuestionTableModel qtm){
+
+        for (Question question : node.getQuestions()) {
+            qtm.addRow(question.getGUI21QuestionTableRow());
+        }
+        if(node.Subcategories!=null)
+            for(Category subnode :node.Subcategories) {
+                addSubcategiesgui21(subnode, qtm);
+            }
+    }
+    public  void addSubcategiesgui63(Category node, DefaultTableModel qtm){
+
+        for (Question question : node.getQuestions()) {
+            qtm.addRow(question.getGUI63QuestionTableRow());
+        }
+        if(node.Subcategories!=null)
+            for(Category subnode :node.Subcategories) {
+                addSubcategiesgui63(subnode, qtm);
+            }
     }
     public  void pregetcategories(Category node){
        categories.add(node);
