@@ -78,6 +78,7 @@ public class CategoriesSingleton {
     public ArrayList<Question> getAllQuestion(Category node){
         allQuestion.clear();
         preGetallquestion(node);
+
         return allQuestion;
     }
     public void preGetallquestion(Category node){
@@ -86,7 +87,7 @@ public class CategoriesSingleton {
         }
         if(node.Subcategories!=null)
             for(Category subnode :node.Subcategories) {
-               pregetcategories(subnode);
+               preGetallquestion(subnode);
             }
     }
     public Category findcategory (Category node,int index){
