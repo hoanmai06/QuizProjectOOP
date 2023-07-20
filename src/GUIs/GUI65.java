@@ -110,10 +110,18 @@ public class GUI65 extends DefaultJFrame {
                 int selectedIndex = categoryComboBox.getSelectedIndex();
                 Category selectedCategory = CategoriesSingleton.getInstance().findcategory(CategoriesSingleton.getInstance().getCategory(),selectedIndex);
 
-                quiz.getQuestions().addAll(Randomfeature.randomQuestion(numberOfRandomQuestionComboBox.getSelectedIndex(), selectedCategory.getQuestions()));
+                if(includeQuestionsFromSubcategoriesCheckBox.isSelected()){
+                    quiz.getQuestions().addAll(Randomfeature.randomQuestion(numberOfRandomQuestionComboBox.getSelectedIndex(),CategoriesSingleton.getInstance().getAllQuestion(selectedCategory)));
 
-                new GUI62(getWidth(), getHeight(), quiz);
-                dispose();
+                    new GUI62(getWidth(), getHeight(), quiz);
+                    dispose();
+                }
+                else {
+                    quiz.getQuestions().addAll(Randomfeature.randomQuestion(numberOfRandomQuestionComboBox.getSelectedIndex(), selectedCategory.getQuestions()));
+
+                    new GUI62(getWidth(), getHeight(), quiz);
+                    dispose();
+                }
             }
         });
         includeQuestionsFromSubcategoriesCheckBox.addActionListener(new ActionListener() {
