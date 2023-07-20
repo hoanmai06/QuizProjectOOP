@@ -39,7 +39,7 @@ public class QuestionPanelManager {
         this.navigationEntity = navigationEntity;
         // Customize JLabel
         questionIndex.setText(String.valueOf(index));
-        questionText.setText("<html>" + FormatHTMLSafe.format(question.getText()) + "</html>");
+        questionText.setText("<html>" + FormatHTMLSafe.format(question.getText()).replaceAll("\n", "<br/>") + "</html>");
 
         // Check if the questionText contains image and show the image in a Label
         if(question.getq_ImageData()!=null) {
@@ -48,7 +48,7 @@ public class QuestionPanelManager {
             questionContent.add(questionImage, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         }
 
-        answerLabel.setText("<html>The correct answer is: " + FormatHTMLSafe.format(question.getAnswer().getText()) + "</html>");
+        answerLabel.setText("<html>The correct answer is: " + (char)(65 + question.getChoices().indexOf(question.getAnswer())) + ". " +  FormatHTMLSafe.format(question.getAnswer().getText()).replaceAll("\n", "<br/>") + "</html>");
 
         // Check if the answer contains image and add a Label of it to answerPanel
         if(question.getAnswer().getc_ImageData()!= null) {
@@ -81,7 +81,7 @@ public class QuestionPanelManager {
             thisChoice.setLayout(box);
 
             Choice currentChoice = question.getChoices().get(i);
-            JRadioButton currentChoiceRadioButton = new JRadioButton("<html>" + FormatHTMLSafe.format(question.getChoices().get(i).getText()) + "</html>");
+            JRadioButton currentChoiceRadioButton = new JRadioButton("<html>" + (char)(65 + i) + ". " + FormatHTMLSafe.format(question.getChoices().get(i).getText()).replaceAll("\n", "<br/>") + "</html>");
             thisChoice.add(currentChoiceRadioButton);
 
             // Check if the choice contains image and show the image in a Label
