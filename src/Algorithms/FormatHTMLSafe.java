@@ -4,22 +4,22 @@ public class FormatHTMLSafe {
     public static String format(String str) {
         if (str == null) return null;
 
-        String newstr="";
+        StringBuilder newstr= new StringBuilder();
 
         for(int i=0;i<str.length();i++)
             if(str.charAt(i)=='\'')
-                newstr = newstr + "&#39;";
+                newstr.append("&#39;");
             else if (str.charAt(i)=='\"')
-                newstr = newstr + "&#34;";
+                newstr.append("&#34;");
             else if(str.charAt(i)=='&')
-                newstr = newstr + "&#38;";
+                newstr.append("&#38;");
             else if(str.charAt(i)=='<')
-                newstr = newstr + "&#60;";
+                newstr.append("&#60;");
             else if(str.charAt(i)=='>')
-                newstr = newstr + "&#62;";
+                newstr.append("&#62;");
             else
-                newstr= newstr + String.copyValueOf(str.toCharArray(),i,1);
+                newstr.append(String.copyValueOf(str.toCharArray(), i, 1));
 
-        return newstr;
+        return newstr.toString();
     }
 }
