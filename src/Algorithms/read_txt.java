@@ -57,13 +57,19 @@ public class read_txt {
             else {
                 if(beforeString.trim().equals("")) {
                     q = new Question();
-                    String txtQ[] = line.split("\\s", 2);
-                    if(txtQ[0].charAt(txtQ[0].length()-1) != '.' && txtQ[0].charAt(txtQ[0].length()-1) != ':') {
-                        q.setName("");
-                        q.setText(txtQ[0] + " " + txtQ[1]);
-                    } else {
+                    String txtQ[] = line.split("\\s", 3);               // them truong hop xay ra
+                    if(txtQ[0].charAt(txtQ[0].length()-1) == '.' || txtQ[0].charAt(txtQ[0].length()-1) == ':') {
                         q.setName(txtQ[0]);
-                        q.setText(txtQ[1]);
+                        q.setText(txtQ[1] + " " + txtQ[2]);
+                    } else {
+                        if(txtQ[1].charAt(txtQ[1].length()-1) == '.' || txtQ[1].charAt(txtQ[1].length()-1) == ':') {
+                            q.setName(txtQ[0] + " " + txtQ[1]);
+                            q.setText(txtQ[2]);
+                        }
+                        else {
+                            q.setName("");
+                            q.setText(txtQ[0] + " " + txtQ[1] + " " + txtQ[2]);
+                        }
                     }
                     beforeString = "text";
                     listC = new ArrayList<>();

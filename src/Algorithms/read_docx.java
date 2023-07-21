@@ -2,22 +2,22 @@ package Algorithms;
 
 import DataObjects.Choice;
 import DataObjects.Question;
+import org.apache.commons.math3.util.Pair;
 import org.apache.poi.openxml4j.opc.OPCPackage;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.apache.poi.xwpf.usermodel.XWPFParagraph;
-import org.apache.poi.xwpf.usermodel.XWPFPictureData;
+import org.apache.poi.xwpf.usermodel.*;
 
 import javax.swing.*;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 public class read_docx {
 
     public static void showError(int i) {
         JFrame frame = new JFrame("ErrorMessageBox");
-        JOptionPane.showMessageDialog(frame, "Error at line "+i, "Invalid input", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frame, "Error at line "+(i+1), "Invalid input", JOptionPane.ERROR_MESSAGE);
     }
     public ArrayList<Question> readFromDOCX(String absPath) {
 
@@ -28,18 +28,34 @@ public class read_docx {
         try{
             FileInputStream fis = new FileInputStream(absPath);
             XWPFDocument document = new XWPFDocument(OPCPackage.open(fis));
+            fis.close();
             List<XWPFParagraph> paragraphList =  document.getParagraphs();
 
-            List<XWPFPictureData> piclist = document.getAllPictures();
-            for (XWPFPictureData picture : piclist) {
-                bytes.add(picture.getData());
+ //           List<XWPFPictureData> piclist = document.getAllPictures();                        // method nay khong lay ra anh trung nhau!
+
+            XWPFPictureData pictureData = null;
+            List<Integer> indexParOfPics = new ArrayList<>();                                   // luu lai chi so cua par tuong ung moi anh
+
+            for (int t = 0; t < paragraphList.size(); t++) {
+                for (XWPFRun run : paragraphList.get(t).getRuns()) {
+                    for(XWPFPicture picture : run.getEmbeddedPictures()) {
+                        pictureData = picture.getPictureData();
+                        bytes.add(pictureData.getData());
+                        indexParOfPics.add(t);
+                    }
+                }
             }
 
             for (int i=0; i<paragraphList.size(); i++) {
-                if (paragraphList.get(i).isEmpty()) typeOfLine.add("blank_space");
+
+                if (!paragraphList.get(i).getText().equals(""))  typeOfLine.add("text");
                 else {
-                    if (!paragraphList.get(i).getText().equals(""))  typeOfLine.add("text");
-                    else typeOfLine.add("images");
+
+                    if(indexParOfPics.contains(i))                          // check xem para nay co trong dsach para chua anh khong.
+                        typeOfLine.add("images");
+                    else
+                        typeOfLine.add("blank_space");
+
                 }
             }
 
@@ -79,13 +95,19 @@ public class read_docx {
                         if (beforeString.trim().equals("")) {
                             typeOfLine.set(indexOfLine, "ques");
                             q = new Question();
-                            String txtQ[] = line.split("\\s", 2);
-                            if(txtQ[0].charAt(txtQ[0].length()-1) != '.' && txtQ[0].charAt(txtQ[0].length()-1) != ':') {
-                                q.setName("");
-                                q.setText(txtQ[0] + " " + txtQ[1]);
-                            } else {
+                            String txtQ[] = line.split("\\s", 3);
+                            if(txtQ[0].charAt(txtQ[0].length()-1) == '.' || txtQ[0].charAt(txtQ[0].length()-1) == ':') {
                                 q.setName(txtQ[0]);
-                                q.setText(txtQ[1]);
+                                q.setText(txtQ[1] + " " + txtQ[2]);
+                            } else {
+                                if(txtQ[1].charAt(txtQ[1].length()-1) == '.' || txtQ[1].charAt(txtQ[1].length()-1) == ':') {
+                                    q.setName(txtQ[0] + " " + txtQ[1]);
+                                    q.setText(txtQ[2]);
+                                }
+                                else {
+                                    q.setName("");
+                                    q.setText(txtQ[0] + " " + txtQ[1] + " " + txtQ[2]);
+                                }
                             }
                             beforeString = "text";
                             listC = new ArrayList<>();
