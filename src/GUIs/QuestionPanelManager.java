@@ -2,6 +2,7 @@ package GUIs;
 
 import Algorithms.FormatHTMLSafe;
 import DataObjects.Choice;
+import DataObjects.GradeConstants;
 import DataObjects.Question;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
@@ -25,8 +26,9 @@ public class QuestionPanelManager {
     private JButton clearSelectionButton;
     private JPanel answerPanel;
     private JLabel answerLabel;
-    JComponent[] choiceComponentList;
+    ArrayList<JComponent> choiceComponentList = new ArrayList<>();
     ArrayList<String> answerNames = new ArrayList<>();
+    ArrayList<JComponent> answerComponents = new ArrayList<>();
     Question question;
     NavigationEntityManager navigationEntity;
     ButtonGroup choiceButtonGroup;
@@ -50,7 +52,6 @@ public class QuestionPanelManager {
 
         choicePanel.setLayout(new GridLayoutManager(numberOfChoices, 1, new Insets(0, 0, 0, 0), -1, 8));
 
-        choiceComponentList = new JComponent[numberOfChoices];
         choiceButtonGroup = new ButtonGroup();
 
         MouseListener choiceComponentListener = new MouseAdapter() {
@@ -98,11 +99,14 @@ public class QuestionPanelManager {
                 choiceImage.setIcon(image);
                 thisChoice.add(choiceImage);
             }
-            choiceComponentList[i] = currentChoiceComponent;
+            choiceComponentList.add(currentChoiceComponent);
 
             currentChoiceComponent.addMouseListener(choiceComponentListener);
 
-            if (question.getAnswers().contains(currentChoice)) answerNames.add(String.valueOf((char) (65 + i)));
+            if (question.getAnswers().contains(currentChoice)) {
+                answerNames.add(String.valueOf((char) (65 + i)));
+                answerComponents.add(currentChoiceComponent);
+            }
 
             if (currentChoiceComponent instanceof JRadioButton) {
                 choiceButtonGroup.add((JRadioButton) currentChoiceComponent);
@@ -195,9 +199,38 @@ public class QuestionPanelManager {
 //        if (choiceButtonGroup.getSelection() != null)
 //            navigationEntity.setColor(GUIConfig.NAVIGATION_INCORRECT);
 //
-        return 0;
+        ArrayList<JComponent> selectedComponents = new ArrayList<>();
+        for (JComponent component : choiceComponentList) {
+            if (component instanceof JCheckBox castedComponent) {
+                if (castedComponent.isSelected())
+                    selectedComponents.add(castedComponent);
+            }
+            if (component instanceof JRadioButton castedComponent) {
+                if (castedComponent.isSelected())
+                    selectedComponents.add(castedComponent);
+            }
+        }
+
+        if (selectedComponents.size() == 0) {
+            return 0;
+        }
+
+        double mark = 0;
+        for (JComponent component : selectedComponents) {
+            if (!answerComponents.contains(component)) {
+                navigationEntity.setColor(GUIConfig.NAVIGATION_INCORRECT);
+                return 0;
+            }
+            else mark += GradeConstants.getGrade(question.getChoices().get(choiceComponentList.indexOf(component)).getGrade());
+        }
+        if (mark < 1) navigationEntity.setColor(GUIConfig.NAVIGATION_PARTIALLY_CORRECT);
+        else {
+            navigationEntity.setColor(GUIConfig.NAVIGATION_CORRECT);
+            answerPanel.setBackground(new Color(0xDEFFDE));
+        }
+        return mark;
     }
-    public JComponent[] getChoiceComponentList() {
+    public ArrayList<JComponent> getChoiceComponentList() {
         return choiceComponentList;
     }
 }
