@@ -3,7 +3,7 @@ package DataObjects;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Question implements Serializable {
+public class Question extends ArrayList<Question> implements Serializable {
     private String name;
     private String text;
     private byte[] q_imageData;

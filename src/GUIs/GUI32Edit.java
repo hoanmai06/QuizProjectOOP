@@ -57,6 +57,8 @@ public class GUI32Edit extends DefaultJFrame {
         // Fill GUI components with the value of editingQuestion
         categoryComboBox.setSelectedIndex(categoryIndex);
 
+        int oldCategoryIndex = categoryIndex;                           // luu tru de xem xet xem co bi thay doi category o luc save khong
+
         Category category = CategoriesSingleton.getInstance().findcategory(CategoriesSingleton.getInstance().getCategory(),categoryIndex);
         Question editingQuestion = category.getQuestions().get(questionIndex);
 
@@ -152,7 +154,12 @@ public class GUI32Edit extends DefaultJFrame {
                     editingQuestion.addChoice(choice);
                 }
 
-               if (categoryIndex != categoryComboBox.getSelectedIndex()) {
+               if (oldCategoryIndex != categoryComboBox.getSelectedIndex()) {
+                   CategoriesSingleton.getInstance().findcategory(CategoriesSingleton.getInstance().getCategory(),categoryComboBox.getSelectedIndex()).addQuestion(editingQuestion);
+
+                   ArrayList<Question> new_ListQuesOf_OldCate = (category.getQuestions());
+                   new_ListQuesOf_OldCate.remove(editingQuestion);
+                   CategoriesSingleton.getInstance().findcategory(CategoriesSingleton.getInstance().getCategory(),oldCategoryIndex).setQuestions(new_ListQuesOf_OldCate);
 
                }
 
