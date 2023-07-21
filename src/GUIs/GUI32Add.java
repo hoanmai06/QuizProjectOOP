@@ -2,6 +2,7 @@ package GUIs;
 
 import DataObjects.CategoriesSingleton;
 import DataObjects.Choice;
+import DataObjects.GradeConstants;
 import DataObjects.Question;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.intellij.uiDesigner.core.GridConstraints;
@@ -161,6 +162,7 @@ public class GUI32Add extends DefaultJFrame {
 
                     Choice choice = new Choice();
 
+                    // Thêm text và Grade
                     choice.setText(choicePanelManager.getChoiceText());                                 //#4 Lay thong tin tu choicePanel set vao choice
                     choice.setGrade(choicePanelManager.getGrade());
 
@@ -168,7 +170,9 @@ public class GUI32Add extends DefaultJFrame {
                         choice.setc_ImageData(choicePanelManager.getChoiceImageData());                 //#4 neu trong GUI co anh thi moi set data cho choice
                     }
 
-                    if (choice.getGrade() == 1) newQuestion.setAnswer(choice);
+                    // Thêm đáp án
+                    if (choice.getGrade() != GradeConstants.GRADE_NONE && choice.getGrade() != GradeConstants.GRADE_MINUS_5)
+                        newQuestion.addAnswer(choice);
 
                     newQuestion.addChoice(choice);
                 }

@@ -82,6 +82,8 @@
                 <item value="12.5%"/>
                 <item value="11.11111%"/>
                 <item value="10%"/>
+                <item value="5%"/>
+                <item value="-5%"/>
               </model>
             </properties>
           </component>
