@@ -63,7 +63,7 @@ public class GUI32Edit extends DefaultJFrame {
 
         // Dien cac thong tin da co cua editingquestion vua lay ra vao cac o tren GUI
         questionNameField.setText(editingQuestion.getName());
-        questionTextField.setText(editingQuestion.getText() + "\n");                                                           //#1 Fill textField with textQues
+        questionTextField.setText(editingQuestion.getText());                                                           //#1 Fill textField with textQues
 
         if(editingQuestion.getq_ImageData()!=null) {
             edit_qImageData = editingQuestion.getq_ImageData();

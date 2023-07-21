@@ -64,7 +64,7 @@ public class ChoicePanelManager {
     }
 
     public void setChoiceText(String choiceText) {
-        choiceTextArea.setText(choiceText + "\n");
+        choiceTextArea.setText(choiceText);
     }
 
     public void setChoiceImage(byte[] data) {                                                   //#? lay data tu question de chen anh vao choicePanel
