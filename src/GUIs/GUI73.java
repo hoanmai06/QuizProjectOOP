@@ -76,7 +76,7 @@ public class GUI73 extends DefaultJFrame {
 
         questionPanelManagers = new QuestionPanelManager[numberOfQuestion];
         for (int i = 0; i < numberOfQuestion; i++) {
-            questionPanelManagers[i] = new QuestionPanelManager(i + 1, quiz.getQuestions().get(i), navigationEntityManagers[i]);
+            questionPanelManagers[i] = new QuestionPanelManager(i + 1, quiz.getQuestions().get(i), navigationEntityManagers[i], quiz.isShuffle());
             questionPanelContainer.add(questionPanelManagers[i].getQuestionPanel(), new GridConstraints(i, 0, 1, 1, GridConstraints.ANCHOR_NORTHWEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         }
 

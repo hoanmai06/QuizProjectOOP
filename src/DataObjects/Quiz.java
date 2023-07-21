@@ -12,6 +12,7 @@ public class Quiz extends QuestionListContainer implements Serializable {
     private int timeLimit = -1;
     private int timeLimitType = Quiz.TIME_TYPE_HOUR;
     private ArrayList<String> previousAttemptList = new ArrayList<>();
+    private boolean isShuffle;
 
     public Object[][] getAttemptTableData() {
         if (previousAttemptList.size() == 0)
@@ -76,5 +77,13 @@ public class Quiz extends QuestionListContainer implements Serializable {
 
     public void setMaxGrade(double maxGrade) {
         this.maxGrade = maxGrade;
+    }
+
+    public boolean isShuffle() {
+        return isShuffle;
+    }
+
+    public void setShuffle(boolean shuffle) {
+        isShuffle = shuffle;
     }
 }

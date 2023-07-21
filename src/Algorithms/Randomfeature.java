@@ -25,7 +25,11 @@ public class Randomfeature {
       }
       return output;
    }
-   public static ArrayList<Integer> shuffle(int k,ArrayList<Integer> arr) {
+   public static ArrayList<Integer> shuffle(int k) {
+      ArrayList<Integer> arr = new ArrayList<>();
+      for (int i = 0; i < k; i++) {
+         arr.add(i);
+      }
 
       ArrayList<Integer> output = new ArrayList<>();
       for (int i=0; i<k; i++) {

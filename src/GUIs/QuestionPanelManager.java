@@ -1,6 +1,7 @@
 package GUIs;
 
 import Algorithms.FormatHTMLSafe;
+import Algorithms.Randomfeature;
 import DataObjects.Choice;
 import DataObjects.GradeConstants;
 import DataObjects.Question;
@@ -32,8 +33,21 @@ public class QuestionPanelManager {
     Question question;
     NavigationEntityManager navigationEntity;
     ButtonGroup choiceButtonGroup;
+    ArrayList<Choice> shuffledChoices = new ArrayList<>();
 
-    public QuestionPanelManager(int index, Question question, NavigationEntityManager navigationEntity) throws IOException {
+    public QuestionPanelManager(int index, Question question, NavigationEntityManager navigationEntity, boolean isShuffle) throws IOException {
+        ArrayList<Choice> defaultChoices = question.getChoices();
+
+        if (isShuffle) {
+            ArrayList<Integer> shuffledIndex = Randomfeature.shuffle(defaultChoices.size());
+            for (Integer i : shuffledIndex) {
+                shuffledChoices.add(defaultChoices.get(i));
+            }
+        } else {
+            shuffledChoices = defaultChoices;
+        }
+
+
         this.question = question;
         this.navigationEntity = navigationEntity;
         // Customize JLabel
@@ -48,7 +62,7 @@ public class QuestionPanelManager {
         }
 
         // Setup choice panel
-        int numberOfChoices = question.getChoices().size();
+        int numberOfChoices = shuffledChoices.size();
 
         choicePanel.setLayout(new GridLayoutManager(numberOfChoices, 1, new Insets(0, 0, 0, 0), -1, 8));
 
@@ -82,12 +96,12 @@ public class QuestionPanelManager {
             BoxLayout box = new BoxLayout(thisChoice, BoxLayout.Y_AXIS); // xep cac components theo chieu doc
             thisChoice.setLayout(box);
 
-            Choice currentChoice = question.getChoices().get(i);
+            Choice currentChoice = shuffledChoices.get(i);
             JComponent currentChoiceComponent;
             if (question.isMultipleChoices()) {
-                currentChoiceComponent = new JCheckBox("<html>" + (char) (65 + i) + ". " + FormatHTMLSafe.format(question.getChoices().get(i).getText()).replaceAll("\n", "<br/>") + "</html>");
+                currentChoiceComponent = new JCheckBox("<html>" + (char) (65 + i) + ". " + FormatHTMLSafe.format(shuffledChoices.get(i).getText()).replaceAll("\n", "<br/>") + "</html>");
             } else {
-                currentChoiceComponent = new JRadioButton("<html>" + (char) (65 + i) + ". " + FormatHTMLSafe.format(question.getChoices().get(i).getText()).replaceAll("\n", "<br/>") + "</html>");
+                currentChoiceComponent = new JRadioButton("<html>" + (char) (65 + i) + ". " + FormatHTMLSafe.format(shuffledChoices.get(i).getText()).replaceAll("\n", "<br/>") + "</html>");
             }
 
             thisChoice.add(currentChoiceComponent);
@@ -221,7 +235,7 @@ public class QuestionPanelManager {
                 navigationEntity.setColor(GUIConfig.NAVIGATION_INCORRECT);
                 return 0;
             }
-            else mark += GradeConstants.getGrade(question.getChoices().get(choiceComponentList.indexOf(component)).getGrade());
+            else mark += GradeConstants.getGrade(shuffledChoices.get(choiceComponentList.indexOf(component)).getGrade());
         }
         if (mark < 1) navigationEntity.setColor(GUIConfig.NAVIGATION_PARTIALLY_CORRECT);
         else {

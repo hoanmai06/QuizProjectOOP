@@ -130,6 +130,12 @@ public class GUI62 extends DefaultJFrame {
                 dispose();
             }
         });
+        shuffleCheckBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                quiz.setShuffle(shuffleCheckBox.isSelected());
+            }
+        });
     }
 
     private Object[][] getQuestionTableData(Quiz quiz) {
