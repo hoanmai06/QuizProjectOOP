@@ -48,14 +48,14 @@ public class QuestionPanelManager {
             questionContent.add(questionImage, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         }
 
-        answerLabel.setText("<html>The correct answer is: " + (char)(65 + question.getChoices().indexOf(question.getAnswer())) + ". " +  FormatHTMLSafe.format(question.getAnswer().getText()).replaceAll("\n", "<br/>") + "</html>");
+//        answerLabel.setText("<html>The correct answer is: " + (char)(65 + question.getChoices().indexOf(question.getAnswer())) + ". " +  FormatHTMLSafe.format(question.getAnswer().getText()).replaceAll("\n", "<br/>") + "</html>");
 
         // Check if the answer contains image and add a Label of it to answerPanel
-        if(question.getAnswer().getc_ImageData()!= null) {
-            ImageIcon image = toImageIcon(question.getAnswer().getc_ImageData());
-            JLabel answerImage = new JLabel(image);
-            answerPanel.add(answerImage, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        }
+//        if(question.getAnswer().getc_ImageData()!= null) {
+//            ImageIcon image = toImageIcon(question.getAnswer().getc_ImageData());
+//            JLabel answerImage = new JLabel(image);
+//            answerPanel.add(answerImage, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+//        }
 
         // Setup choice panel
         int numberOfChoices = question.getChoices().size();
@@ -95,7 +95,7 @@ public class QuestionPanelManager {
 
             currentChoiceRadioButton.addActionListener(radioButtonListener);
 
-            if (question.getAnswer() == currentChoice) answerRadioButton = currentChoiceRadioButton;
+//            if (question.getAnswer() == currentChoice) answerRadioButton = currentChoiceRadioButton;
 
             choiceButtonGroup.add(currentChoiceRadioButton);
             choicePanel.add(thisChoice, new GridConstraints(i, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));

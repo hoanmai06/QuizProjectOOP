@@ -222,7 +222,7 @@ public class GUI73 extends DefaultJFrame {
         question1.setText("Hello World");
         question1.getChoices().add(choice1);
         question1.getChoices().add(choice2);
-        question1.setAnswer(choice1);
+        question1.addAnswer(choice1);
 
         // Test choice1
         Choice choice11 = new Choice();
@@ -237,12 +237,12 @@ public class GUI73 extends DefaultJFrame {
         question2.getChoices().add(choice12);
         question2.getChoices().add(choice12);
         question2.getChoices().add(choice12);
-        question2.setAnswer(choice11);
+        question2.addAnswer(choice11);
 
         // Test question3
         Question question3 = new Question();
         question3.addChoice(choice11);
-        question3.setAnswer(choice11);
+        question3.addAnswer(choice11);
 
         // Test quiz
         Quiz quiz = new Quiz();

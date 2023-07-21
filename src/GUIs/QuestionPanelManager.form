@@ -149,7 +149,7 @@
         <properties>
           <background color="-200740"/>
           <enabled value="true"/>
-          <visible value="false"/>
+          <visible value="true"/>
         </properties>
         <border type="none"/>
         <children>
