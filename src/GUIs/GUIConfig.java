@@ -13,5 +13,6 @@ public class GUIConfig {
     public static Color NAVIGATION_SELECTED = Color.GRAY;
     public static Color NAVIGATION_NOT_SELECTED = Color.WHITE;
     public static Color NAVIGATION_CORRECT = new Color(0x7FFF7F);
+    public static Color NAVIGATION_PARTIALLY_CORRECT = new Color(0xFFC285);
     public static Color NAVIGATION_INCORRECT = new Color(0xE77070);
 }
