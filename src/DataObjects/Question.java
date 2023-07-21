@@ -9,7 +9,7 @@ public class Question implements Serializable {
     private byte[] q_imageData;
     private final double defaultMark = 1.0;
     private ArrayList<Choice> choices = new ArrayList<Choice>();            // loai bo final
-    private Choice answer;                                                 // them vao thuoc tinh Answer ls 1 trong so cac choices
+    private ArrayList<Choice> answer = new ArrayList<Choice>();                                                 // them vao thuoc tinh Answer ls 1 trong so cac choices
 
     public void addChoice(Choice choice) {
         choices.add(choice);
@@ -31,10 +31,15 @@ public class Question implements Serializable {
         return defaultMark;
     }
 
-    public Choice getAnswer() {return answer;}                 // them getter setter cho Answer
+    public ArrayList<Choice> getAnswer() {return answer;}                 // them getter setter cho Answer
     public byte[] getq_ImageData() {return q_imageData;}
 
-    public void setAnswer(Choice ans) {this.answer = ans;}
+    public void setAnswer(ArrayList<Choice> ans) {this.answer = ans;}
+
+    public void addAnswer(Choice answer) {
+        this.answer.add(answer);
+    }
+
     public Object[] getGUI21QuestionTableRow() {
         return new Object[]{Boolean.FALSE, text, "Edit"};
     }

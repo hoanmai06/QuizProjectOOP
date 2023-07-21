@@ -1,9 +1,7 @@
 package GUIs;
 
-import DataObjects.CategoriesSingleton;
-import DataObjects.Category;
+import DataObjects.*;
 import DataObjects.Choice;
-import DataObjects.Question;
 import com.formdev.flatlaf.FlatLightLaf;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
@@ -147,7 +145,8 @@ public class GUI32Edit extends DefaultJFrame {
                         choice.setc_ImageData(choicePanelManager.getChoiceImageData());                                 //#3 Neu tren pane co anh thi moi set choice data
                     }
 
-                    if (choice.getGrade() == 1) editingQuestion.setAnswer(choice);
+                    if (choice.getGrade() != GradeConstants.GRADE_NONE && choice.getGrade() != GradeConstants.GRADE_MINUS_5)
+                        editingQuestion.addAnswer(choice);
 
                     editingQuestion.addChoice(choice);
                 }

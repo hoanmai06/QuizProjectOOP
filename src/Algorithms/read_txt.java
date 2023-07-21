@@ -97,7 +97,7 @@ public class read_txt {
                             for(Choice c : listC) {
                                 if ((c.getName()).equals(ans)) {
                                     c.setGrade(1);
-                                    q.setAnswer(c);
+                                    q.addAnswer(c);
                                 }
                                 else c.setGrade(0);
                             }
