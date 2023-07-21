@@ -2,18 +2,16 @@ package GUIs;
 
 import Algorithms.FormatHTMLSafe;
 import DataObjects.Choice;
+import DataObjects.GradeConstants;
 import DataObjects.Question;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
+import java.awt.event.*;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class QuestionPanelManager {
     private JPanel questionIndexPanel;
@@ -28,8 +26,9 @@ public class QuestionPanelManager {
     private JButton clearSelectionButton;
     private JPanel answerPanel;
     private JLabel answerLabel;
-    JRadioButton[] choiceRadioButtonList;
-    JRadioButton answerRadioButton;
+    ArrayList<JComponent> choiceComponentList = new ArrayList<>();
+    ArrayList<String> answerNames = new ArrayList<>();
+    ArrayList<JComponent> answerComponents = new ArrayList<>();
     Question question;
     NavigationEntityManager navigationEntity;
     ButtonGroup choiceButtonGroup;
@@ -48,27 +47,30 @@ public class QuestionPanelManager {
             questionContent.add(questionImage, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         }
 
-        answerLabel.setText("<html>The correct answer is: " + (char)(65 + question.getChoices().indexOf(question.getAnswer())) + ". " +  FormatHTMLSafe.format(question.getAnswer().getText()).replaceAll("\n", "<br/>") + "</html>");
-
-        // Check if the answer contains image and add a Label of it to answerPanel
-        if(question.getAnswer().getc_ImageData()!= null) {
-            ImageIcon image = toImageIcon(question.getAnswer().getc_ImageData());
-            JLabel answerImage = new JLabel(image);
-            answerPanel.add(answerImage, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        }
-
         // Setup choice panel
         int numberOfChoices = question.getChoices().size();
 
         choicePanel.setLayout(new GridLayoutManager(numberOfChoices, 1, new Insets(0, 0, 0, 0), -1, 8));
 
-        choiceRadioButtonList = new JRadioButton[numberOfChoices];
         choiceButtonGroup = new ButtonGroup();
-        ActionListener radioButtonListener = new ActionListener() {
+
+        MouseListener choiceComponentListener = new MouseAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                navigationEntity.setColor(GUIConfig.NAVIGATION_SELECTED);
-                answerStatus.setText("<html>Answered<br>&nbsp;</html>");
+            public void mouseReleased(MouseEvent e) {
+                boolean isCheckBoxesSelected = false;
+                for (JComponent component : choiceComponentList) {
+                    if (component instanceof JCheckBox castedComponent) {
+                        if (castedComponent.isSelected()) isCheckBoxesSelected = true;
+                    }
+                }
+
+                if (!question.isMultipleChoices() || isCheckBoxesSelected) {
+                    navigationEntity.setColor(GUIConfig.NAVIGATION_SELECTED);
+                    answerStatus.setText("<html>Answered<br>&nbsp;</html>");
+                } else {
+                    navigationEntity.setColor(GUIConfig.NAVIGATION_NOT_SELECTED);
+                    answerStatus.setText("<html>Not yet answered</html>");
+                }
             }
         };
 
@@ -81,8 +83,14 @@ public class QuestionPanelManager {
             thisChoice.setLayout(box);
 
             Choice currentChoice = question.getChoices().get(i);
-            JRadioButton currentChoiceRadioButton = new JRadioButton("<html>" + (char)(65 + i) + ". " + FormatHTMLSafe.format(question.getChoices().get(i).getText()).replaceAll("\n", "<br/>") + "</html>");
-            thisChoice.add(currentChoiceRadioButton);
+            JComponent currentChoiceComponent;
+            if (question.isMultipleChoices()) {
+                currentChoiceComponent = new JCheckBox("<html>" + (char) (65 + i) + ". " + FormatHTMLSafe.format(question.getChoices().get(i).getText()).replaceAll("\n", "<br/>") + "</html>");
+            } else {
+                currentChoiceComponent = new JRadioButton("<html>" + (char) (65 + i) + ". " + FormatHTMLSafe.format(question.getChoices().get(i).getText()).replaceAll("\n", "<br/>") + "</html>");
+            }
+
+            thisChoice.add(currentChoiceComponent);
 
             // Check if the choice contains image and show the image in a Label
             choiceImage = new JLabel();
@@ -91,20 +99,58 @@ public class QuestionPanelManager {
                 choiceImage.setIcon(image);
                 thisChoice.add(choiceImage);
             }
-            choiceRadioButtonList[i] = currentChoiceRadioButton;
+            choiceComponentList.add(currentChoiceComponent);
 
-            currentChoiceRadioButton.addActionListener(radioButtonListener);
+            currentChoiceComponent.addMouseListener(choiceComponentListener);
 
-            if (question.getAnswer() == currentChoice) answerRadioButton = currentChoiceRadioButton;
+            if (question.getAnswers().contains(currentChoice)) {
+                answerNames.add(String.valueOf((char) (65 + i)));
+                answerComponents.add(currentChoiceComponent);
+            }
 
-            choiceButtonGroup.add(currentChoiceRadioButton);
+            if (currentChoiceComponent instanceof JRadioButton) {
+                choiceButtonGroup.add((JRadioButton) currentChoiceComponent);
+            }
+
             choicePanel.add(thisChoice, new GridConstraints(i, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         }
+
+        // Setup answerPanel
+        if (!question.isMultipleChoices()) {
+            answerLabel.setText("<html>The correct answer is: " + answerNames.get(0) + ". " +  FormatHTMLSafe.format(question.getAnswers().get(0).getText()).replaceAll("\n", "<br/>") + "</html>");
+
+            // Check if the answer contains image and add a Label of it to answerPanel
+            if(question.getAnswers().get(0).getc_ImageData()!= null) {
+                ImageIcon image = toImageIcon(question.getAnswers().get(0).getc_ImageData());
+                JLabel answerImage = new JLabel(image);
+                answerPanel.add(answerImage, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+            }
+        } else {
+            StringBuilder answer = new StringBuilder();
+            int numOfAns = answerNames.size();
+
+            for (int i = 0; i < answerNames.size() - 1; i++) {
+                answer.append(answerNames.get(i)).append(", ");
+            }
+            answer.append("and ").append(answerNames.get(numOfAns - 1));
+
+            answerLabel.setText("<html>The correct answers are: " + answer + "</html>");
+        }
+
         // Listener
         clearSelectionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                choiceButtonGroup.clearSelection();
+                for (JComponent component : choiceComponentList) {
+                    if (component instanceof JRadioButton) {
+                        choiceButtonGroup.clearSelection();
+                    }
+                    if (component instanceof JCheckBox) {
+                        JCheckBox castedComponent = (JCheckBox) component;
+                        castedComponent.setSelected(false);
+                    }
+                }
+
                 navigationEntity.setColor(GUIConfig.NAVIGATION_NOT_SELECTED);
                 answerStatus.setText("<html>Not yet answered</html>");
             }
@@ -127,8 +173,8 @@ public class QuestionPanelManager {
     }
 
     public void disableButton() {
-        for (JRadioButton radioButton : choiceRadioButtonList) {
-            radioButton.setEnabled(false);
+        for (JComponent component : choiceComponentList) {
+            component.setEnabled(false);
         }
 
         clearSelectionButton.setEnabled(false);
@@ -144,18 +190,47 @@ public class QuestionPanelManager {
     }
 
     public double formatFinishAndGetMark() {
-        if (answerRadioButton.isSelected()) {
-            answerPanel.setBackground(new Color(0xDEFFDE));
-            navigationEntity.setColor(GUIConfig.NAVIGATION_CORRECT);
-            return question.getDefaultMark();
+//        if (answerRadioButton.isSelected()) {
+//            answerPanel.setBackground(new Color(0xDEFFDE));
+//            navigationEntity.setColor(GUIConfig.NAVIGATION_CORRECT);
+//            return question.getDefaultMark();
+//        }
+//
+//        if (choiceButtonGroup.getSelection() != null)
+//            navigationEntity.setColor(GUIConfig.NAVIGATION_INCORRECT);
+//
+        ArrayList<JComponent> selectedComponents = new ArrayList<>();
+        for (JComponent component : choiceComponentList) {
+            if (component instanceof JCheckBox castedComponent) {
+                if (castedComponent.isSelected())
+                    selectedComponents.add(castedComponent);
+            }
+            if (component instanceof JRadioButton castedComponent) {
+                if (castedComponent.isSelected())
+                    selectedComponents.add(castedComponent);
+            }
         }
 
-        if (choiceButtonGroup.getSelection() != null)
-            navigationEntity.setColor(GUIConfig.NAVIGATION_INCORRECT);
+        if (selectedComponents.size() == 0) {
+            return 0;
+        }
 
-        return 0;
+        double mark = 0;
+        for (JComponent component : selectedComponents) {
+            if (!answerComponents.contains(component)) {
+                navigationEntity.setColor(GUIConfig.NAVIGATION_INCORRECT);
+                return 0;
+            }
+            else mark += GradeConstants.getGrade(question.getChoices().get(choiceComponentList.indexOf(component)).getGrade());
+        }
+        if (mark < 1) navigationEntity.setColor(GUIConfig.NAVIGATION_PARTIALLY_CORRECT);
+        else {
+            navigationEntity.setColor(GUIConfig.NAVIGATION_CORRECT);
+            answerPanel.setBackground(new Color(0xDEFFDE));
+        }
+        return mark;
     }
-    public JRadioButton[] getChoiceRadioButtonList() {
-        return choiceRadioButtonList;
+    public ArrayList<JComponent> getChoiceComponentList() {
+        return choiceComponentList;
     }
 }

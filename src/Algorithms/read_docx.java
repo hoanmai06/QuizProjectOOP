@@ -141,7 +141,7 @@ public class read_docx {
                                     for (Choice c1 : listC) {
                                         if ((c1.getName()).equals(ans)) {
                                             c1.setGrade(1);
-                                            q.setAnswer(c1);
+                                            q.addAnswer(c1);
                                         } else c.setGrade(0);
                                     }
                                     q.setChoices(listC);

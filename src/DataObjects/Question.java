@@ -9,7 +9,7 @@ public class Question extends ArrayList<Question> implements Serializable {
     private byte[] q_imageData;
     private final double defaultMark = 1.0;
     private ArrayList<Choice> choices = new ArrayList<Choice>();            // loai bo final
-    private Choice answer;                                                 // them vao thuoc tinh Answer ls 1 trong so cac choices
+    private ArrayList<Choice> answers = new ArrayList<Choice>();                                                 // them vao thuoc tinh Answer ls 1 trong so cac choices
 
     public void addChoice(Choice choice) {
         choices.add(choice);
@@ -31,10 +31,15 @@ public class Question extends ArrayList<Question> implements Serializable {
         return defaultMark;
     }
 
-    public Choice getAnswer() {return answer;}                 // them getter setter cho Answer
+    public ArrayList<Choice> getAnswers() {return answers;}                 // them getter setter cho Answer
     public byte[] getq_ImageData() {return q_imageData;}
 
-    public void setAnswer(Choice ans) {this.answer = ans;}
+    public void setAnswers(ArrayList<Choice> ans) {this.answers = ans;}
+
+    public void addAnswer(Choice answer) {
+        this.answers.add(answer);
+    }
+
     public Object[] getGUI21QuestionTableRow() {
         return new Object[]{Boolean.FALSE, text, "Edit"};
     }
@@ -60,7 +65,9 @@ public class Question extends ArrayList<Question> implements Serializable {
     }
     public void setImageData(byte[] imageData) {this.q_imageData = imageData;}
 
-
+    public boolean isMultipleChoices() {
+        return answers.size() != 1;
+    }
 
 
 //    public void setDefaultMark(int defaultMark) {

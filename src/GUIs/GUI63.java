@@ -138,7 +138,7 @@ public class GUI63 extends DefaultJFrame {
                     int selectedIndex = categoryComboBox.getSelectedIndex();
                     Category selectedCategory = categories.get(selectedIndex);
 
-                    QuestionTableModel questionTableModel = (QuestionTableModel) questionTable.getModel();
+                    DefaultTableModel questionTableModel = (DefaultTableModel) questionTable.getModel();
                     questionTableModel.setRowCount(0);
                     CategoriesSingleton.getInstance().addSubcategiesgui63(selectedCategory,questionTableModel);
                 }
