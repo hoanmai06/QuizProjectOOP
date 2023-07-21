@@ -90,12 +90,18 @@ public class GUI73 extends DefaultJFrame {
         questionsScrollPane.getVerticalScrollBar().setUnitIncrement(8);
 
         // Creat count down clock
+        Timer timeTaken = new Timer();
+        timeConsume = 0;
+        timeTaken.schedule(new TimerTask() {
+            public void run() {
+                timeConsume ++;
+            }
+        }, 0, 1000);
 
         class countdownAndFinish extends Countdown {
             @Override
             public void showCountDown(JLabel label, int seconds) {
                 Timer timer = new Timer();
-                timeConsume = 0;
                 timer.schedule(new TimerTask() {
                     int i = seconds;
                     public void run() {
@@ -108,7 +114,6 @@ public class GUI73 extends DefaultJFrame {
                             finishAttemptButton.doClick();
                         }
                         i--;
-                        timeConsume++;
                     }
                 }, 0, 1000);
             }
