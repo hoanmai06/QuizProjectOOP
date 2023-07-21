@@ -21,4 +21,6 @@ public interface GradeConstants {
     public static final int GRADE_12 = 15;
     public static final int GRADE_11 = 16;
     public static final int GRADE_10 = 17;
+    public static final int GRADE_5 = 18;
+    public static final int GRADE_MINUS_5 = 19;
 }
