@@ -84,6 +84,23 @@
                 <item value="10%"/>
                 <item value="5%"/>
                 <item value="-5%"/>
+                <item value="-10%"/>
+                <item value="-11.11111%"/>
+                <item value="-12.5%"/>
+                <item value="-14.28571%"/>
+                <item value="-16.66667%"/>
+                <item value="-20%"/>
+                <item value="-25%"/>
+                <item value="-30%"/>
+                <item value="-33.33333%"/>
+                <item value="-40%"/>
+                <item value="-50%"/>
+                <item value="-60%"/>
+                <item value="-66.66667%"/>
+                <item value="-70%"/>
+                <item value="-75%"/>
+                <item value="-80%"/>
+                <item value="-83.33333%"/>
               </model>
             </properties>
           </component>

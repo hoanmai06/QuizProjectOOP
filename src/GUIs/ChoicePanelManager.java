@@ -83,7 +83,7 @@ public class ChoicePanelManager {
         }
         else {
             cEditImageData = null;
-            return cEditImageData;
+            return null;
         }
     }
 
