@@ -235,7 +235,7 @@ public class QuestionPanelManager {
                 navigationEntity.setColor(GUIConfig.NAVIGATION_INCORRECT);
                 return 0;
             }
-            else mark += GradeConstants.getGrade(shuffledChoices.get(choiceComponentList.indexOf(component)).getGrade());
+            else mark += GradeConstants.getGrade(shuffledChoices.get(choiceComponentList.indexOf(component)).getGradeIndex());
         }
         if (mark < 1) navigationEntity.setColor(GUIConfig.NAVIGATION_PARTIALLY_CORRECT);
         else {
