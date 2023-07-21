@@ -139,6 +139,7 @@ public class GUI21 extends DefaultJFrame implements DropTargetListener {
 
                     JOptionPane.showMessageDialog(null, String.format("Added category \"%s\"", new_category.getCategoryName()));
                     new GUI21(getWidth(), getHeight());
+                    dispose();
                 }
             }
         });
