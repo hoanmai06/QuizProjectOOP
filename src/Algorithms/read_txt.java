@@ -97,7 +97,7 @@ public class read_txt {
                     }
                     else {
                         if(listCN.contains("A.") && listCN.contains("B.") && listCN.contains(txtCorA[1] + ".")) {
-                            String ans = txtCorA[1] + ".";
+                            String ans = txtCorA[1].charAt(0) + ".";
             //# setGrade cho tung choice, chu y doc file thi cau hoi chi co 1 cau tra loi
                             for(Choice c : listC) {
                                 if ((c.getName()).equals(ans)) {
