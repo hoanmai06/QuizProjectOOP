@@ -36,8 +36,9 @@ public class GUI32Edit extends DefaultJFrame {
     private JTextArea choice2TextArea;
     private JComboBox grade2ComboBox;
     private JLabel titleLabel;
-    private JTextPane QuestionTextField;
+    private JTextPane questionTextField;
     private JButton insertImageButton;
+    private JLabel errorLabel;
     private ArrayList<ChoicePanelManager> choicePanelManagers = new ArrayList<>();
     private static byte[] edit_qImageData;
 
@@ -62,7 +63,7 @@ public class GUI32Edit extends DefaultJFrame {
 
         // Dien cac thong tin da co cua editingquestion vua lay ra vao cac o tren GUI
         questionNameField.setText(editingQuestion.getName());
-        QuestionTextField.setText(editingQuestion.getText() + "\n");                                                           //#1 Fill textField with textQues
+        questionTextField.setText(editingQuestion.getText() + "\n");                                                           //#1 Fill textField with textQues
 
         if(editingQuestion.getq_ImageData()!=null) {
             edit_qImageData = editingQuestion.getq_ImageData();
@@ -73,7 +74,7 @@ public class GUI32Edit extends DefaultJFrame {
                 throw new RuntimeException(ex);
             }
             label.setVisible(true);
-            QuestionTextField.insertComponent(label);                                                                   //#1 Fill textField with image if it has
+            questionTextField.insertComponent(label);                                                                   //#1 Fill textField with image if it has
         }
 
         // Fill choices with the choices of editingQuestion
@@ -92,7 +93,7 @@ public class GUI32Edit extends DefaultJFrame {
                 choicePanelManagers.add(newChoicePanelManager);
 
                 newChoicePanelManager.setChoiceText(choice.getText());                                                  //#2 set choicePanel tren GUI theo thong tin tu choice vua chon ra
-                newChoicePanelManager.setGrade(choice.getGrade());
+                newChoicePanelManager.setGrade(choice.getGradeIndex());
 
                 if(choice.getc_ImageData()!=null) {
                     newChoicePanelManager.setChoiceImage(choice.getc_ImageData());                                      //#2 neu choice co anh thi moi set vao Pane
@@ -110,7 +111,7 @@ public class GUI32Edit extends DefaultJFrame {
             choicePanelManagers.add(newChoicePanelManager);
 
             newChoicePanelManager.setChoiceText(choice.getText());                                                      //#2
-            newChoicePanelManager.setGrade(choice.getGrade());
+            newChoicePanelManager.setGrade(choice.getGradeIndex());
 
             if(choice.getc_ImageData()!=null) {
                 newChoicePanelManager.setChoiceImage(choice.getc_ImageData());                                      //#2 neu choice co anh thi moi set vao Pane
@@ -125,32 +126,56 @@ public class GUI32Edit extends DefaultJFrame {
             public void actionPerformed(ActionEvent e) {
                 editingQuestion.getChoices().clear();                                                                   //#3 Xac lap lai cau hoi nhu mot cau hoi moi
 
-                editingQuestion.setName(questionNameField.getText());
-                editingQuestion.setText(QuestionTextField.getText());
+                if (questionNameField.getText().equals("")) {
+                    showError("Question name is required");
+                    return;
+                }
 
-                if(QuestionTextField.getComponentCount() != 0) {
+                if (questionTextField.getText().equals("")) {
+                    showError("Question text is required");
+                    return;
+                }
+
+                editingQuestion.setName(questionNameField.getText());
+                editingQuestion.setText(questionTextField.getText());
+
+                if(questionTextField.getComponentCount() != 0) {
                     editingQuestion.setImageData(edit_qImageData);
                 }
                 else {
                     editingQuestion.setImageData(null);
                 }
 
+                double sumOfPositiveGrade = 0;
                 for (ChoicePanelManager choicePanelManager : choicePanelManagers) {                                     //#3 lay ra tung ChoicePanel trong ArrayList Panel choice da add tren GUI
                     if (choicePanelManager.getChoiceText().equals("")) continue;                                        //#3 Bo qua choice rong
+                    if (GradeConstants.getGrade(choicePanelManager.getGradeIndex()) > 0)
+                        sumOfPositiveGrade += GradeConstants.getGrade(choicePanelManager.getGradeIndex());
 
                     Choice choice = new Choice();
 
+                    // Thêm text và Grade
                     choice.setText(choicePanelManager.getChoiceText());
-                    choice.setGrade(choicePanelManager.getGrade());
+                    choice.setGradeIndex(choicePanelManager.getGradeIndex());
 
                     if(choicePanelManager.getChoiceImageData() != null) {
                         choice.setc_ImageData(choicePanelManager.getChoiceImageData());                                 //#3 Neu tren pane co anh thi moi set choice data
                     }
 
-                    if (choice.getGrade() != GradeConstants.GRADE_NONE && choice.getGrade() != GradeConstants.GRADE_MINUS_5)
+                    // Thêm đáp án
+                    if (GradeConstants.GRADE_NONE < choice.getGradeIndex() && choice.getGradeIndex() < GradeConstants.GRADE_MINUS_5)
                         editingQuestion.addAnswer(choice);
 
                     editingQuestion.addChoice(choice);
+                }
+
+                if (editingQuestion.getChoices().size() < 2) {
+                    showError("At least 2 choices is required");
+                    return;
+                }
+                if (sumOfPositiveGrade != 1) {
+                    showError("Sum of all positive choice's grade must equal 100");
+                    return;
                 }
 
                if (oldCategoryIndex != categoryComboBox.getSelectedIndex()) {
@@ -211,7 +236,7 @@ public class GUI32Edit extends DefaultJFrame {
                     throw new RuntimeException(ex);
                 }
                 label.setVisible(true);
-                QuestionTextField.insertComponent(label);
+                questionTextField.insertComponent(label);
 
             }
         });
@@ -247,6 +272,11 @@ public class GUI32Edit extends DefaultJFrame {
                 new GUI32Edit(1024, 768, 0, 0);
             }
         });
+    }
+
+    private void showError(String errorMessage) {
+        errorLabel.setText(errorMessage);
+        errorLabel.setVisible(true);
     }
 
     private void createUIComponents() {

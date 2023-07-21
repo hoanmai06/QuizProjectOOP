@@ -37,6 +37,7 @@ public class GUI32Add extends DefaultJFrame {
     private JButton saveAndContinueButton;
     private JTextPane questionTextField;
     private JButton insertImageButton;
+    private JLabel errorLabel;
     private ArrayList<ChoicePanelManager> choicePanelManagers = new ArrayList<>();
     private static byte[] qImageData;
 
@@ -54,14 +55,14 @@ public class GUI32Add extends DefaultJFrame {
         choicePanelContainer.setLayout(new GridLayoutManager(32, 2, new Insets(0, 0, 0, 10), -1, -1));
         choicePanelContainer.setBackground(new Color(-1));
 
-        // Restore addingQuestion (if needed)
-        Question addingQuestion = CategoriesSingleton.getInstance().getAddingQuestion();                                //#1: Mang cau hoi dang adding ra Fill vao GUI
-        if (addingQuestion != null) {
-            questionNameField.setText(addingQuestion.getName());
-            questionTextField.setText(addingQuestion.getText());
+        // Restore editLaterQuestion (if needed)
+        Question editLaterQuestion = CategoriesSingleton.getInstance().getEditLaterQuestion();                                //#1: Mang cau hoi dang adding ra Fill vao GUI
+        if (editLaterQuestion != null) {
+            questionNameField.setText(editLaterQuestion.getName());
+            questionTextField.setText(editLaterQuestion.getText());
 
-            if(addingQuestion.getq_ImageData()!=null) {
-                qImageData = addingQuestion.getq_ImageData();
+            if(editLaterQuestion.getq_ImageData()!=null) {
+                qImageData = editLaterQuestion.getq_ImageData();
                 JLabel label = new JLabel();
                 try {
                     label.setIcon(toImageIcon(qImageData));
@@ -72,9 +73,9 @@ public class GUI32Add extends DefaultJFrame {
                 questionTextField.insertComponent(label);                                                                   //#1 Fill textField with image if it has
             }
 
-            // Fill choices with the choices of addingQuestion
+            // Fill choices with the choices of editLaterQuestion
             // Nếu choices.size() < 2 thì vẫn phải có 2 ô trống điền choice nên xử lý riêng
-            ArrayList<Choice> choices = addingQuestion.getChoices();                                                    //#1: Lay ra choices cua cau hoi dang adding ra Fill vao GUI
+            ArrayList<Choice> choices = editLaterQuestion.getChoices();                                                    //#1: Lay ra choices cua cau hoi dang adding ra Fill vao GUI
             for (int i = 0; i < 2; i++) {
                 if (i >= choices.size()) {
                     ChoicePanelManager newChoicePanelManager = new ChoicePanelManager(i + 1);
@@ -88,7 +89,7 @@ public class GUI32Add extends DefaultJFrame {
                     choicePanelManagers.add(newChoicePanelManager);
 
                     newChoicePanelManager.setChoiceText(choice.getText());
-                    newChoicePanelManager.setGrade(choice.getGrade());
+                    newChoicePanelManager.setGrade(choice.getGradeIndex());
 
                     if(choice.getc_ImageData()!=null) {
                         newChoicePanelManager.setChoiceImage(choice.getc_ImageData());                                  //#1 Neu choice lay ra co anh thi moi setcImage
@@ -106,7 +107,7 @@ public class GUI32Add extends DefaultJFrame {
                 choicePanelManagers.add(newChoicePanelManager);
 
                 newChoicePanelManager.setChoiceText(choice.getText());
-                newChoicePanelManager.setGrade(choice.getGrade());
+                newChoicePanelManager.setGrade(choice.getGradeIndex());
 
                 if(choice.getc_ImageData()!=null) {
                     newChoicePanelManager.setChoiceImage(choice.getc_ImageData());                                  //#1 Neu choice lay ra co anh thi moi setcImage
@@ -147,6 +148,17 @@ public class GUI32Add extends DefaultJFrame {
             @Override
             public void actionPerformed(ActionEvent e) {                                                //#4 Mang thong tin tren GUI set vao newQuestion de save-> dataCenter
                 Question newQuestion = new Question();
+
+                if (questionNameField.getText().equals("")) {
+                    showError("Question name is required");
+                    return;
+                }
+
+                if (questionTextField.getText().equals("")) {
+                    showError("Question text is required");
+                    return;
+                }
+
                 newQuestion.setName(questionNameField.getText());
                 newQuestion.setText(questionTextField.getText());                   // luc nay getText() chi tra ve text be tren cua JtextPane thoi chu kho chua text cua component Jlabel
 
@@ -157,28 +169,40 @@ public class GUI32Add extends DefaultJFrame {
                     newQuestion.setImageData(null);
                 }
 
+                double sumOfPositiveGrade = 0;
                 for (ChoicePanelManager choicePanelManager : choicePanelManagers) {                     //#4 Lay tung choicePanel ra khoi Manager
                     if (choicePanelManager.getChoiceText().equals("")) continue;                        //#4 bo qua Choice rong
+                    if (GradeConstants.getGrade(choicePanelManager.getGradeIndex()) > 0)
+                        sumOfPositiveGrade += GradeConstants.getGrade(choicePanelManager.getGradeIndex());
 
                     Choice choice = new Choice();
 
                     // Thêm text và Grade
                     choice.setText(choicePanelManager.getChoiceText());                                 //#4 Lay thong tin tu choicePanel set vao choice
-                    choice.setGrade(choicePanelManager.getGrade());
+                    choice.setGradeIndex(choicePanelManager.getGradeIndex());
 
                     if(choicePanelManager.getChoiceImageData() != null) {
                         choice.setc_ImageData(choicePanelManager.getChoiceImageData());                 //#4 neu trong GUI co anh thi moi set data cho choice
                     }
 
                     // Thêm đáp án
-                    if (choice.getGrade() != GradeConstants.GRADE_NONE && choice.getGrade() != GradeConstants.GRADE_MINUS_5)
+                    if (GradeConstants.GRADE_NONE < choice.getGradeIndex() && choice.getGradeIndex() < GradeConstants.GRADE_MINUS_5)
                         newQuestion.addAnswer(choice);
 
                     newQuestion.addChoice(choice);
                 }
 
+                if (newQuestion.getChoices().size() < 2) {
+                    showError("At least 2 choices is required");
+                    return;
+                }
+                if (sumOfPositiveGrade != 1) {
+                    showError("Sum of all positive choice's grade must equal 100");
+                    return;
+                }
+
                 CategoriesSingleton.getInstance().findcategory(CategoriesSingleton.getInstance().getCategory(),categoryComboBox.getSelectedIndex()).addQuestion(newQuestion);
-                CategoriesSingleton.getInstance().setAddingQuestion(null);
+                CategoriesSingleton.getInstance().setEditLaterQuestion(null);
 
                 dispose();
                 new GUI21(getWidth(), getHeight(), categoryComboBox.getSelectedIndex());
@@ -214,7 +238,7 @@ public class GUI32Add extends DefaultJFrame {
                     Choice choice = new Choice();
 
                     choice.setText(choicePanelManager.getChoiceText());                                     //#6 Lay cac thong tin trong choicePanel gan vao choice moi
-                    choice.setGrade(choicePanelManager.getGrade());
+                    choice.setGradeIndex(choicePanelManager.getGradeIndex());
 
                     if(choicePanelManager.getChoiceImageData() != null) {
                         choice.setc_ImageData(choicePanelManager.getChoiceImageData());                 //#6 neu trong GUI co anh thi moi set data cho choice
@@ -223,7 +247,7 @@ public class GUI32Add extends DefaultJFrame {
                     editingQuestion.addChoice(choice);
                 }
 
-                CategoriesSingleton.getInstance().setAddingQuestion(editingQuestion);
+                CategoriesSingleton.getInstance().setEditLaterQuestion(editingQuestion);
             }
         });
         insertImageButton.addActionListener(new ActionListener() {
@@ -282,6 +306,11 @@ public class GUI32Add extends DefaultJFrame {
                 new GUI32Add(1024, 768, 0);
             }
         });
+    }
+
+    private void showError(String errorMessage) {
+        errorLabel.setText(errorMessage);
+        errorLabel.setVisible(true);
     }
 
     private void createUIComponents() {
