@@ -36,6 +36,7 @@ public class GUI73 extends DefaultJFrame {
     private JLabel countdown;
     private JTable summaryTable;
     private JLabel labelClock;
+    private JLabel directoryLabel;
     private QuestionPanelManager[] questionPanelManagers;
 
     private int timeConsume;
@@ -44,6 +45,8 @@ public class GUI73 extends DefaultJFrame {
         super(width, height);
         setContentPane(guiPanel);
         setVisible(true);
+        directoryLabel.setText("Home / My courses / Thi cuối kỳ / General / " + quiz.getName() + " / Preview");
+
 
         // Set GUI component related to quiz
 
@@ -195,7 +198,7 @@ public class GUI73 extends DefaultJFrame {
                                 {"State", "Finished"},
                                 {"Time taken", timeTakenArea},
                                 {"Marks", "%.2f/%.2f".formatted(mark, quiz.getTotalMark())},
-                                {"Grade", "%.2f/%.2f".formatted(grade, quiz.getMaxGrade())}
+                                {"Grade", "%.2f out of %.2f (%.2f".formatted(grade, quiz.getMaxGrade(), grade/quiz.getMaxGrade()*100) + " %)"}
                         },
                         new String[]{"0", "1"}
                 ));

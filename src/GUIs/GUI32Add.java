@@ -39,7 +39,7 @@ public class GUI32Add extends DefaultJFrame {
     private JButton insertImageButton;
     private JLabel errorLabel;
     private ArrayList<ChoicePanelManager> choicePanelManagers = new ArrayList<>();
-    private static byte[] qImageData;
+    private byte[] qImageData;
 
     public GUI32Add(int width, int height, int categoryIndex) {
         super(width, height);

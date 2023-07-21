@@ -29,11 +29,13 @@ public class GUI65 extends DefaultJFrame {
     private JPanel existingCategory;
     private JPanel newCategory;
     private JComboBox numberOfRandomQuestionComboBox;
+    private JLabel directoryLabel;
 
     public GUI65(int width, int height, Quiz quiz) {
         super(width, height);
         setContentPane(guiPanel);
         setVisible(true);
+        directoryLabel.setText("Home / My courses / Thi cuối kỳ / General / " + quiz.getName() + " / Edit quiz");
 
         // Setup questionTable
         ArrayList<Category> categories = CategoriesSingleton.getInstance().getCategories();

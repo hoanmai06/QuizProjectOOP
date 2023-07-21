@@ -43,6 +43,7 @@ public class GUI61 extends DefaultJFrame {
         setVisible(true);
 
         // Set GUI component related to quiz
+        directoryLabel.setText("Home / My courses / Thi cuối kỳ / General / " + quiz.getName());
         quizNameLabel.setText(quiz.getName());
         switch (quiz.getTimeLimit()) {
             case -1 -> timeLimitLabel.setText("Time limit: No limit");

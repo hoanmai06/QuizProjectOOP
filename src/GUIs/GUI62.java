@@ -45,6 +45,7 @@ public class GUI62 extends DefaultJFrame {
         setVisible(true);
 
         // Set GUI component related to quiz
+        directoryLabel.setText("Home / My courses / Thi cuối kỳ / General / " + quiz.getName() + " / Edit quiz");
         quizNameLabel.setText("Editing quiz: " + quiz.getName());
         totalMarkLabel.setText("Total of marks: %.2f".formatted(quiz.getTotalMark()));
         maxGradeField.setText("%.2f".formatted(quiz.getMaxGrade()));

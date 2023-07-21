@@ -28,11 +28,13 @@ public class GUI72 extends DefaultJFrame {
     private JButton CHOOSEADIRECTORYButton;
     private JPanel passwordPanel;
     private JPasswordField passwordField;
+    private JLabel directoryLabel;
 
     public GUI72(int width, int height, Quiz quiz) {
         super(width, height);
         setContentPane(guiPanel);
         setVisible(true);
+        directoryLabel.setText("Home / My courses / Thi cuối kỳ / General / " + quiz.getName() + " / Preview");
 
         // Set GUI component related to quiz
 

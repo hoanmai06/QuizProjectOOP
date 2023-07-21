@@ -40,7 +40,7 @@ public class GUI32Edit extends DefaultJFrame {
     private JButton insertImageButton;
     private JLabel errorLabel;
     private ArrayList<ChoicePanelManager> choicePanelManagers = new ArrayList<>();
-    private static byte[] edit_qImageData;
+    private byte[] edit_qImageData;
 
     public GUI32Edit(int width, int height, int categoryIndex, int questionIndex) {
         super(width, height);

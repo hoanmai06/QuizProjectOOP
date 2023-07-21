@@ -26,11 +26,13 @@ public class GUI63 extends DefaultJFrame {
     private JButton ADDSELECTEDQUESTIONTOButton;
     private JCheckBox selectAllCheckBox;
     private JLabel IT;
+    private JLabel directoryLabel;
 
     public GUI63(int width, int height, Quiz quiz) {
         super(width, height);
         setContentPane(guiPanel);
         setVisible(true);
+        directoryLabel.setText("Home / My courses / Thi cuối kỳ / General / " + quiz.getName() + " / Edit quiz");
 
         // Setup questionTable
         ArrayList<Category> categories = CategoriesSingleton.getInstance().getCategories();
