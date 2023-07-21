@@ -204,15 +204,6 @@ public class QuestionPanelManager {
     }
 
     public double formatFinishAndGetMark() {
-//        if (answerRadioButton.isSelected()) {
-//            answerPanel.setBackground(new Color(0xDEFFDE));
-//            navigationEntity.setColor(GUIConfig.NAVIGATION_CORRECT);
-//            return question.getDefaultMark();
-//        }
-//
-//        if (choiceButtonGroup.getSelection() != null)
-//            navigationEntity.setColor(GUIConfig.NAVIGATION_INCORRECT);
-//
         ArrayList<JComponent> selectedComponents = new ArrayList<>();
         for (JComponent component : choiceComponentList) {
             if (component instanceof JCheckBox castedComponent) {
@@ -231,19 +222,20 @@ public class QuestionPanelManager {
 
         double mark = 0;
         for (JComponent component : selectedComponents) {
-            if (!answerComponents.contains(component)) {
-                navigationEntity.setColor(GUIConfig.NAVIGATION_INCORRECT);
-                return 0;
-            }
-            else mark += GradeConstants.getGrade(shuffledChoices.get(choiceComponentList.indexOf(component)).getGradeIndex());
+            mark += GradeConstants.getGrade(shuffledChoices.get(choiceComponentList.indexOf(component)).getGradeIndex());
         }
-        if (mark < 1) navigationEntity.setColor(GUIConfig.NAVIGATION_PARTIALLY_CORRECT);
-        else {
+
+        if (mark == 1) {
             navigationEntity.setColor(GUIConfig.NAVIGATION_CORRECT);
             answerPanel.setBackground(new Color(0xDEFFDE));
+        } else if (0 < mark && mark < 1)
+            navigationEntity.setColor(GUIConfig.NAVIGATION_PARTIALLY_CORRECT);
+        else {
+            return 0;
         }
         return mark;
     }
+
     public ArrayList<JComponent> getChoiceComponentList() {
         return choiceComponentList;
     }
