@@ -18,7 +18,7 @@ public class ChoicePanelManager {
     private JTextPane choiceTextArea;
     private JButton insertImageButton;
     private JButton testButton;
-    private static byte[] cEditImageData;
+    private byte[] cEditImageData;
 
     public ChoicePanelManager(int index) {
         choiceLabel.setText("Choice " + index);
