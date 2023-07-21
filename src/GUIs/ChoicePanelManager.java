@@ -1,5 +1,7 @@
 package GUIs;
 
+import DataObjects.GradeConstants;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -53,7 +55,7 @@ public class ChoicePanelManager {
         return choiceTextArea.getText();
     }
 
-    public int getGrade() {
+    public int getGradeIndex() {
         return choiceGradeComboBox.getSelectedIndex();
     }
 

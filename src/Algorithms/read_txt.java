@@ -9,7 +9,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class read_txt {
@@ -102,10 +101,10 @@ public class read_txt {
             //# setGrade cho tung choice, chu y doc file thi cau hoi chi co 1 cau tra loi
                             for(Choice c : listC) {
                                 if ((c.getName()).equals(ans)) {
-                                    c.setGrade(1);
+                                    c.setGradeIndex(1);
                                     q.addAnswer(c);
                                 }
-                                else c.setGrade(0);
+                                else c.setGradeIndex(0);
                             }
                             q.setChoices(listC);
                             listCN.clear();

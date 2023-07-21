@@ -2,15 +2,12 @@ package Algorithms;
 
 import DataObjects.Choice;
 import DataObjects.Question;
-import org.apache.commons.math3.util.Pair;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.xwpf.usermodel.*;
 
 import javax.swing.*;
 import java.io.FileInputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 public class read_docx {
@@ -140,9 +137,9 @@ public class read_docx {
                                     //# setGrade cho tung choice, chu y doc file thi cau hoi chi co 1 cau tra loi
                                     for (Choice c1 : listC) {
                                         if ((c1.getName()).equals(ans)) {
-                                            c1.setGrade(1);
+                                            c1.setGradeIndex(1);
                                             q.addAnswer(c1);
-                                        } else c.setGrade(0);
+                                        } else c.setGradeIndex(0);
                                     }
                                     q.setChoices(listC);
                                     listCN.clear();

@@ -2,7 +2,6 @@ package DataObjects;
 
 import GUIs.QuestionTableModel;
 
-import javax.lang.model.type.NullType;
 import javax.swing.table.DefaultTableModel;
 import java.io.*;
 import java.net.URISyntaxException;
@@ -28,7 +27,7 @@ public class CategoriesSingleton {
 
     private static CategoriesSingleton instance;
     private Category headcategories=new Category() ;
-    private Question addingQuestion;
+    private Question editLaterQuestion;
 
 
     private CategoriesSingleton() {
@@ -188,11 +187,11 @@ public class CategoriesSingleton {
         return list;
     }
 
-    public Question getAddingQuestion() {
-        return addingQuestion;
+    public Question getEditLaterQuestion() {
+        return editLaterQuestion;
     }
 
-    public void setAddingQuestion(Question addingQuestion) {
-        this.addingQuestion = addingQuestion;
+    public void setEditLaterQuestion(Question editLaterQuestion) {
+        this.editLaterQuestion = editLaterQuestion;
     }
 }
