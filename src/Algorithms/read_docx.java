@@ -136,7 +136,7 @@ public class read_docx {
                             } else {
                                 if (listCN.contains("A.") && listCN.contains("B.") && listCN.contains(txtCorA[1] + ".")) {
                                     typeOfLine.set(indexOfLine, "answer");
-                                    String ans = txtCorA[1] + ".";
+                                    String ans = txtCorA[1].charAt(0) + ".";
                                     //# setGrade cho tung choice, chu y doc file thi cau hoi chi co 1 cau tra loi
                                     for (Choice c1 : listC) {
                                         if ((c1.getName()).equals(ans)) {
