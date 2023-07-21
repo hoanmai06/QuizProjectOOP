@@ -38,6 +38,8 @@ public class GUI73 extends DefaultJFrame {
     private JLabel labelClock;
     private QuestionPanelManager[] questionPanelManagers;
 
+    private int timeConsume;
+
     public GUI73(int width, int height, Quiz quiz) throws IOException {
         super(width, height);
         setContentPane(guiPanel);
@@ -93,6 +95,7 @@ public class GUI73 extends DefaultJFrame {
             @Override
             public void showCountDown(JLabel label, int seconds) {
                 Timer timer = new Timer();
+                timeConsume = 0;
                 timer.schedule(new TimerTask() {
                     int i = seconds;
                     public void run() {
@@ -105,6 +108,7 @@ public class GUI73 extends DefaultJFrame {
                             finishAttemptButton.doClick();
                         }
                         i--;
+                        timeConsume++;
                     }
                 }, 0, 1000);
             }
@@ -126,6 +130,30 @@ public class GUI73 extends DefaultJFrame {
         finishAttemptButton.addActionListener(new ActionListener()  {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                int timeTotal = timeConsume;
+                String timeTakenArea = new String();
+                String hUnit = new String(" hrs ");
+                String mUnit = new String(" mins ");
+                String sUnit = new String(" secs ");
+                int h = timeTotal / 3600;
+                int m = (timeTotal % 3600) / 60;
+                int s = timeTotal % 60;
+                if(h==1) hUnit = " hr ";
+                if(m==1) mUnit = " min ";
+                if(s==1) sUnit = " sec ";
+
+                if(h>0) {
+                    timeTakenArea = String.format(h + hUnit + m + mUnit + s + sUnit);
+                }
+                else {
+                    if(m>0)
+                        timeTakenArea = String.format(m + mUnit + s + sUnit);
+                    else
+                        timeTakenArea = String.format(s + sUnit);
+
+                }
+
                 // Disable finishAttempt button
                 finishAttemptButton.setEnabled(false);
                 finishAttemptButton.setVisible(false);
@@ -160,7 +188,7 @@ public class GUI73 extends DefaultJFrame {
                 summaryTable.setModel(new DefaultTableModel(
                         new Object[][]{
                                 {"State", "Finished"},
-                                {"Time taken", "Not implemented"},
+                                {"Time taken", timeTakenArea},
                                 {"Marks", "%.2f/%.2f".formatted(mark, quiz.getTotalMark())},
                                 {"Grade", "%.2f/%.2f".formatted(grade, quiz.getMaxGrade())}
                         },
