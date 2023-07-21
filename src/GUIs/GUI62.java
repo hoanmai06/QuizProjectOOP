@@ -48,6 +48,7 @@ public class GUI62 extends DefaultJFrame {
         quizNameLabel.setText("Editing quiz: " + quiz.getName());
         totalMarkLabel.setText("Total of marks: %.2f".formatted(quiz.getTotalMark()));
         maxGradeField.setText("%.2f".formatted(quiz.getMaxGrade()));
+        shuffleCheckBox.setSelected(quiz.isShuffle());
 
         // Setup questionTable
         String[] columnNames = {"Index", "Question name", "Delete", "Mark"};
