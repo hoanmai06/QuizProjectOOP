@@ -231,6 +231,7 @@ public class QuestionPanelManager {
         } else if (0 < mark && mark < 1)
             navigationEntity.setColor(GUIConfig.NAVIGATION_PARTIALLY_CORRECT);
         else {
+            navigationEntity.setColor(GUIConfig.NAVIGATION_INCORRECT);
             return 0;
         }
         return mark;
