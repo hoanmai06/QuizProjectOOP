@@ -20,7 +20,6 @@ public class Randomfeature {
          randomDouble = randomDouble * (arrIndices.size()) ;
          int randomInt = (int) randomDouble;
          output.add(arr.get(arrIndices.get(randomInt)));
-         System.out.println(arrIndices.get(randomInt));
          arrIndices.remove(arrIndices.get(randomInt));
       }
       return output;

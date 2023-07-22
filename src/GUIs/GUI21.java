@@ -113,7 +113,7 @@ public class GUI21 extends DefaultJFrame implements DropTargetListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                new GUI32Add(1024, 768, categoryComboBox.getSelectedIndex());
+                new GUI32Add(getWidth(), getHeight(), categoryComboBox.getSelectedIndex());
             }
         });
         ADDCATEGORYButton.addActionListener(new ActionListener() {
