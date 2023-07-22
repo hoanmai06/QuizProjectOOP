@@ -139,7 +139,7 @@ public class GUI73 extends DefaultJFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                int timeTotal = timeConsume;
+                int timeTotal = timeConsume-1;
                 String timeTakenArea = new String();
                 String hUnit = new String(" hrs ");
                 String mUnit = new String(" mins ");
