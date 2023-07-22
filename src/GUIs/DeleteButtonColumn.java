@@ -182,7 +182,7 @@ public class DeleteButtonColumn extends AbstractCellEditor
 //			renderButton.setIcon( null );
 //		}
 
-		renderButton.setIcon(new ImageIcon("src/icons/trash.png"));
+		renderButton.setIcon(new ImageIcon(getClass().getResource("/icons/trash.png")));
 
 		return renderButton;
 	}

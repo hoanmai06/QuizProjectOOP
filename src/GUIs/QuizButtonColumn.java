@@ -119,17 +119,17 @@ public class QuizButtonColumn extends AbstractCellEditor
         if (value == null)
         {
             editButton.setText( "" );
-            editButton.setIcon(new ImageIcon("src/icons/quiz_icon.png"));
+            editButton.setIcon(new ImageIcon(getClass().getResource("/icons/quiz_icon.png")));
         }
         else if (value instanceof Icon)
         {
             editButton.setText( "" );
-            editButton.setIcon(new ImageIcon("src/icons/quiz_icon.png"));
+            editButton.setIcon(new ImageIcon(getClass().getResource("/icons/quiz_icon.png")));
         }
         else
         {
             editButton.setText( value.toString() );
-            editButton.setIcon(new ImageIcon("src/icons/quiz_icon.png"));
+            editButton.setIcon(new ImageIcon(getClass().getResource("/icons/quiz_icon.png")));
         }
 
         this.editorValue = value;
