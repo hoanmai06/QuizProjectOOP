@@ -164,17 +164,17 @@ public class QuizButtonColumn extends AbstractCellEditor
         if (value == null)
         {
             renderButton.setText( "" );
-            renderButton.setIcon(new ImageIcon("src/icons/quiz_icon.png"));
+            renderButton.setIcon(new ImageIcon(getClass().getResource("/icons/quiz_icon.png")));
         }
         else if (value instanceof Icon)
         {
             renderButton.setText( "" );
-            renderButton.setIcon(new ImageIcon("src/icons/quiz_icon.png"));
+            renderButton.setIcon(new ImageIcon(getClass().getResource("/icons/quiz_icon.png")));
         }
         else
         {
             renderButton.setText( value.toString() );
-            renderButton.setIcon(new ImageIcon("src/icons/quiz_icon.png"));
+            renderButton.setIcon(new ImageIcon(getClass().getResource("/icons/quiz_icon.png")));
         }
 
         return renderButton;
